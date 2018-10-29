@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    This XML file provides all the text to be used when the application
+    is to be displayed in English.
+-->
+<properties>
+    <property_list>
+
+        <!-- ENGLISH LANGUAGE SETTINGS FOR DESKTOP JAVA FRAMEWORK CONTROLS -->
+
+        <!-- WELCOME DIALOG TEXT -->
+        <property name="WELCOME_DIALOG_TITLE"               value="Bienvenido a Las Horas de Oficina"></property>
+        <property name="WELCOME_DIALOG_RECENT_WORK_LABEL"   value="Trabajo Reciente"></property>
+        <property name="WELCOME_DIALOG_NEW_BUTTON_TEXT"  value="Crear Nuevas Horas de Oficina "></property>
+
+        <!-- GENERIC APP ERROR MESSAGES -->
+        <property name="APP_ERROR_TITLE"            value="Error de la Aplicación"></property>
+        <property name="APP_ERROR_CONTENT"          value="Un Error Ocurrido en la Aplicación"></property>
+
+        <!-- PROPERTIES ERROR MESSAGES -->
+        <property name="PROPERTIES_ERROR_TITLE"     value="Error de Archivo de Propiedades"></property>
+        <property name="PROPERTIES_ERROR_CONTENT"   value="Hubo Un Error Al Cargar Un Archivo de Propiedades"></property>
+
+        <!-- FILE TOOLBAR TOOLTIPS -->
+        <property name="NEW_BUTTON_TOOLTIP"         value="Nuevas Horas de Oficina"></property>
+        <property name="LOAD_BUTTON_TOOLTIP"        value="Cargar Horas de Oficina"></property>
+        <property name="CLOSE_BUTTON_TOOLTIP"       value="Cerrar Horas de Oficina"></property>
+        <property name="SAVE_BUTTON_TOOLTIP"        value="Ahorre Horas de oOicina"></property>
+        <property name="EXPORT_BUTTON_TOOLTIP"      value="Horas de Oficina de Exportación"></property>
+        <property name="EXIT_BUTTON_TOOLTIP"        value="Salida"></property>
+
+        <!-- CLIPBOARD TOOLBAR TOOLTIPS -->
+        <property name="CUT_BUTTON_TOOLTIP"         value="Cortar"></property>
+        <property name="COPY_BUTTON_TOOLTIP"        value="Dupdo"></property>
+        <property name="PASTE_BUTTON_TOOLTIP"       value="Pegar"></property>
+
+        <!-- UNDO TOOLBAR TOOLTIPS -->
+        <property name="UNDO_BUTTON_TOOLTIP"        value="Deshacer"></property>
+        <property name="REDO_BUTTON_TOOLTIP"        value="Rehacer"></property>
+
+        <!-- HELP TOOLBAR TOOLTIPS -->
+        <property name="HELP_BUTTON_TOOLTIP"        value="Ayuda"></property>
+        <property name="LANGUAGE_BUTTON_TOOLTIP"    value="Cambiar Idioma"></property>
+        <property name="ABOUT_BUTTON_TOOLTIP"       value="Acerca de"></property>
+
+        <!-- NEW FEEDBACK DIALOGS -->	
+        <property name="NEW_SUCCESS_TITLE"      value="Nuevo Completo"></property>
+        <property name="NEW_SUCCESS_CONTENT"	value="Trabajo Creado Pero Aún No Guardado"></property>
+        <property name="NEW_ERROR_TITLE"        value="Advertencia: Error"></property>
+        <property name="NEW_ERROR_CONTENT"      value="Se Produjo Un Error al Crear Un Nuevo Trabajo."></property>
+
+        <!-- LOAD FEEDBACK DIALOGS -->
+        <property name="LOAD_WORK_TITLE"        value="Cargar Trabajo"></property>
+        <property name="LOAD_SUCCESS_TITLE"     value="Carga Completa"></property>
+        <property name="LOAD_SUCCESS_CONTENT"   value="El Archivo se Cargó Con éxito y Ahora Se Puede Editar."></property>
+        <property name="LOAD_ERROR_TITLE"       value="Error de Carga"></property>        
+        <property name="LOAD_ERROR_CONTENT"     value="Cargando Da Fallado Es Probable Que Haya Un Problema de Formato de Archivo."></property>
+
+        <!-- SAVE FEEDBACK DIALOGS -->
+        <property name="SAVE_WORK_TITLE"        value="Ahorre Trabajo"></property>
+        <property name="SAVE_SUCCESS_TITLE"     value="Guardar Completo"></property>
+        <property name="SAVE_SUCCESS_CONTENT"   value="El archivo Está Guardado"></property>
+        <property name="SAVE_ERROR_TITLE"       value="Guardar Error"></property>
+        <property name="SAVE_ERROR_CONTENT"     value="El Ahorro ha Fallado. Probablemente Debido a Un Problema de Acceso a Archivos."></property>
+        <property name="SAVE_VERIFY_TITLE"	value="¿Guardar Trabajo No Guardado?"></property>
+        <property name="SAVE_VERIFY_CONTENT"	value="¿Le Gustaría Guardar su Trabajo no Guardado Primero?"></property>
+        
+        <!-- ABOUT DIALOG -->
+        <property name="ABOUT_TITLE"            value="Acerca de CSG"></property>
+        <property name="ABOUT_CONTENT"          value="CSG el Gerente de Horas de Oficina - Empresas de Depuración - © 2018"></property>
+
+        <property name="EDIT_DIALOG_TITLE"        value="Editar Asistente de Enseñanza"></property>
+        <property name="EDIT_DIALOG_NAME"     value="Nombre:"></property>
+        <property name="EDIT_DIALOG_EMAIL"   value="Correo Electrónico:"></property>
+        <property name="EDIT_DIALOG_NAME_PROMPT"     value="Nombre"></property>
+        <property name="EDIT_DIALOG_EMAIL_PROMPT"   value="Correo Electrónico"></property>
+        <property name="EDIT_DIALOG_TYPE"       value="Tipo:"></property>
+        <property name="EDIT_DIALOG_GRADUATE"     value="Graduado"></property>
+        <property name="EDIT_DIALOG_UNDERGRADUATE"	value="De Licenciatura"></property>
+        <!-- ENGLISH LANGUAGE SETTINGS SPECIFICALLY FOR TDLM CONTROLS -->
+
+        <!-- LANGUAGE-DEPENDENT TEXT FOR CSG WORKSPACE CONTROLS -->      
+        <property name="CSG_TAS_HEADER_LABEL_TEXT"           value="Enseñando Asistentes"></property>        
+        <property name="CSG_TAS_TABLE_VIEW_TEXT"           value="Sin Contenido en la Mesa"></property>
+        <property name="CSG_TAS_ALL_RB_TEXT"           value="Todas"></property>
+        <property name="CSG_TAS_GRADUATE_RB_TEXT"           value="Graduado"></property>
+        <property name="CSG_TAS_UNDERGRADUATE_RB_TEXT"           value="De Licenciatura"></property>     
+        <property name="CSG_ADD_TA_BUTTON_TEXT"              value="Agregar TA"></property>
+        <property name="CSG_OFFICE_HOURS_HEADER_LABEL_TEXT"  value="Horas de Oficina"></property>
+        <property name="CSG_NAME_TABLE_COLUMN_TEXT"          value="Nombre"></property>
+        <property name="CSG_EMAIL_TABLE_COLUMN_TEXT"         value="Correo Electrónico"></property>
+        <property name="CSG_SLOTS_TABLE_COLUMN_TEXT"         value="Ranuras de Tiempo"></property>        
+        <property name="CSG_TYPE_TABLE_COLUMN_TEXT"         value="Tipo"></property>
+        <property name="CSG_START_TIME_TABLE_COLUMN_TEXT"    value="Hora de Inicio"></property>
+        <property name="CSG_END_TIME_TABLE_COLUMN_TEXT"      value="Hora de Finalización"></property>
+        <property name="CSG_MONDAY_TABLE_COLUMN_TEXT"        value="Lunes"></property>
+        <property name="CSG_TUESDAY_TABLE_COLUMN_TEXT"       value="Martes"></property>
+        <property name="CSG_WEDNESDAY_TABLE_COLUMN_TEXT"     value="Miércoles"></property>
+        <property name="CSG_THURSDAY_TABLE_COLUMN_TEXT"      value="Jueves"></property>
+        <property name="CSG_FRIDAY_TABLE_COLUMN_TEXT"        value="Viernes"></property>
+        <property name="CSG_NAME_TEXT_FIELD_TEXT"          value="Nombre"></property>
+        <property name="CSG_EMAIL_TEXT_FIELD_TEXT"         value="Correo Electrónico"></property>
+
+        <!-- TO SWITCH BACK TO ANOTHER LANGUAGE -->
+        <property name="LANGUAGE_DIALOG_TITLE"          value="Selección del Idioma de la Aplicación"></property>
+        <property name="LANGUAGE_DIALOG_HEADER_TEXT"    value="Elija un Idioma"></property>
+        <property name="LANGUAGE_DIALOG_CONTENT_TEXT"   value="Seleccione un Idioma Para la Interfaz de Usuario."></property>
+
+        <property name="WORK_FILE_EXT"          value="*.json"></property>
+        <property name="WORK_FILE_EXT_DESC"     value="Archivos de Asistente de Enseñanza (*.json)"></property>
+
+    </property_list>
+    
+    <property_options_list>
+        <property_options name="LANGUAGE_OPTIONS">
+            <option>English</option>
+            <option>Spanish</option>
+        </property_options>
+    </property_options_list>
+</properties>
