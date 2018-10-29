@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
@@ -157,6 +158,7 @@ public class AppWelcomeDialog extends Stage {
 
         // SPECIFY THE STYLE THE BANNER AND NEW BUTTON
         app.getGUIModule().initStylesheet(this);
+        splashPane.setPadding(new Insets(20, 10 , 20 , 10));
         welcomeDialogImageView.getStyleClass().add(CLASS_DJF_WELCOME_BANNER);
         recentlyEditedPane.getStyleClass().add(CLASS_DJF_WELCOME_RECENT_PANE);
         recentWorkLabel.getStyleClass().add(CLASS_DJF_WELCOME_HEADER);
@@ -165,5 +167,6 @@ public class AppWelcomeDialog extends Stage {
         for (Button recentWorkButton : recentWorkButtons) {
             recentWorkButton.getStyleClass().add(CLASS_DJF_WELCOME_RECENT_BUTTON);
         }
+        splashPane.setPrefWidth(500);
     }
 }
