@@ -6,10 +6,10 @@
 package csg.workspace.foolproof;
 
 import csg.CourseSiteGeneratorApp;
-import static csg.CourseSiteGeneratorPropertyType.CSG_ADD_TA_BUTTON;
-import static csg.CourseSiteGeneratorPropertyType.CSG_EMAIL_TEXT_FIELD;
-import static csg.CourseSiteGeneratorPropertyType.CSG_NAME_TEXT_FIELD;
-import static csg.CourseSiteGeneratorPropertyType.CSG_TAS_ALL_RB;
+import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_ADD_TA_BUTTON;
+import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_ALL_RB;
+import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_EMAIL_TEXT_FIELD;
+import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_NAME_TEXT_FIELD;
 import csg.data.CourseSiteGeneratorData;
 import djf.modules.AppGUIModule;
 import djf.ui.foolproof.FoolproofDesign;
@@ -33,10 +33,10 @@ public class CourseSiteGeneratorFoolproofDesign implements FoolproofDesign {
     @Override
     public void updateControls() {
         AppGUIModule gui = app.getGUIModule();
-        TextField nameTF = (TextField) gui.getGUINode(CSG_NAME_TEXT_FIELD);
-        TextField emailTF = (TextField) gui.getGUINode(CSG_EMAIL_TEXT_FIELD);            
-        Button addBt = (Button) gui.getGUINode(CSG_ADD_TA_BUTTON);        
-        RadioButton allRB = (RadioButton) gui.getGUINode(CSG_TAS_ALL_RB);
+        TextField nameTF = (TextField) gui.getGUINode(CSG_OH_TAS_NAME_TEXT_FIELD);
+        TextField emailTF = (TextField) gui.getGUINode(CSG_OH_TAS_EMAIL_TEXT_FIELD);            
+        Button addBt = (Button) gui.getGUINode(CSG_OH_TAS_ADD_TA_BUTTON);        
+        RadioButton allRB = (RadioButton) gui.getGUINode(CSG_OH_TAS_ALL_RB);
         String name = nameTF.getText();
         String email = emailTF.getText();
         final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);

@@ -6,11 +6,11 @@
 package csg.data;
 
 import csg.CourseSiteGeneratorApp;
-import static csg.CourseSiteGeneratorPropertyType.CSG_OFFICE_HOURS_TABLE_VIEW;
-import static csg.CourseSiteGeneratorPropertyType.CSG_TAS_ALL_RB;
-import static csg.CourseSiteGeneratorPropertyType.CSG_TAS_GRADUATE_RB;
-import static csg.CourseSiteGeneratorPropertyType.CSG_TAS_TABLE_VIEW;
-import static csg.CourseSiteGeneratorPropertyType.CSG_TAS_UNDERGRADUATE_RB;
+import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TABLEVIEW;
+import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_ALL_RB;
+import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_GRAD_RB;
+import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_TABLE_VIEW;
+import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_UNDERGRA_RB;
 import static csg.data.TeachingAssistantPrototype.TA_TYPE_GRA;
 import static csg.data.TeachingAssistantPrototype.TA_TYPE_UNDERGRA;
 import csg.data.TimeSlot.DayOfWeek;
@@ -59,7 +59,7 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
             undergraduateTeachingAssistants = FXCollections.observableArrayList();
 
             // CONSTRUCT THE LIST OF TAs FOR THE TABLE
-            TableView<TeachingAssistantPrototype> taTableView = (TableView)gui.getGUINode(CSG_TAS_TABLE_VIEW);
+            TableView<TeachingAssistantPrototype> taTableView = (TableView)gui.getGUINode(CSG_OH_TAS_TABLE_VIEW);
             teachingAssistants = taTableView.getItems();
             graduateTeachingAssistants.addListener(new ListChangeListener<TeachingAssistantPrototype>() {
                 @Override
@@ -88,7 +88,7 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
     private void resetOfficeHours() {
         //THIS WILL STORE OUR OFFICE HOURS
         AppGUIModule gui = app.getGUIModule();
-        TableView<TimeSlot> officeHoursTableView = (TableView)gui.getGUINode(CSG_OFFICE_HOURS_TABLE_VIEW);
+        TableView<TimeSlot> officeHoursTableView = (TableView)gui.getGUINode(CSG_OH_TABLEVIEW);
         officeHours = officeHoursTableView.getItems(); 
         officeHours.clear();
         for (int i = startHour; i <= endHour; i++) {
@@ -165,19 +165,19 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
     
     public boolean isTASelected() {
         AppGUIModule gui = app.getGUIModule();
-        TableView tasTable = (TableView)gui.getGUINode(CSG_TAS_TABLE_VIEW);
+        TableView tasTable = (TableView)gui.getGUINode(CSG_OH_TAS_TABLE_VIEW);
         return tasTable.getSelectionModel().getSelectedItem() != null;
     }
     
     public TeachingAssistantPrototype getSelectedTA(){
         AppGUIModule gui = app.getGUIModule();
-        TableView tasTable = (TableView)gui.getGUINode(CSG_TAS_TABLE_VIEW);
+        TableView tasTable = (TableView)gui.getGUINode(CSG_OH_TAS_TABLE_VIEW);
         return (TeachingAssistantPrototype) tasTable.getSelectionModel().getSelectedItem();        
     }
     
     public void addTA(TeachingAssistantPrototype ta, String type) {        
         AppGUIModule gui = app.getGUIModule();
-        TableView<TeachingAssistantPrototype> officeHoursTableView = (TableView)gui.getGUINode(CSG_TAS_TABLE_VIEW); 
+        TableView<TeachingAssistantPrototype> officeHoursTableView = (TableView)gui.getGUINode(CSG_OH_TAS_TABLE_VIEW); 
         if (type.equals(TA_TYPE_UNDERGRA) && !undergraduateTeachingAssistants.contains(ta)){
             undergraduateTeachingAssistants.add(ta);        
             undergraduateTeachingAssistants.sort((TeachingAssistantPrototype o1, TeachingAssistantPrototype o2) -> o1.getName().compareTo(o2.getName()));
@@ -259,9 +259,9 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
 
     public String getCurrentTAType(){
         AppGUIModule gui = app.getGUIModule();
-        RadioButton allRB = (RadioButton)gui.getGUINode(CSG_TAS_ALL_RB);
-        RadioButton underg = (RadioButton)gui.getGUINode(CSG_TAS_UNDERGRADUATE_RB);
-        RadioButton graduate = (RadioButton)gui.getGUINode(CSG_TAS_GRADUATE_RB);
+        RadioButton allRB = (RadioButton)gui.getGUINode(CSG_OH_TAS_ALL_RB);
+        RadioButton underg = (RadioButton)gui.getGUINode(CSG_OH_TAS_UNDERGRA_RB);
+        RadioButton graduate = (RadioButton)gui.getGUINode(CSG_OH_TAS_GRAD_RB);
         if (underg.isSelected())
             return TA_TYPE_UNDERGRA;
         else
@@ -270,12 +270,12 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
     
     public boolean isAllRBSelected(){        
         AppGUIModule gui = app.getGUIModule();
-        return ((RadioButton)gui.getGUINode(CSG_TAS_ALL_RB)).isSelected();
+        return ((RadioButton)gui.getGUINode(CSG_OH_TAS_ALL_RB)).isSelected();
     }
     
     public void setGraduateTA(){        
         AppGUIModule gui = app.getGUIModule();
-        TableView<TeachingAssistantPrototype> taTableView = (TableView)gui.getGUINode(CSG_TAS_TABLE_VIEW);
+        TableView<TeachingAssistantPrototype> taTableView = (TableView)gui.getGUINode(CSG_OH_TAS_TABLE_VIEW);
         taTableView.setItems(graduateTeachingAssistants);
         for(TimeSlot oh: officeHours)
             oh.setGradTA();
@@ -283,7 +283,7 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
         
     public void setUndergraduateTA(){
         AppGUIModule gui = app.getGUIModule();
-        TableView<TeachingAssistantPrototype> taTableView = (TableView)gui.getGUINode(CSG_TAS_TABLE_VIEW);
+        TableView<TeachingAssistantPrototype> taTableView = (TableView)gui.getGUINode(CSG_OH_TAS_TABLE_VIEW);
         taTableView.setItems(undergraduateTeachingAssistants);
         for(TimeSlot oh: officeHours)
             oh.setUndergraTA();
@@ -291,7 +291,7 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
         
     public void setAllTA(){
         AppGUIModule gui = app.getGUIModule();
-        TableView<TeachingAssistantPrototype> taTableView = (TableView)gui.getGUINode(CSG_TAS_TABLE_VIEW);
+        TableView<TeachingAssistantPrototype> taTableView = (TableView)gui.getGUINode(CSG_OH_TAS_TABLE_VIEW);
         teachingAssistants.clear();
         teachingAssistants.addAll(graduateTeachingAssistants);
         teachingAssistants.addAll(undergraduateTeachingAssistants);
@@ -303,7 +303,7 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
     
     public ObservableList<TeachingAssistantPrototype> getCurrentList(){
         AppGUIModule gui = app.getGUIModule();
-        return ((TableView)gui.getGUINode(CSG_TAS_TABLE_VIEW)).getItems();
+        return ((TableView)gui.getGUINode(CSG_OH_TAS_TABLE_VIEW)).getItems();
     }
     
     public void doTypeEdited(TeachingAssistantPrototype TA){

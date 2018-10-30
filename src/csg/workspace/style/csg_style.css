@@ -139,3 +139,32 @@ and open the template in the editor.
     -fx-color: SWATCH_NEUTRAL;
     -fx-font-weight: bold;
 }
+
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-opacity: 0;
+}
+
+.tab-pane .tab
+{
+    -fx-padding: 5px, 0px, 5px, 0px;
+    -fx-background-color: white;
+    -fx-border-radius: 20 20 0 0;
+    -fx-background-radius: 20 20 0 0;
+    -fx-box-border: transparent;
+}
+
+.tab-pane .tab:selected
+{
+    -fx-background-color: #FF6347;
+}
+
+.tab .tab-label { 
+    -fx-alignment: CENTER;
+    -fx-text-fill: black;
+    -fx-font-size: 20px;
+}
+
+.tab:selected .tab-label { 
+    -fx-alignment: CENTER;
+    -fx-text-fill: black;
+}

@@ -6,10 +6,10 @@
 package csg.workspace.controllers;
 
 import csg.CourseSiteGeneratorApp;
-import static csg.CourseSiteGeneratorPropertyType.CSG_EMAIL_TEXT_FIELD;
-import static csg.CourseSiteGeneratorPropertyType.CSG_NAME_TEXT_FIELD;
-import static csg.CourseSiteGeneratorPropertyType.CSG_OFFICE_HOURS_TABLE_VIEW;
-import static csg.CourseSiteGeneratorPropertyType.CSG_TAS_TABLE_VIEW;
+import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TABLEVIEW;
+import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_EMAIL_TEXT_FIELD;
+import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_NAME_TEXT_FIELD;
+import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_TABLE_VIEW;
 import csg.data.CourseSiteGeneratorData;
 import csg.data.TeachingAssistantPrototype;
 import csg.data.TimeSlot;
@@ -37,9 +37,9 @@ public class CourseSiteGeneratorController {
 
     public void processAddTA() {
         AppGUIModule gui = app.getGUIModule();
-        TextField nameTF = (TextField) gui.getGUINode(CSG_NAME_TEXT_FIELD);
+        TextField nameTF = (TextField) gui.getGUINode(CSG_OH_TAS_NAME_TEXT_FIELD);
         String name = nameTF.getText();
-        TextField emailTF = (TextField) gui.getGUINode(CSG_EMAIL_TEXT_FIELD);
+        TextField emailTF = (TextField) gui.getGUINode(CSG_OH_TAS_EMAIL_TEXT_FIELD);
         String email = emailTF.getText();
         CourseSiteGeneratorData data = (CourseSiteGeneratorData) app.getDataComponent();
         TeachingAssistantPrototype ta = new TeachingAssistantPrototype(name,email, data.getCurrentTAType());
@@ -54,12 +54,12 @@ public class CourseSiteGeneratorController {
     public void processAddOrRemoveCSG(){
         AppGUIModule gui = app.getGUIModule();
         CourseSiteGeneratorData ohData = (CourseSiteGeneratorData)app.getDataComponent();
-        TableView<TeachingAssistantPrototype> taTable = (TableView<TeachingAssistantPrototype>)gui.getGUINode(CSG_TAS_TABLE_VIEW);
+        TableView<TeachingAssistantPrototype> taTable = (TableView<TeachingAssistantPrototype>)gui.getGUINode(CSG_OH_TAS_TABLE_VIEW);
         TeachingAssistantPrototype selectedTA = taTable.getSelectionModel().getSelectedItem();
         //User didn't choose a TA
         if(selectedTA == null)
             return;        
-        TableView<TimeSlot> officeHoursTable = (TableView<TimeSlot>)gui.getGUINode(CSG_OFFICE_HOURS_TABLE_VIEW);
+        TableView<TimeSlot> officeHoursTable = (TableView<TimeSlot>)gui.getGUINode(CSG_OH_TABLEVIEW);
         TablePosition selectedCell = officeHoursTable.getSelectionModel().getSelectedCells().get(0);
         //User didn't choose a day
         if(!ohData.isDayOfWeekColumn(selectedCell.getColumn()))
@@ -80,7 +80,7 @@ public class CourseSiteGeneratorController {
         AppGUIModule gui = app.getGUIModule();
         CourseSiteGeneratorData ohData = (CourseSiteGeneratorData)app.getDataComponent();
         ohData.setGraduateTA();            
-        TableView<TimeSlot> officeHoursTable = (TableView<TimeSlot>)gui.getGUINode(CSG_OFFICE_HOURS_TABLE_VIEW);
+        TableView<TimeSlot> officeHoursTable = (TableView<TimeSlot>)gui.getGUINode(CSG_OH_TABLEVIEW);
         officeHoursTable.refresh();
     }
     
@@ -88,7 +88,7 @@ public class CourseSiteGeneratorController {
         AppGUIModule gui = app.getGUIModule();
         CourseSiteGeneratorData ohData = (CourseSiteGeneratorData)app.getDataComponent();
         ohData.setUndergraduateTA();          
-        TableView<TimeSlot> officeHoursTable = (TableView<TimeSlot>)gui.getGUINode(CSG_OFFICE_HOURS_TABLE_VIEW);
+        TableView<TimeSlot> officeHoursTable = (TableView<TimeSlot>)gui.getGUINode(CSG_OH_TABLEVIEW);
         officeHoursTable.refresh();
 
     }
@@ -97,14 +97,14 @@ public class CourseSiteGeneratorController {
         AppGUIModule gui = app.getGUIModule();
         CourseSiteGeneratorData ohData = (CourseSiteGeneratorData)app.getDataComponent();
         ohData.setAllTA();               
-        TableView<TimeSlot> officeHoursTable = (TableView<TimeSlot>)gui.getGUINode(CSG_OFFICE_HOURS_TABLE_VIEW);
+        TableView<TimeSlot> officeHoursTable = (TableView<TimeSlot>)gui.getGUINode(CSG_OH_TABLEVIEW);
         officeHoursTable.refresh();
     }
     
     public void showEditDialog(){        
         AppGUIModule gui = app.getGUIModule();
         CourseSiteGeneratorData ohData = (CourseSiteGeneratorData)app.getDataComponent();
-        TableView<TeachingAssistantPrototype> taTable = (TableView<TeachingAssistantPrototype>)gui.getGUINode(CSG_TAS_TABLE_VIEW);
+        TableView<TeachingAssistantPrototype> taTable = (TableView<TeachingAssistantPrototype>)gui.getGUINode(CSG_OH_TAS_TABLE_VIEW);
         TeachingAssistantPrototype selectedTA = taTable.getSelectionModel().getSelectedItem();
         CourseSiteGeneratorDialog.showEditDialog(app, selectedTA);
     }
