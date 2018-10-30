@@ -20,10 +20,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
+import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
@@ -556,5 +560,39 @@ public class AppNodesBuilder {
         rb.setToggleGroup(tgTA);
         initNode(nodeId, rb, hBox, styleClass, enabled);
         return rb;
+    }
+    
+    public Tab buildTab(Object nodeId, TabPane tabPane,
+            String styleClass,
+            boolean enabled){
+            Tab tab = new Tab();
+            languageSettings.addLabeledControlProperty(nodeId.toString() + "_TEXT", tab.textProperty());
+            // SET THE STYLE
+            tab.getStyleClass().add(styleClass);
+            tabPane.getTabs().add(tab);
+            // ENABLE/DISABLE
+            tab.setDisable(!enabled);
+            return tab;
+    }
+    
+    public TextArea buildTextArea(Object nodeId, Pane parent,
+            String styleClass,
+            boolean enabled){
+            TextArea ta = new TextArea();
+            languageSettings.addLabeledControlProperty(nodeId.toString() + "_TEXT", ta.promptTextProperty());
+            initNode(nodeId, ta, parent, styleClass, enabled);
+            return ta;
+    }
+    
+    public TitledPane buildTitledPaneWithTextArea(Object nodeId, Object textAreaId, Pane parent,
+            String styleClass, String textAreaStyleClass,
+            boolean enabled){
+            TitledPane tp = new TitledPane();
+            languageSettings.addLabeledControlProperty(nodeId.toString() + "_TEXT", tp.textProperty());            
+            TextArea ta = buildTextArea(textAreaId, null, textAreaStyleClass, enabled);
+            tp.setContent(ta);
+            tp.setExpanded(false);
+            initNode(nodeId, tp, parent, styleClass, enabled);
+            return tp;
     }
 }
