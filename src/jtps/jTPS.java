@@ -158,6 +158,9 @@ public class jTPS {
     }
     
     public jTPS_Transaction getMostRecentTransaction(){
-        return transactions.get(mostRecentTransaction);
+        if(hasTransactionToUndo())
+            return transactions.get(mostRecentTransaction);
+        else
+            return null;
     }
 }
