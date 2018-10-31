@@ -16,6 +16,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
 import javafx.scene.control.RadioButton;
@@ -111,9 +112,11 @@ public class AppNodesBuilder {
             Object defaultValueProperty,
             Pane parentPane,
             String styleClass,
-            boolean enabled) {
+            boolean enabled, boolean editable) {
         // MAKE AND INIT THE COMBO BOX
         ComboBox comboBox = initComboBox(optionsListProperty, defaultValueProperty);
+        comboBox.setMinWidth(200);
+        comboBox.setEditable(editable);
         initNode(nodeId, comboBox, parentPane, styleClass, enabled);        
         return comboBox;
     }
@@ -124,9 +127,11 @@ public class AppNodesBuilder {
             String styleClass,
             boolean enabled,
             Object optionsListProperty,
-            Object defaultValueProperty) {
+            Object defaultValueProperty, boolean editable) {
         // MAKE AND INIT THE COMBO BOX
         ComboBox comboBox = initComboBox(optionsListProperty, defaultValueProperty);
+        comboBox.setMinWidth(200);
+        comboBox.setEditable(editable);
         initNode(nodeId, comboBox, parent, col, row, colSpan, rowSpan, styleClass, enabled);        
         return comboBox;
     }
@@ -579,6 +584,7 @@ public class AppNodesBuilder {
             String styleClass,
             boolean enabled){
             TextArea ta = new TextArea();
+            ta.setWrapText(true);
             languageSettings.addLabeledControlProperty(nodeId.toString() + "_TEXT", ta.promptTextProperty());
             initNode(nodeId, ta, parent, styleClass, enabled);
             return ta;
@@ -594,5 +600,28 @@ public class AppNodesBuilder {
             tp.setExpanded(false);
             initNode(nodeId, tp, parent, styleClass, enabled);
             return tp;
+    }
+    
+    public DatePicker buildDatePicker(Object nodeId, Pane parent,
+            String styleClass,
+            boolean enabled){
+            DatePicker dp = new DatePicker();
+            initNode(nodeId, dp, parent, styleClass, enabled);
+            return dp;
+    }
+    
+    public DatePicker buildDatePicker(Object nodeId,
+            GridPane parent,
+            int col, int row, int colSpan, int rowSpan,
+            String styleClass,
+            boolean enabled) {
+        // NOW MAKE THE TABLE VIEW
+            DatePicker dp = new DatePicker();
+
+        // INITIALIZE THE OTHER SETTINGS
+        initNode(nodeId, dp, parent, col, row, colSpan, rowSpan, styleClass, enabled);
+
+        // AND RETURN THE COMPLETED BUTTON
+        return dp;
     }
 }

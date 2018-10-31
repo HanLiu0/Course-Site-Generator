@@ -47,7 +47,7 @@ public enum AppPropertyType {
     PREF_WIDTH,
     PREF_HEIGHT,
     START_MAXIMIZED,
-    CLOSE_BUTTON_TEXT,    
+    CLOSE_BUTTON_TEXT,   
     
     // FOR THE WELCOME DIALOG
     WELCOME_DIALOG_TITLE,

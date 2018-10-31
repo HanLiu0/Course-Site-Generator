@@ -415,7 +415,7 @@ public class AppGUIModule {
         Image appWindowLogo = new Image(appLogo);
         primaryStage.getIcons().add(appWindowLogo);
         primaryStage.setIconified(true);
-
+        
         // NOW TIE THE SCENE TO THE WINDOW
         primaryStage.setScene(primaryScene);
 
