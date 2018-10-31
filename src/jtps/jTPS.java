@@ -156,4 +156,8 @@ public class jTPS {
         }
         return text;
     }
+    
+    public jTPS_Transaction getMostRecentTransaction(){
+        return transactions.get(mostRecentTransaction);
+    }
 }
