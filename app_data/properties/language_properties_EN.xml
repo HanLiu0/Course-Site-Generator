@@ -101,7 +101,7 @@
         <property name="CSG_SITE_LEFT_FOOTER_BUTTON_TEXT"           value="Left Footer Image:"></property>
         <property name="CSG_SITE_RIGHT_FOOTER_BUTTON_TEXT"           value="Right Footer Image:"></property>
         <property name="CSG_SITE_STYLESHEET_LABEL_TEXT"             value="Fonts &amp; Colors Style Sheets:"></property>
-        <property name="CSG_SITE_STYESHEET_NOTE_LABEL_TEXT"           value="Note: Stylesheets should be placed inside work/css to be selectable"></property>
+        <property name="CSG_SITE_STYLESHEET_NOTE_LABEL_TEXT"           value="Note: Stylesheets should be placed inside work/css to be selectable"></property>
         <property name="CSG_SITE_INSTRUCTOR_LABEL_TEXT"           value="Instructor"></property>
         <property name="CSG_SITE_NAME_LABEL_TEXT"           value="Name:"></property>
         <property name="CSG_SITE_EMAIL_LABEL_TEXT"           value="Email:"></property>
@@ -169,6 +169,10 @@
         <property name="CSG_OH_TAS_ALL_RB_TEXT"           value="All"></property>
         <property name="CSG_OH_TAS_GRAD_RB_TEXT"           value="Grad"></property>
         <property name="CSG_OH_TAS_UNDERGRA_RB_TEXT"           value="Undergrad"></property>    
+        <property name="CSG_OH_TAS_NAME_TABLE_COLUMN_TEXT"          value="Name"></property>
+        <property name="CSG_OH_TAS_EMAIL_TABLE_COLUMN_TEXT"          value="Email"></property>
+        <property name="CSG_OH_TAS_SLOTS_TABLE_COLUMN_TEXT"          value="Time Slots"></property>
+        <property name="CSG_OH_TAS_TYPE_TABLE_COLUMN_TEXT"          value="Type"></property>
         <property name="CSG_OH_TAS_NAME_TEXT_FIELD_TEXT"          value="Name"></property>
         <property name="CSG_OH_TAS_EMAIL_TEXT_FIELD_TEXT"         value="Email"></property>    
         <property name="CSG_OH_TAS_ADD_TA_BUTTON_TEXT"              value="Add TA"></property>
@@ -192,7 +196,32 @@
         <property name="CSG_EDIT_DIALOG_TYPE"       value="Type:"></property>
         <property name="CSG_EDIT_DIALOG_GRADUATE"     value="Graduate"></property>
         <property name="CSG_EDIT_DIALOG_UNDERGRADUATE"	value="Undergraduate"></property>
-        
+   
+        <!-- FOR CSG SCHEDULE TAB -->                                            
+        <property name="CSG_SCHEDULE_BOUNDARIES_LABEL_TEXT"           value="Calendar Boundaries"></property>
+        <property name="CSG_SCHEDULE_STARTING_MONDAY_LABEL_TEXT"           value="Starting Monday:"></property>
+        <property name="CSG_SCHEDULE_ENDING_FRIDAY_LABEL_TEXT"           value="Ending Friday:"></property>
+        <property name="CSG_SCHEDULE_ITEM_LABEL_TEXT"           value="Schedule Items"></property>
+        <property name="CSG_SCHEDULE_REMOVE_BT_TEXT"           value="-"></property>
+        <property name="CSG_SCHEDULE_TABLEVIEW_TEXT"           value="No content in table"></property>
+        <property name="CSG_SCHEDULE_TYPE_TABLE_COLUMN_TEXT"           value="Type"></property>
+        <property name="CSG_SCHEDULE_DATE_TABLE_COLUMN_TEXT"           value="Date"></property>
+        <property name="CSG_SCHEDULE_TITLE_TABLE_COLUMN_TEXT"           value="Title"></property>
+        <property name="CSG_SCHEDULE_TOPIC_TABLE_COLUMN_TEXT"           value="Topic"></property>
+        <property name="CSG_SCHEDULE_CLEAR_BT_TEXT"           value="Clear"></property>
+        <property name="CSG_SCHEDULE_ADD_UPDATE_BT_TEXT"           value="Add/Update"></property>
+        <property name="CSG_SCHEDULE_ADD_BT_TEXT"           value="Add"></property>
+        <property name="CSG_SCHEDULE_UPDATE_BT_TEXT"           value="Update"></property>
+        <property name="CSG_SCHEDULE_ADD_EDIT_LABEL_TEXT"           value="Add/Edit"></property>
+        <property name="CSG_SCHEDULE_TYPE_LABEL_TEXT"           value="Type:"></property>
+        <property name="CSG_SCHEDULE_DATE_LABEL_TEXT"           value="Date:"></property>
+        <property name="CSG_SCHEDULE_TITLE_LABEL_TEXT"           value="Title:"></property>
+        <property name="CSG_SCHEDULE_TOPIC_LABEL_TEXT"           value="Topic:"></property>
+        <property name="CSG_SCHEDULE_LINK_LABEL_TEXT"           value="Link:"></property>
+        <property name="CSG_SCHEDULE_TITLE_TF_TEXT"           value="Title"></property>
+        <property name="CSG_SCHEDULE_TOPIC_TF_TEXT"           value="Topic"></property>
+        <property name="CSG_SCHEDULE_LINK_TF_TEXT"           value="Link"></property>
+     
         <!-- TO SWITCH BACK TO ANOTHER LANGUAGE -->
         <property name="LANGUAGE_DIALOG_TITLE"          value="App Language Selection"></property>
         <property name="LANGUAGE_DIALOG_HEADER_TEXT"    value="Choose a Language"></property>

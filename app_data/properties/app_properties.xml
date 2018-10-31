@@ -23,9 +23,9 @@
         <property name="WORK_FILE_EXT"       value="*.json"></property>
         <property name="WORK_FILE_EXT_DESC"       value="JSON files (*.json)"></property>
         <property name="PREF_WIDTH"         value="800"></property>
-        <property name="PREF_HEIGHT"        value="600"></property>
+        <property name="PREF_HEIGHT"        value="600"></property>        
         <property name="START_MAXIMIZED"    value="true"></property>
-
+        
         <!-- TOP TOOLBARS AND CONTROLS TO INCLUDE -->
         <property name="HAS_WELCOME_DIALOG"     value="true"></property>
         <property name="HAS_TOP_TOOLBAR"        value="true"></property>        

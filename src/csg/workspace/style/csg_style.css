@@ -16,13 +16,13 @@ and open the template in the editor.
     
     /*  THE NEURAL SWATCH IS USED FOR THE BACKGROUNDS IN PLACES WHERE
         THERE ARE NO OTHER CONTROLS*/
-    SWATCH_NEUTRAL:             #DDE9E8;
+    SWATCH_NEUTRAL:              #fbceb1;
     /*  THE COMPLEMENT SWATCH IS USED FOR BACKGROUND AREAS OF THINGS
         LAYERED ON TOP OF THE BACKGROUND */
-    SWATCH_COMPLEMENT:          #CAE9FF;
+    SWATCH_COMPLEMENT:          #faf0e6;
     /*  THE ACCENT SWATCH IS USED FOR BORDERS OF THINGS LIKE TOOLBAR
         THAT ARE USED FOR ORGANIZING GROUPS OF COMPONENTS */
-    SWATCH_ACCENT:              #1B4965;
+    SWATCH_ACCENT:              #e9967a;
     SWATCH_ACCENT_ALT:          #4E7C98;
     /*  THIS BLEND SWATCH IS USED FOR GRADIENT TRANSITIONS */
     SWATCH_BLEND:               #5FA8D3;
@@ -98,12 +98,26 @@ and open the template in the editor.
 }
 
 .csg_pane {
-    -fx-padding: 10px;
+    -fx-border-color: black;
+    -fx-padding: 20px;
+    -fx-margin: 20px;
+    -fx-background-color: #fff5ee;
+    -fx-border-radius: 10 10 10 10;
+    -fx-background-radius: 10 10 10 10;
+}
+
+.csg_tabpane{
+    -fx-padding: 0 10 0 10;
+    -fx-background-color: #faf0e6;
 }
 
 .csg_header_label{
     -fx-font-weight: bold;
     -fx-font-size: 19px;
+}
+
+.csg_bold_label{
+    -fx-font-weight: bold;    
 }
 
 .csg_rb{
@@ -119,9 +133,73 @@ and open the template in the editor.
     -fx-alignment: CENTER;
 }
 
+.csg_small_button{
+    -fx-font-weight: bold;
+    -fx-background-radius: 5px;
+    -fx-padding: 2 10 2 10;
+    -fx-margin: 0;
+    -fx-color: #fff5ee;
+}
+
 .csg_button{
     -fx-font-weight: bold;
-    -fx-background-radius: 10px;
+    -fx-background-radius: 5px;
+    -fx-color: #fff5ee;
+
+}
+
+.csg_large_button{
+    -fx-background-radius: 5px;
+    -fx-color: #fff5ee;
+}
+
+.csg_text_field{
+    -fx-background-radius: 5px;    
+}
+
+.csg_text_area{
+    -fx-background-radius: 5px; 
+}
+
+.titled-pane > .title 
+{
+    -fx-background-color: -fx-box-border, -fx-inner-border, -fx-body-color, #fffafa;
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 5 5 0 0, 4 4 0 0, 3 3 0 0;
+    -fx-padding: 10px;
+    -fx-font-weight: bold;
+}
+
+.csg_cb{
+    -fx-background-radius: 5px;    
+}
+
+.combo-box-base {
+    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, white;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius: 3px, 3px, 2px, 1px;
+}
+
+.combo-box-base > .arrow-button  {
+    -fx-background-color: transparent;
+}
+
+.check-box .box {
+    -fx-background-color: white;
+    -fx-border-color:grey;
+    -fx-border-radius:3px; 
+}
+
+.radio-button .radio {
+    -fx-border-width: 1px;
+    -fx-border-color: #000;
+    -fx-background-color: white;
+    -fx-border-radius: 15px;
+    -fx-padding: 4px;
+}
+
+.csg_titledpane{
+    -fx-background-radius: 5px;    
 }
 
 .table-view .column-header {
@@ -142,20 +220,34 @@ and open the template in the editor.
 
 .tab-pane .tab-header-area .tab-header-background {
     -fx-opacity: 0;
+    -fx-padding: 0;
+    -fx-margin: 0;
+}
+
+.tab-pane *.tab-header-background {
+    -fx-background-color: #faf0e6;
+}
+
+.tab-pane {
+    -fx-padding: 10px 0px 0px 0px;
+    -fx-background-color: #faf0e6;
 }
 
 .tab-pane .tab
 {
+    -fx-margin: 0;
     -fx-padding: 5px, 0px, 5px, 0px;
-    -fx-background-color: white;
+    -fx-background-color: #efdecd;
     -fx-border-radius: 20 20 0 0;
     -fx-background-radius: 20 20 0 0;
     -fx-box-border: transparent;
+    -fx-border-width: 3px;
+    -fx-border-color: SWATCH_ACCENT;
 }
 
 .tab-pane .tab:selected
 {
-    -fx-background-color: #FF6347;
+    -fx-background-color: #ffa07a;
 }
 
 .tab .tab-label { 
@@ -167,4 +259,8 @@ and open the template in the editor.
 .tab:selected .tab-label { 
     -fx-alignment: CENTER;
     -fx-text-fill: black;
+}
+
+.root { 
+    -fx-focus-color: #ffcba4; 
 }

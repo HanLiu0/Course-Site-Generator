@@ -33,6 +33,7 @@ import static csg.CourseSiteGeneratorPropertyType.CSG_LECTURES_TIME_TABLE_COLUMN
 import static csg.CourseSiteGeneratorPropertyType.CSG_MEETING_TIME_PANE;
 import static csg.CourseSiteGeneratorPropertyType.CSG_MEETING_TIME_TAB;
 import static csg.CourseSiteGeneratorPropertyType.CSG_MONDAY_TABLE_COLUMN;
+import static csg.CourseSiteGeneratorPropertyType.CSG_NEW_EDIT_PANE;
 import static csg.CourseSiteGeneratorPropertyType.CSG_OH_END_TIME_CB;
 import static csg.CourseSiteGeneratorPropertyType.CSG_OH_END_TIME_LABEL;
 import static csg.CourseSiteGeneratorPropertyType.CSG_OH_HEADER_PANE;
@@ -67,8 +68,37 @@ import static csg.CourseSiteGeneratorPropertyType.CSG_REC_SECTION_TABLE_COLUMN;
 import static csg.CourseSiteGeneratorPropertyType.CSG_REC_TA1_TABLE_COLUMN;
 import static csg.CourseSiteGeneratorPropertyType.CSG_REC_TA2_TABLE_COLUMN;
 import static csg.CourseSiteGeneratorPropertyType.CSG_REC_TABLEVIEW;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_ADD_EDIT_LABEL;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_ADD_UPDATE_BT;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_BOUNDARIES_LABEL;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_BOUNDARIES_PANE;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_CLEAR_BT;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_DATE_DP;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_DATE_LABEL;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_DATE_PANE;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_DATE_TABLE_COLUMN;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_ENDING_FRIDAY_DP;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_ENDING_FRIDAY_LABEL;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_ITEMS_HEADER_PANE;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_ITEMS_PANE;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_ITEM_LABEL;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_LINK_LABEL;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_LINK_TF;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_PANE;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_REMOVE_BT;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_STARTING_MONDAY_DP;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_STARTING_MONDAY_LABEL;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_TAB;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_TABLEVIEW;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_TITLE_LABEL;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_TITLE_TABLE_COLUMN;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_TITLE_TF;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_TOPIC_LABEL;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_TOPIC_TABLE_COLUMN;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_TOPIC_TF;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_TYPE_CB;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_TYPE_LABEL;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_TYPE_TABLE_COLUMN;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_BANNER_LABEL;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_BANNER_PANE;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_DIR_LABEL;
@@ -132,6 +162,7 @@ import static csg.CourseSiteGeneratorPropertyType.CSG_SYLLABUS_SPECIAL_ASSISTANC
 import static csg.CourseSiteGeneratorPropertyType.CSG_SYLLABUS_TAB;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SYLLABUS_TEXTBOOKS_TA;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SYLLABUS_TEXTBOOKS_TP;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SYLLABUS_TEXT_AREA_PANE;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SYLLABUS_TOPICS_TA;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SYLLABUS_TOPICS_TP;
 import static csg.CourseSiteGeneratorPropertyType.CSG_THURSDAY_TABLE_COLUMN;
@@ -141,6 +172,7 @@ import csg.data.CourseSiteGeneratorData;
 import csg.data.LabItem;
 import csg.data.LectureItem;
 import csg.data.RecitationItem;
+import csg.data.ScheduleItem;
 import csg.data.TeachingAssistantPrototype;
 import csg.data.TimeSlot;
 import csg.workspace.controllers.CourseSiteGeneratorController;
@@ -150,13 +182,16 @@ import static csg.workspace.style.CSGStyle.CLASS_CSG_BOX;
 import static csg.workspace.style.CSGStyle.CLASS_CSG_BUTTON;
 import static csg.workspace.style.CSGStyle.CLASS_CSG_CB;
 import static csg.workspace.style.CSGStyle.CLASS_CSG_CENTER_COLUMN;
+import static csg.workspace.style.CSGStyle.CLASS_CSG_CHECKBOX;
 import static csg.workspace.style.CSGStyle.CLASS_CSG_COLUMN;
 import static csg.workspace.style.CSGStyle.CLASS_CSG_DAY_OF_WEEK_COLUMN;
+import static csg.workspace.style.CSGStyle.CLASS_CSG_DP;
 import static csg.workspace.style.CSGStyle.CLASS_CSG_HEADER_LABEL;
 import static csg.workspace.style.CSGStyle.CLASS_CSG_LARGE_BUTTON;
 import static csg.workspace.style.CSGStyle.CLASS_CSG_OFFICE_HOURS_TABLE_VIEW;
 import static csg.workspace.style.CSGStyle.CLASS_CSG_PANE;
 import static csg.workspace.style.CSGStyle.CLASS_CSG_RB;
+import static csg.workspace.style.CSGStyle.CLASS_CSG_SMALL_BUTTON;
 import static csg.workspace.style.CSGStyle.CLASS_CSG_TAB;
 import static csg.workspace.style.CSGStyle.CLASS_CSG_TABLE_VIEW;
 import static csg.workspace.style.CSGStyle.CLASS_CSG_TABPANE;
@@ -171,6 +206,7 @@ import static djf.modules.AppGUIModule.ENABLED;
 import djf.ui.AppNodesBuilder;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -231,8 +267,8 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             initScheduleTab(scheduleTab);
             
             tPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
-            tPane.tabMinWidthProperty().bind(tPane.widthProperty().divide(5.2));
-            tPane.tabMaxWidthProperty().bind(tPane.widthProperty().divide(5.2));
+            tPane.tabMinWidthProperty().bind(tPane.widthProperty().divide(6));
+            tPane.tabMaxWidthProperty().bind(tPane.widthProperty().divide(6));
 
             // AND PUT EVERYTHING IN THE WORKSPACE
             ((BorderPane)workspace).setCenter(tPane);
@@ -242,11 +278,18 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             PropertiesManager props = PropertiesManager.getPropertiesManager();
 
             // THIS WILL BUILD ALL OF OUR JavaFX COMPONENTS FOR US
-            AppNodesBuilder csgBuilder = app.getGUIModule().getNodesBuilder();        
+            AppNodesBuilder csgBuilder = app.getGUIModule().getNodesBuilder();    
+            ScrollPane sp = new ScrollPane();
             VBox sitePane = csgBuilder.buildVBox(CSG_SITE_PANE, null, CLASS_CSG_TABPANE, ENABLED);
-            
+            sitePane.setSpacing(10);
+            VBox.setVgrow(sitePane, Priority.ALWAYS);
+            sp.setContent(sitePane);
+            sp.setFitToHeight(true);
+            sp.setFitToWidth(true);
             // Banner
             GridPane bannerPane = csgBuilder.buildGridPane(CSG_SITE_BANNER_PANE, sitePane, CLASS_CSG_PANE, ENABLED);
+            bannerPane.setHgap(10);
+            bannerPane.setVgap(10);
             csgBuilder.buildLabel(CSG_SITE_BANNER_LABEL, bannerPane, 0, 0, 1, 1, CLASS_CSG_HEADER_LABEL, ENABLED);
             csgBuilder.buildLabel(CSG_SITE_SUBJECT_LABEL, bannerPane, 0, 1, 1, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
             csgBuilder.buildLabel(CSG_SITE_SEMESTER_LABEL, bannerPane, 0, 2, 1, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
@@ -255,46 +298,55 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             csgBuilder.buildLabel(CSG_SITE_NUMBER_LABEL, bannerPane, 3, 1, 1, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
             csgBuilder.buildLabel(CSG_SITE_YEAR_LABEL, bannerPane, 3, 2, 1, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
             csgBuilder.buildLabel(CSG_SITE_DIR_LABEL, bannerPane, 1, 4, 2, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
-            csgBuilder.buildComboBox(CSG_SITE_SUBJECT_CB, bannerPane, 1, 1, 2, 1, CLASS_CSG_CB, ENABLED, sitePane, bannerPane);
-            csgBuilder.buildComboBox(CSG_SITE_SEMESTER_CB, bannerPane, 1, 2, 2, 1, CLASS_CSG_CB, ENABLED, sitePane, bannerPane);
-            csgBuilder.buildComboBox(CSG_SITE_NUMBER_CB, bannerPane, 4, 1, 2, 1, CLASS_CSG_CB, ENABLED, sitePane, bannerPane);
-            csgBuilder.buildComboBox(CSG_SITE_YEAR_CB, bannerPane, 4, 2, 2, 1, CLASS_CSG_CB, ENABLED, sitePane, bannerPane);
-            csgBuilder.buildComboBox(CSG_SITE_TITLE_LABEL, bannerPane, 4, 2, 2, 1, CLASS_CSG_CB, ENABLED, sitePane, bannerPane);
-            csgBuilder.buildTextField(CSG_SITE_TITLE_TF, bannerPane, 1, 4, 4, 1, CLASS_CSG_TEXT_FIELD, ENABLED);
+            csgBuilder.buildComboBox(CSG_SITE_SUBJECT_CB, bannerPane, 1, 1, 2, 1, CLASS_CSG_CB, ENABLED, sitePane, bannerPane, true);
+            csgBuilder.buildComboBox(CSG_SITE_SEMESTER_CB, bannerPane, 1, 2, 2, 1, CLASS_CSG_CB, ENABLED, sitePane, bannerPane, true);
+            csgBuilder.buildComboBox(CSG_SITE_NUMBER_CB, bannerPane, 4, 1, 2, 1, CLASS_CSG_CB, ENABLED, sitePane, bannerPane, true);
+            csgBuilder.buildComboBox(CSG_SITE_YEAR_CB, bannerPane, 4, 2, 2, 1, CLASS_CSG_CB, ENABLED, sitePane, bannerPane, true);
+            csgBuilder.buildTextField(CSG_SITE_TITLE_TF, bannerPane, 1, 3, 5, 1, CLASS_CSG_TEXT_FIELD, ENABLED);
             
             //Pages
             HBox pagesPane = csgBuilder.buildHBox(CSG_SITE_PAGES_PANE, sitePane, CLASS_CSG_PANE, ENABLED);
+            pagesPane.setSpacing(10);
             csgBuilder.buildLabel(CSG_SITE_PAGES_LABEL, pagesPane, CLASS_CSG_HEADER_LABEL, ENABLED);
-            csgBuilder.buildCheckBox(CSG_SITE_HOME_CB, pagesPane, CLASS_CSG_CB, ENABLED);
-            csgBuilder.buildCheckBox(CSG_SITE_SYLLABUS_CB, pagesPane, CLASS_CSG_CB, ENABLED);
-            csgBuilder.buildCheckBox(CSG_SITE_SCHEDULE_CB, pagesPane, CLASS_CSG_CB, ENABLED);
-            csgBuilder.buildCheckBox(CSG_SITE_HWS_CB, pagesPane, CLASS_CSG_CB, ENABLED);
+            csgBuilder.buildCheckBox(CSG_SITE_HOME_CB, pagesPane, CLASS_CSG_CHECKBOX, ENABLED);
+            csgBuilder.buildCheckBox(CSG_SITE_SYLLABUS_CB, pagesPane, CLASS_CSG_CHECKBOX, ENABLED);
+            csgBuilder.buildCheckBox(CSG_SITE_SCHEDULE_CB, pagesPane, CLASS_CSG_CHECKBOX, ENABLED);
+            csgBuilder.buildCheckBox(CSG_SITE_HWS_CB, pagesPane, CLASS_CSG_CHECKBOX, ENABLED);
             
             // Style
             GridPane stylePane = csgBuilder.buildGridPane(CSG_SITE_STYLE_PANE, sitePane, CLASS_CSG_PANE, ENABLED);
+            stylePane.setHgap(10);
+            stylePane.setVgap(10);            
             csgBuilder.buildLabel(CSG_SITE_STYLE_LABEL, stylePane, 0, 0, 1, 1, CLASS_CSG_HEADER_LABEL, ENABLED);
-            csgBuilder.buildTextButton(CSG_SITE_FAVICON_BUTTON, stylePane, 0, 1, 2, 1, CLASS_CSG_LARGE_BUTTON, ENABLED);
-            csgBuilder.buildTextButton(CSG_SITE_NAVBAR_BUTTON, stylePane, 0, 2, 2, 1, CLASS_CSG_LARGE_BUTTON, ENABLED);
-            csgBuilder.buildTextButton(CSG_SITE_LEFT_FOOTER_BUTTON, stylePane, 0, 3, 2, 1, CLASS_CSG_LARGE_BUTTON, ENABLED);
-            csgBuilder.buildTextButton(CSG_SITE_RIGHT_FOOTER_BUTTON, stylePane, 0, 4, 2, 1, CLASS_CSG_LARGE_BUTTON, ENABLED);
+            Button bt1 = csgBuilder.buildTextButton(CSG_SITE_FAVICON_BUTTON, stylePane, 0, 1, 2, 1, CLASS_CSG_LARGE_BUTTON, ENABLED);
+            Button bt2 =  csgBuilder.buildTextButton(CSG_SITE_NAVBAR_BUTTON, stylePane, 0, 2, 2, 1, CLASS_CSG_LARGE_BUTTON, ENABLED);
+            Button bt3 = csgBuilder.buildTextButton(CSG_SITE_LEFT_FOOTER_BUTTON, stylePane, 0, 3, 2, 1, CLASS_CSG_LARGE_BUTTON, ENABLED);
+            Button bt4 = csgBuilder.buildTextButton(CSG_SITE_RIGHT_FOOTER_BUTTON, stylePane, 0, 4, 2, 1, CLASS_CSG_LARGE_BUTTON, ENABLED);
+            bt1.setPrefWidth(200);
+            bt2.setPrefWidth(200);
+            bt3.setPrefWidth(200);
+            bt4.setPrefWidth(200);
             csgBuilder.buildLabel(CSG_SITE_STYLESHEET_LABEL, stylePane, 0, 5, 2, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
-            csgBuilder.buildLabel(CSG_SITE_STYLESHEET_NOTE_LABEL, stylePane, 0, 6, 5, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
-            csgBuilder.buildComboBox(CSG_SITE_STYLESHEET_CB, stylePane, 2, 5, 2, 1, CLASS_CSG_CB, ENABLED, stylePane, stylePane);
+            csgBuilder.buildLabel(CSG_SITE_STYLESHEET_NOTE_LABEL, stylePane, 0, 6, 7, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
+            csgBuilder.buildComboBox(CSG_SITE_STYLESHEET_CB, stylePane, 2, 5, 2, 1, CLASS_CSG_CB, ENABLED, stylePane, stylePane, false);
             
             //Instructor
             VBox instuctorPane = csgBuilder.buildVBox(CSG_SITE_INSTRUCTOR_PANE, sitePane, CLASS_CSG_PANE, ENABLED);
+            instuctorPane.setSpacing(10);
             GridPane instuctorInfoPane = csgBuilder.buildGridPane(CSG_SITE_INSTRUCTORINFO_PANE, instuctorPane, null, ENABLED);
+            instuctorInfoPane.setHgap(10);
+            instuctorInfoPane.setVgap(10);
             csgBuilder.buildLabel(CSG_SITE_INSTRUCTOR_LABEL, instuctorInfoPane, 0, 0, 1, 1, CLASS_CSG_HEADER_LABEL, ENABLED);
             csgBuilder.buildLabel(CSG_SITE_NAME_LABEL, instuctorInfoPane, 0, 1, 1, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
             csgBuilder.buildLabel(CSG_SITE_EMAIL_LABEL, instuctorInfoPane, 0, 2, 1, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
-            csgBuilder.buildLabel(CSG_SITE_ROOM_LABEL, instuctorInfoPane, 4, 1, 1, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
-            csgBuilder.buildLabel(CSG_SITE_HOMEPAGE_LABEL, instuctorInfoPane, 4, 2, 1, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
-            csgBuilder.buildTextField(CSG_SITE_NAME_TF, instuctorInfoPane, 1, 1, 3, 1, CLASS_CSG_TEXT_FIELD, ENABLED);
-            csgBuilder.buildTextField(CSG_SITE_EMAIL_TF, instuctorInfoPane, 1, 2, 3, 1, CLASS_CSG_TEXT_FIELD, ENABLED);
-            csgBuilder.buildTextField(CSG_SITE_ROOM_TF, instuctorInfoPane, 5, 1, 3, 1, CLASS_CSG_TEXT_FIELD, ENABLED);
-            csgBuilder.buildTextField(CSG_SITE_HOMEPAGE_TF, instuctorInfoPane, 5, 2, 3, 1, CLASS_CSG_TEXT_FIELD, ENABLED);
+            csgBuilder.buildLabel(CSG_SITE_ROOM_LABEL, instuctorInfoPane, 5, 1, 1, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
+            csgBuilder.buildLabel(CSG_SITE_HOMEPAGE_LABEL, instuctorInfoPane, 5, 2, 1, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
+            csgBuilder.buildTextField(CSG_SITE_NAME_TF, instuctorInfoPane, 1, 1, 4, 1, CLASS_CSG_TEXT_FIELD, ENABLED);
+            csgBuilder.buildTextField(CSG_SITE_EMAIL_TF, instuctorInfoPane, 1, 2, 4, 1, CLASS_CSG_TEXT_FIELD, ENABLED);
+            csgBuilder.buildTextField(CSG_SITE_ROOM_TF, instuctorInfoPane, 6, 1, 4, 1, CLASS_CSG_TEXT_FIELD, ENABLED);
+            csgBuilder.buildTextField(CSG_SITE_HOMEPAGE_TF, instuctorInfoPane, 6, 2, 4, 1, CLASS_CSG_TEXT_FIELD, ENABLED);
             csgBuilder.buildTitledPaneWithTextArea(CSG_SITE_OH_TITLEDPANE, CSG_SITE_OH_TA, instuctorPane,  CLASS_CSG_TITLEDPANE, CLASS_CSG_TEXT_AREA, ENABLED);
-            siteTab.setContent(sitePane);
+            siteTab.setContent(sp);
         }
         
         private void initSyllabusTab(Tab syllabusTab){
@@ -302,27 +354,34 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
 
             // THIS WILL BUILD ALL OF OUR JavaFX COMPONENTS FOR US
             AppNodesBuilder csgBuilder = app.getGUIModule().getNodesBuilder();               
-            
+            ScrollPane sp = new ScrollPane();
+
             VBox syllabusPane = csgBuilder.buildVBox(CSG_SYLLABUS_PANE, null, CLASS_CSG_TABPANE, ENABLED);
-            csgBuilder.buildTitledPaneWithTextArea(CSG_SYLLABUS_DESCRIPTION_TP, CSG_SYLLABUS_DESCRIPTION_TA, syllabusPane,  
+            VBox.setVgrow(syllabusPane, Priority.ALWAYS);
+            sp.setContent(syllabusPane);
+            sp.setFitToHeight(true);
+            sp.setFitToWidth(true);
+            VBox textAreaPane = csgBuilder.buildVBox(CSG_SYLLABUS_TEXT_AREA_PANE, syllabusPane, CLASS_CSG_PANE, ENABLED);
+            textAreaPane.setSpacing(10);
+            csgBuilder.buildTitledPaneWithTextArea(CSG_SYLLABUS_DESCRIPTION_TP, CSG_SYLLABUS_DESCRIPTION_TA, textAreaPane,  
                      CLASS_CSG_TITLEDPANE, CLASS_CSG_TEXT_AREA, ENABLED);
-            csgBuilder.buildTitledPaneWithTextArea(CSG_SYLLABUS_TOPICS_TP, CSG_SYLLABUS_TOPICS_TA, syllabusPane,  
+            csgBuilder.buildTitledPaneWithTextArea(CSG_SYLLABUS_TOPICS_TP, CSG_SYLLABUS_TOPICS_TA, textAreaPane,  
                      CLASS_CSG_TITLEDPANE, CLASS_CSG_TEXT_AREA, ENABLED);             
-            csgBuilder.buildTitledPaneWithTextArea(CSG_SYLLABUS_PREREQUISITES_TP, CSG_SYLLABUS_PREREQUISITES_TA, syllabusPane,  
+            csgBuilder.buildTitledPaneWithTextArea(CSG_SYLLABUS_PREREQUISITES_TP, CSG_SYLLABUS_PREREQUISITES_TA, textAreaPane,  
                      CLASS_CSG_TITLEDPANE, CLASS_CSG_TEXT_AREA, ENABLED);
-            csgBuilder.buildTitledPaneWithTextArea(CSG_SYLLABUS_OUTCOMES_TP, CSG_SYLLABUS_OUTCOMES_TA, syllabusPane,  
+            csgBuilder.buildTitledPaneWithTextArea(CSG_SYLLABUS_OUTCOMES_TP, CSG_SYLLABUS_OUTCOMES_TA, textAreaPane,  
                      CLASS_CSG_TITLEDPANE, CLASS_CSG_TEXT_AREA, ENABLED);            
-            csgBuilder.buildTitledPaneWithTextArea(CSG_SYLLABUS_TEXTBOOKS_TP, CSG_SYLLABUS_TEXTBOOKS_TA, syllabusPane,  
+            csgBuilder.buildTitledPaneWithTextArea(CSG_SYLLABUS_TEXTBOOKS_TP, CSG_SYLLABUS_TEXTBOOKS_TA, textAreaPane,  
                      CLASS_CSG_TITLEDPANE, CLASS_CSG_TEXT_AREA, ENABLED);   
-            csgBuilder.buildTitledPaneWithTextArea(CSG_SYLLABUS_GRADED_COMPONENTS_TP, CSG_SYLLABUS_GRADED_COMPONENTS_TA, syllabusPane,  
+            csgBuilder.buildTitledPaneWithTextArea(CSG_SYLLABUS_GRADED_COMPONENTS_TP, CSG_SYLLABUS_GRADED_COMPONENTS_TA, textAreaPane,  
                      CLASS_CSG_TITLEDPANE, CLASS_CSG_TEXT_AREA, ENABLED);            
-            csgBuilder.buildTitledPaneWithTextArea(CSG_SYLLABUS_GRADING_NOTE_TP, CSG_SYLLABUS_GRADING_NOTE_TA, syllabusPane,  
+            csgBuilder.buildTitledPaneWithTextArea(CSG_SYLLABUS_GRADING_NOTE_TP, CSG_SYLLABUS_GRADING_NOTE_TA, textAreaPane,  
                      CLASS_CSG_TITLEDPANE, CLASS_CSG_TEXT_AREA, ENABLED);            
-            csgBuilder.buildTitledPaneWithTextArea(CSG_SYLLABUS_ACADEMIC_DISHONESTY_TP, CSG_SYLLABUS_ACADEMIC_DISHONESTY_TA, syllabusPane,  
+            csgBuilder.buildTitledPaneWithTextArea(CSG_SYLLABUS_ACADEMIC_DISHONESTY_TP, CSG_SYLLABUS_ACADEMIC_DISHONESTY_TA, textAreaPane,  
                      CLASS_CSG_TITLEDPANE, CLASS_CSG_TEXT_AREA, ENABLED);
-            csgBuilder.buildTitledPaneWithTextArea(CSG_SYLLABUS_SPECIAL_ASSISTANCE_TP, CSG_SYLLABUS_SPECIAL_ASSISTANCE_TA, syllabusPane,  
+            csgBuilder.buildTitledPaneWithTextArea(CSG_SYLLABUS_SPECIAL_ASSISTANCE_TP, CSG_SYLLABUS_SPECIAL_ASSISTANCE_TA, textAreaPane,  
                      CLASS_CSG_TITLEDPANE, CLASS_CSG_TEXT_AREA, ENABLED);
-            syllabusTab.setContent(syllabusPane);
+            syllabusTab.setContent(sp);
         }
         
         private void initMeetingTimeTab(Tab meetingTimeTab){
@@ -330,13 +389,20 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
 
             // THIS WILL BUILD ALL OF OUR JavaFX COMPONENTS FOR US
             AppNodesBuilder csgBuilder = app.getGUIModule().getNodesBuilder();   
+            ScrollPane sp = new ScrollPane();
             VBox meetingTimePane = csgBuilder.buildVBox(CSG_MEETING_TIME_PANE, null, CLASS_CSG_TABPANE, ENABLED);
-
+            meetingTimePane.setSpacing(10);
+            sp.setContent(meetingTimePane);
+            sp.setFitToHeight(true);
+            sp.setFitToWidth(true);
             VBox lecturePane = csgBuilder.buildVBox(CSG_LECTURES_PANE, meetingTimePane, CLASS_CSG_PANE, ENABLED);
+            lecturePane.setSpacing(10);
             HBox lectureHeaderPane = csgBuilder.buildHBox(CSG_LECTURES_HEADER_PANE, lecturePane, null, ENABLED);
-            csgBuilder.buildTextButton(CSG_LECTURES_ADD_BT, lectureHeaderPane, CLASS_CSG_BUTTON, ENABLED);
-            csgBuilder.buildTextButton(CSG_LECTURES_REMOVE_BT, lectureHeaderPane, CLASS_CSG_BUTTON, ENABLED);
+            lectureHeaderPane.setSpacing(10);
+            csgBuilder.buildTextButton(CSG_LECTURES_ADD_BT, lectureHeaderPane, CLASS_CSG_SMALL_BUTTON, ENABLED);
+            csgBuilder.buildTextButton(CSG_LECTURES_REMOVE_BT, lectureHeaderPane, CLASS_CSG_SMALL_BUTTON, ENABLED);
             csgBuilder.buildLabel(CSG_LECTURES_LABEL, lectureHeaderPane, CLASS_CSG_BOLD_LABEL, ENABLED);
+            
             TableView<LectureItem> lecturesTable = csgBuilder.buildTableView(CSG_LECTURES_TABLEVIEW, lecturePane, CLASS_CSG_TABLE_VIEW, ENABLED);
             lecturesTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
             TableColumn sectionColumn = csgBuilder.buildTableColumn(CSG_LECTURES_SECTION_TABLE_COLUMN, lecturesTable, CLASS_CSG_COLUMN);
@@ -352,10 +418,12 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             roomColumn.setCellValueFactory(new PropertyValueFactory<String, String>("room"));
             roomColumn.prefWidthProperty().bind(lecturesTable.widthProperty().multiply(1.0/4.0));
 
-            VBox recPane = csgBuilder.buildVBox(CSG_REC_PANE, meetingTimePane, CLASS_CSG_PANE, ENABLED);            
+            VBox recPane = csgBuilder.buildVBox(CSG_REC_PANE, meetingTimePane, CLASS_CSG_PANE, ENABLED);  
+            recPane.setSpacing(10);
             HBox recHeaderPane = csgBuilder.buildHBox(CSG_REC_HEADER_PANE, recPane, null, ENABLED);
-            csgBuilder.buildTextButton(CSG_REC_ADD_BT, recHeaderPane, CLASS_CSG_BUTTON, ENABLED);
-            csgBuilder.buildTextButton(CSG_REC_REMOVE_BT, recHeaderPane, CLASS_CSG_BUTTON, ENABLED);
+            recHeaderPane.setSpacing(10);
+            csgBuilder.buildTextButton(CSG_REC_ADD_BT, recHeaderPane, CLASS_CSG_SMALL_BUTTON, ENABLED);
+            csgBuilder.buildTextButton(CSG_REC_REMOVE_BT, recHeaderPane, CLASS_CSG_SMALL_BUTTON, ENABLED);
             csgBuilder.buildLabel(CSG_REC_LABEL, recHeaderPane, CLASS_CSG_BOLD_LABEL, ENABLED);
             TableView<RecitationItem> recTable = csgBuilder.buildTableView(CSG_REC_TABLEVIEW, recPane, CLASS_CSG_TABLE_VIEW, ENABLED);
             recTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -376,9 +444,11 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             ta2Column.prefWidthProperty().bind(lecturesTable.widthProperty().multiply(0.25));      
             
             VBox labsPane = csgBuilder.buildVBox(CSG_LECTURES_PANE, meetingTimePane, CLASS_CSG_PANE, ENABLED);            
+            labsPane.setSpacing(10);
             HBox labsHeaderPane = csgBuilder.buildHBox(CSG_LABS_HEADER_PANE, labsPane, null, ENABLED);
-            csgBuilder.buildTextButton(CSG_LABS_ADD_BT, labsHeaderPane, CLASS_CSG_BUTTON, ENABLED);
-            csgBuilder.buildTextButton(CSG_LABS_REMOVE_BT, labsHeaderPane, CLASS_CSG_BUTTON, ENABLED);
+            labsHeaderPane.setSpacing(10);
+            csgBuilder.buildTextButton(CSG_LABS_ADD_BT, labsHeaderPane, CLASS_CSG_SMALL_BUTTON, ENABLED);
+            csgBuilder.buildTextButton(CSG_LABS_REMOVE_BT, labsHeaderPane, CLASS_CSG_SMALL_BUTTON, ENABLED);
             csgBuilder.buildLabel(CSG_LABS_LABEL, labsHeaderPane, CLASS_CSG_BOLD_LABEL, ENABLED);
             TableView<LabItem> labTable = csgBuilder.buildTableView(CSG_LABS_TABLEVIEW, labsPane, CLASS_CSG_TABLE_VIEW, ENABLED);
             labTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -398,7 +468,7 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             ta2Column2.setCellValueFactory(new PropertyValueFactory<String, String>("ta2"));
             ta2Column2.prefWidthProperty().bind(lecturesTable.widthProperty().multiply(0.15));  
             
-            meetingTimeTab.setContent(meetingTimePane);
+            meetingTimeTab.setContent(sp);
         }        
         
         private void initOfficeHoursTab(Tab officeHoursTab){
@@ -407,13 +477,19 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
 
             // THIS WILL BUILD ALL OF OUR JavaFX COMPONENTS FOR US
             AppNodesBuilder csgBuilder = app.getGUIModule().getNodesBuilder();       
+            ScrollPane sp = new ScrollPane();
             
             VBox ohPane = csgBuilder.buildVBox(CSG_OH_PANE, null, CLASS_CSG_TABPANE, ENABLED);
-
+            ohPane.setSpacing(10);
+            sp.setContent(ohPane);
+            sp.setFitToHeight(true);
+            sp.setFitToWidth(true);
             // INIT THE HEADER ON THE LEFT
             VBox taPane = csgBuilder.buildVBox(CSG_OH_TAS_PANE, ohPane, CLASS_CSG_PANE, ENABLED);
+            taPane.setSpacing(10);
             HBox tasHeaderBox = csgBuilder.buildHBox(CSG_OH_TAS_HEADER_PANE, taPane, CLASS_CSG_BOX, ENABLED);
-            csgBuilder.buildTextButton(CourseSiteGeneratorPropertyType.CSG_OH_TAS_REMOVE_BT, tasHeaderBox, CLASS_CSG_BUTTON, ENABLED);
+            tasHeaderBox.setSpacing(10);
+            csgBuilder.buildTextButton(CourseSiteGeneratorPropertyType.CSG_OH_TAS_REMOVE_BT, tasHeaderBox, CLASS_CSG_SMALL_BUTTON, ENABLED);
             csgBuilder.buildLabel(CourseSiteGeneratorPropertyType.CSG_OH_TAS_LABEL, tasHeaderBox, CLASS_CSG_HEADER_LABEL, ENABLED);
             ToggleGroup tgTA = new ToggleGroup();
             csgBuilder.buildRB(CourseSiteGeneratorPropertyType.CSG_OH_TAS_ALL_RB, tasHeaderBox, tgTA,CLASS_CSG_RB, ENABLED);
@@ -423,6 +499,7 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             // MAKE THE TABLE AND SETUP THE DATA MODEL
             TableView<TeachingAssistantPrototype> taTable = csgBuilder.buildTableView(CSG_OH_TAS_TABLE_VIEW, taPane, CLASS_CSG_TABLE_VIEW, ENABLED);
             taTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+            taTable.prefHeightProperty().bind(ohPane.heightProperty().multiply(0.2));
             TableColumn nameColumn = csgBuilder.buildTableColumn(CSG_OH_TAS_NAME_TABLE_COLUMN, taTable, CLASS_CSG_COLUMN);
             nameColumn.setCellValueFactory(new PropertyValueFactory<String, String>("name"));
             nameColumn.prefWidthProperty().bind(taTable.widthProperty().multiply(1.0/5.0));
@@ -437,7 +514,8 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             typeColumn.prefWidthProperty().bind(taTable.widthProperty().multiply(1.0/5.0));
 
             // ADD BOX FOR ADDING A TA
-            HBox taBox = csgBuilder.buildHBox(CSG_OH_TAS_ADD_TA_PANE, taPane, CLASS_CSG_PANE, ENABLED);
+            HBox taBox = csgBuilder.buildHBox(CSG_OH_TAS_ADD_TA_PANE, taPane, null, ENABLED);
+            taBox.setSpacing(10);
             csgBuilder.buildTextField(CSG_OH_TAS_NAME_TEXT_FIELD, taBox, CLASS_CSG_TEXT_FIELD, ENABLED);
             csgBuilder.buildTextField(CSG_OH_TAS_EMAIL_TEXT_FIELD, taBox, CLASS_CSG_TEXT_FIELD , ENABLED);
             csgBuilder.buildTextButton(CSG_OH_TAS_ADD_TA_BUTTON, taBox, CLASS_CSG_BUTTON, ENABLED);
@@ -447,20 +525,23 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
 
             // INIT THE HEADER ON THE RIGHT
             VBox ohsPane = csgBuilder.buildVBox(CSG_OH_PANE, ohPane, CLASS_CSG_PANE, ENABLED);
-            HBox officeHoursHeaderBox = csgBuilder.buildHBox(CSG_OH_HEADER_PANE, ohsPane, CLASS_CSG_PANE, ENABLED);
+            ohsPane.setSpacing(10);
+            HBox officeHoursHeaderBox = csgBuilder.buildHBox(CSG_OH_HEADER_PANE, ohsPane, null, ENABLED);
+            officeHoursHeaderBox.setSpacing(10);
             csgBuilder.buildLabel(CSG_OH_LABEL, officeHoursHeaderBox, CLASS_CSG_HEADER_LABEL, ENABLED);
             Region region1 = new Region();
             HBox.setHgrow(region1, Priority.ALWAYS);
             officeHoursHeaderBox.getChildren().add(region1);            
             csgBuilder.buildLabel(CSG_OH_START_TIME_LABEL, officeHoursHeaderBox, CLASS_CSG_HEADER_LABEL, ENABLED);
-            csgBuilder.buildComboBox(CSG_OH_START_TIME_CB,  taPane, taPane, officeHoursHeaderBox, CLASS_CSG_HEADER_LABEL, ENABLED);
+            csgBuilder.buildComboBox(CSG_OH_START_TIME_CB,  taPane, taPane, officeHoursHeaderBox, CLASS_CSG_HEADER_LABEL, ENABLED, false);
             csgBuilder.buildLabel(CSG_OH_END_TIME_LABEL, officeHoursHeaderBox, CLASS_CSG_HEADER_LABEL, ENABLED);
-            csgBuilder.buildComboBox(CSG_OH_END_TIME_CB,  taPane, taPane, officeHoursHeaderBox, CLASS_CSG_HEADER_LABEL, ENABLED);
+            csgBuilder.buildComboBox(CSG_OH_END_TIME_CB,  taPane, taPane, officeHoursHeaderBox, CLASS_CSG_HEADER_LABEL, ENABLED, false);
             Region region2 = new Region();
             HBox.setHgrow(region2, Priority.ALWAYS);
             officeHoursHeaderBox.getChildren().add(region2);            
             // SETUP THE OFFICE HOURS TABLE
             TableView<TimeSlot> officeHoursTable = csgBuilder.buildTableView(CSG_OH_TABLEVIEW, ohsPane, CLASS_CSG_OFFICE_HOURS_TABLE_VIEW, ENABLED);
+            officeHoursTable.prefHeightProperty().bind(ohPane.heightProperty().multiply(0.6));
             TableColumn startTimeColumn = csgBuilder.buildTableColumn(CSG_START_TIME_TABLE_COLUMN, officeHoursTable, CLASS_CSG_TIME_COLUMN);
             TableColumn endTimeColumn = csgBuilder.buildTableColumn(CSG_END_TIME_TABLE_COLUMN, officeHoursTable, CLASS_CSG_TIME_COLUMN);
             TableColumn mondayColumn = csgBuilder.buildTableColumn(CSG_MONDAY_TABLE_COLUMN, officeHoursTable, CLASS_CSG_DAY_OF_WEEK_COLUMN);
@@ -508,7 +589,7 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             }
             // MAKE SURE IT'S THE TABLE THAT ALWAYS GROWS IN THE LEFT PANE
             VBox.setVgrow(officeHoursTable, Priority.ALWAYS);
-            officeHoursTab.setContent(ohPane);
+            officeHoursTab.setContent(sp);
         }
 
         private void initScheduleTab(Tab scheduleTab){
@@ -516,9 +597,60 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
 
             // THIS WILL BUILD ALL OF OUR JavaFX COMPONENTS FOR US
             AppNodesBuilder csgBuilder = app.getGUIModule().getNodesBuilder();     
+            ScrollPane sp = new ScrollPane();
             
             VBox schedulePane = csgBuilder.buildVBox(CSG_SCHEDULE_PANE, null, CLASS_CSG_TABPANE, ENABLED);
+            schedulePane.setSpacing(10);
+            sp.setContent(schedulePane);
+            sp.setFitToHeight(true);
+            sp.setFitToWidth(true);            
+            VBox calendarPane = csgBuilder.buildVBox(CSG_SCHEDULE_BOUNDARIES_PANE, schedulePane, CLASS_CSG_PANE, ENABLED);
+            calendarPane.setSpacing(10);
+            csgBuilder.buildLabel(CSG_SCHEDULE_BOUNDARIES_LABEL, calendarPane, CLASS_CSG_HEADER_LABEL, ENABLED);
+            HBox datePane = csgBuilder.buildHBox(CSG_SCHEDULE_DATE_PANE, calendarPane, null, ENABLED);
+            datePane.setSpacing(10);
+            csgBuilder.buildLabel(CSG_SCHEDULE_STARTING_MONDAY_LABEL, datePane, CLASS_CSG_BOLD_LABEL, ENABLED);
+            csgBuilder.buildDatePicker(CSG_SCHEDULE_STARTING_MONDAY_DP, datePane, CLASS_CSG_DP, ENABLED); 
+            csgBuilder.buildLabel(CSG_SCHEDULE_ENDING_FRIDAY_LABEL, datePane, CLASS_CSG_BOLD_LABEL, ENABLED);
+            csgBuilder.buildDatePicker(CSG_SCHEDULE_ENDING_FRIDAY_DP, datePane, CLASS_CSG_DP, ENABLED);
+            VBox scheduleItemsPane = csgBuilder.buildVBox(CSG_SCHEDULE_ITEMS_PANE, schedulePane, CLASS_CSG_PANE, ENABLED);
+            HBox scheduleHeaderPane = csgBuilder.buildHBox(CSG_SCHEDULE_ITEMS_HEADER_PANE, scheduleItemsPane, null, ENABLED);
+            scheduleHeaderPane.setSpacing(10);
+            csgBuilder.buildTextButton(CSG_SCHEDULE_REMOVE_BT, scheduleHeaderPane, CLASS_CSG_SMALL_BUTTON, ENABLED);
+            csgBuilder.buildLabel(CSG_SCHEDULE_ITEM_LABEL, scheduleHeaderPane, CLASS_CSG_HEADER_LABEL, ENABLED);
 
+            TableView<ScheduleItem> scheduleTable = csgBuilder.buildTableView(CSG_SCHEDULE_TABLEVIEW, scheduleItemsPane, CLASS_CSG_TABLE_VIEW, ENABLED);
+            scheduleTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+            TableColumn typeColumn = csgBuilder.buildTableColumn(CSG_SCHEDULE_TYPE_TABLE_COLUMN, scheduleTable, CLASS_CSG_COLUMN);
+            typeColumn.setCellValueFactory(new PropertyValueFactory<String, String>("type"));
+            typeColumn.prefWidthProperty().bind(scheduleTable.widthProperty().multiply(0.15));
+            TableColumn dateColumn = csgBuilder.buildTableColumn(CSG_SCHEDULE_DATE_TABLE_COLUMN, scheduleTable, CLASS_CSG_COLUMN);
+            dateColumn.setCellValueFactory(new PropertyValueFactory<String, String>("date"));
+            dateColumn.prefWidthProperty().bind(scheduleTable.widthProperty().multiply(0.15));
+            TableColumn titleColumn = csgBuilder.buildTableColumn(CSG_SCHEDULE_TITLE_TABLE_COLUMN, scheduleTable, CLASS_CSG_COLUMN);
+            titleColumn.setCellValueFactory(new PropertyValueFactory<String, String>("title"));
+            titleColumn.prefWidthProperty().bind(scheduleTable.widthProperty().multiply(0.2));
+            TableColumn topicColumn = csgBuilder.buildTableColumn(CSG_SCHEDULE_TOPIC_TABLE_COLUMN, scheduleTable, CLASS_CSG_COLUMN);
+            topicColumn.setCellValueFactory(new PropertyValueFactory<String, String>("topic"));
+            topicColumn.prefWidthProperty().bind(scheduleTable.widthProperty().multiply(0.5));       
+            
+            GridPane addEditPane = csgBuilder.buildGridPane(CSG_NEW_EDIT_PANE, schedulePane, CLASS_CSG_PANE, ENABLED);
+            addEditPane.setHgap(10);
+            addEditPane.setVgap(10);
+            csgBuilder.buildLabel(CSG_SCHEDULE_ADD_EDIT_LABEL, addEditPane, 0, 0, 1, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
+            csgBuilder.buildLabel(CSG_SCHEDULE_TYPE_LABEL, addEditPane, 0, 1, 1, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
+            csgBuilder.buildLabel(CSG_SCHEDULE_DATE_LABEL, addEditPane, 0, 2, 1, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
+            csgBuilder.buildLabel(CSG_SCHEDULE_TITLE_LABEL, addEditPane, 0, 3, 1, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
+            csgBuilder.buildLabel(CSG_SCHEDULE_TOPIC_LABEL, addEditPane, 0, 4, 1, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
+            csgBuilder.buildLabel(CSG_SCHEDULE_LINK_LABEL, addEditPane, 0, 5, 1, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
+            csgBuilder.buildComboBox(CSG_SCHEDULE_TYPE_CB, addEditPane, 1, 1, 3, 1, CLASS_CSG_CB, ENABLED, CSG_SITE_OH_TA, datePane, false);
+            csgBuilder.buildDatePicker(CSG_SCHEDULE_DATE_DP, addEditPane, 1, 2, 3, 1, CLASS_CSG_DP, ENABLED);
+            csgBuilder.buildTextField(CSG_SCHEDULE_TITLE_TF, addEditPane, 1, 3, 3, 1, CLASS_CSG_TEXT_FIELD, ENABLED);
+            csgBuilder.buildTextField(CSG_SCHEDULE_TOPIC_TF, addEditPane, 1, 4, 3, 1, CLASS_CSG_TEXT_FIELD, ENABLED);
+            csgBuilder.buildTextField(CSG_SCHEDULE_LINK_TF, addEditPane, 1, 5, 3, 1, CLASS_CSG_TEXT_FIELD, ENABLED);
+            csgBuilder.buildTextButton(CSG_SCHEDULE_ADD_UPDATE_BT, addEditPane, 0, 6, 2, 1, CLASS_CSG_BUTTON, ENABLED);
+            csgBuilder.buildTextButton(CSG_SCHEDULE_CLEAR_BT, addEditPane, 3, 6, 2, 1, CLASS_CSG_BUTTON, ENABLED);
+            scheduleTab.setContent(sp);
         }        
         
         private void initControllers() {

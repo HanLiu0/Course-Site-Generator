@@ -25,9 +25,11 @@ public class CSGStyle {
     public static final String CLASS_CSG_BOLD_LABEL  = "csg_bold_label";
     public static final String CLASS_CSG_RB           = "csg_rb"; 
     public static final String CLASS_CSG_CB           = "csg_cb"; 
+    public static final String CLASS_CSG_CHECKBOX           = "csg_checkbox"; 
     public static final String CLASS_CSG_PROMPT        = "csg_prompt";
     public static final String CLASS_CSG_TEXT_FIELD    = "csg_text_field";
     public static final String CLASS_CSG_TEXT_AREA    = "csg_text_area";
+    public static final String CLASS_CSG_SMALL_BUTTON        = "csg_small_button";
     public static final String CLASS_CSG_BUTTON        = "csg_button";
     public static final String CLASS_CSG_LARGE_BUTTON        = "csg_large_button";
     public static final String CLASS_CSG_TABLE_VIEW    = "csg_table_view";
@@ -38,5 +40,5 @@ public class CSGStyle {
     public static final String CLASS_CSG_TIME_COLUMN = "csg_time_column";
     public static final String CLASS_CSG_DAY_OF_WEEK_COLUMN = "csg_day_of_week_column";
     public static final String CLASS_CSG_TITLEDPANE    = "csg_titledpane";
-
+    public static final String CLASS_CSG_DP   = "csg_datepicker";
 }
