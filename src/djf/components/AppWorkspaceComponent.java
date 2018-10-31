@@ -80,4 +80,6 @@ public abstract class AppWorkspaceComponent {
     // BY THE CONCRETE WORKSPACE
    
     public abstract void showNewDialog();
+    
+    public abstract void resetUserInterface();
 }

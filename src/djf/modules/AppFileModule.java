@@ -72,11 +72,13 @@ public class AppFileModule {
     
     public void newWork() {
         // RESET THE DATA
+        app.getWorkspaceComponent().resetUserInterface();
+
         app.getDataComponent().reset();
         
         // CLEAR OUT ANY OLD TRANSACTIONS
         app.getTPS().clearAllTransactions();
-        
+                
         // MAKE SURE THE WORKSPACE IS ACTIVATED
         app.getWorkspaceComponent().activate();
         

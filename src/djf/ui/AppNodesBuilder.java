@@ -108,13 +108,11 @@ public class AppNodesBuilder {
     }    
 
     public ComboBox buildComboBox(Object nodeId,
-            Object optionsListProperty,
-            Object defaultValueProperty,
             Pane parentPane,
             String styleClass,
             boolean enabled, boolean editable) {
         // MAKE AND INIT THE COMBO BOX
-        ComboBox comboBox = initComboBox(optionsListProperty, defaultValueProperty);
+        ComboBox comboBox = initComboBox();
         comboBox.setMinWidth(200);
         comboBox.setEditable(editable);
         initNode(nodeId, comboBox, parentPane, styleClass, enabled);        
@@ -125,37 +123,21 @@ public class AppNodesBuilder {
             GridPane parent,
             int col, int row, int colSpan, int rowSpan,
             String styleClass,
-            boolean enabled,
-            Object optionsListProperty,
-            Object defaultValueProperty, boolean editable) {
+            boolean enabled, boolean editable) {
         // MAKE AND INIT THE COMBO BOX
-        ComboBox comboBox = initComboBox(optionsListProperty, defaultValueProperty);
+        ComboBox comboBox = initComboBox();
         comboBox.setMinWidth(200);
         comboBox.setEditable(editable);
         initNode(nodeId, comboBox, parent, col, row, colSpan, rowSpan, styleClass, enabled);        
         return comboBox;
     }
     
-    private ComboBox initComboBox(
-            Object optionsListProperty,
-            Object defaultValueProperty) {
+    private ComboBox initComboBox() {
         // LOAD THE OPTIONS INTO THE COMBO BOX
         ComboBox comboBox = new ComboBox();
-        PropertiesManager props = PropertiesManager.getPropertiesManager();
-        ObservableList<String> items = comboBox.getItems();
-        ArrayList<String> propertyOptions = props.getPropertyOptionsList(optionsListProperty);
-        String defaultValue = props.getProperty(defaultValueProperty);
-        if (defaultValue != null) {
-            items.add(defaultValue);
-            comboBox.getSelectionModel().select(defaultValue);
-        }
-        if (propertyOptions != null) {
-            for (String s : propertyOptions) {
-                if (!items.contains(s)) {
-                    items.add(s);
-                }
-            }
-        }
+        Label loadLabel = new Label("Options");
+        comboBox.setPlaceholder(loadLabel);   
+        comboBox.setValue("Options");
         return comboBox;
     }
 
