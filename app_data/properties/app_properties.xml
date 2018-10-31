@@ -59,6 +59,7 @@
         <!-- PROGRAM ICON FILES - FILE TOOLBAR -->        
         <property name="LANGUAGE_BUTTON_ICON"   value="Language.png"></property>
         <property name="HELP_BUTTON_ICON"       value="Help.png"></property>
+        <property name="ABOUT_BUTTON_ICON"       value="About.png"></property>
 
         <!-- OH BUTTONS TOOLBAR -->
         

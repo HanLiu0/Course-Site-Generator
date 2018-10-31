@@ -107,7 +107,7 @@ and open the template in the editor.
 }
 
 .csg_tabpane{
-    -fx-padding: 0 10 0 10;
+    -fx-padding: 5 10 5 10;
     -fx-background-color: #faf0e6;
 }
 
@@ -204,6 +204,10 @@ and open the template in the editor.
 
 .table-view .column-header {
     -fx-background-color : SWATCH_NEUTRAL;
+}
+
+.table-view {
+    -fx-selection-bar:  #e9967a;
 }
 
 .csg_time_column{

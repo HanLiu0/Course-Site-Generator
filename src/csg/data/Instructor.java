@@ -26,7 +26,33 @@ public class Instructor {
         this.homepage = new SimpleStringProperty(homepage);
         this.ohs = new SimpleStringProperty(ohs);
     }
+    
+    public String getInfo(int i){
+        if(i == 0)
+            return getName();
+        else if(i == 1)
+            return getRoom();
+        else if(i==2)
+            return getEmail();
+        else if (i==3)
+            return getHomepage();
+        else
+            return getOhs();
+    }
 
+    public void setInfo(int i, String text){
+        if(i == 0)
+            setName(text);
+        else if(i == 1)
+            setRoom(text);
+        else if(i==2)
+            setEmail(text);
+        else if (i==3)
+            setHomepage(text);
+        else
+            setOhs(text);
+    }
+        
     /**
      * @return the name
      */

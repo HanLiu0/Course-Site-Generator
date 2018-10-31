@@ -29,22 +29,36 @@ import javafx.scene.control.TableView;
  */
 public class CourseSiteGeneratorData  implements AppDataComponent{
         CourseSiteGeneratorApp app;
+        
+        // Site
+        private String[] bannerText;
+        private String exportDir;
+        private boolean pages[];
+        private String[] styleImages;
+        private String stylesheet;
+        private Instructor instructor;
+        private ObservableList<String> subjectOptions;
+        private ObservableList<String> numberOptions;
+        private ObservableList<String> semesterOptions;
+        private ObservableList<String> yearOptions;
+        
+        
+        private String[] syllabusText;
 
         // NOTE THAT THIS DATA STRUCTURE WILL DIRECTLY STORE THE
         // DATA IN THE ROWS OF THE TABLE VIEW
-        ObservableList<TeachingAssistantPrototype> teachingAssistants;
-        ObservableList<TeachingAssistantPrototype> graduateTeachingAssistants;
-        ObservableList<TeachingAssistantPrototype> undergraduateTeachingAssistants;
+        private ObservableList<TeachingAssistantPrototype> teachingAssistants;
+        private ObservableList<TeachingAssistantPrototype> graduateTeachingAssistants;
+        private ObservableList<TeachingAssistantPrototype> undergraduateTeachingAssistants;
 
-        ObservableList<TimeSlot> officeHours;
-
+        private ObservableList<TimeSlot> officeHours;
 
         // THESE ARE THE TIME BOUNDS FOR THE OFFICE HOURS GRID. NOTE
         // THAT THESE VALUES CAN BE DIFFERENT FOR DIFFERENT FILES, BUT
         // THAT OUR APPLICATION USES THE DEFAULT TIME VALUES AND PROVIDES
         // NO MEANS FOR CHANGING THESE VALUES
-        int startHour;
-        int endHour;
+        private int startHour;
+        private int endHour;
 
         // DEFAULT VALUES FOR START AND END HOURS IN MILITARY HOURS
         public static final int MIN_START_HOUR = 9;
@@ -54,7 +68,18 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
             // KEEP THIS FOR LATER
             app = initApp;
             AppGUIModule gui = app.getGUIModule();
-
+            bannerText = new String[5];
+            exportDir = "";
+            pages = new boolean[4];
+            styleImages = new String[4];
+            instructor = new Instructor("", "", "", "", "");
+            subjectOptions = FXCollections.observableArrayList();
+            numberOptions = FXCollections.observableArrayList();
+            semesterOptions = FXCollections.observableArrayList();
+            yearOptions = FXCollections.observableArrayList();
+            
+            syllabusText = new String[9];
+            
             graduateTeachingAssistants = FXCollections.observableArrayList();
             undergraduateTeachingAssistants = FXCollections.observableArrayList();
 
@@ -64,17 +89,17 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
             graduateTeachingAssistants.addListener(new ListChangeListener<TeachingAssistantPrototype>() {
                 @Override
                 public void onChanged(ListChangeListener.Change<? extends TeachingAssistantPrototype> change) {
-                    teachingAssistants.clear();
-                    teachingAssistants.addAll(graduateTeachingAssistants);
-                    teachingAssistants.addAll(undergraduateTeachingAssistants);              
+                    getTeachingAssistants().clear();
+                    getTeachingAssistants().addAll(getGraduateTeachingAssistants());
+                    getTeachingAssistants().addAll(getUndergraduateTeachingAssistants());              
                 }
             });
             undergraduateTeachingAssistants.addListener(new ListChangeListener<TeachingAssistantPrototype>() {
                 @Override
                 public void onChanged(ListChangeListener.Change<? extends TeachingAssistantPrototype> change) {
-                    teachingAssistants.clear();
-                    teachingAssistants.addAll(graduateTeachingAssistants);
-                    teachingAssistants.addAll(undergraduateTeachingAssistants);                
+                    getTeachingAssistants().clear();
+                    getTeachingAssistants().addAll(getGraduateTeachingAssistants());
+                    getTeachingAssistants().addAll(getUndergraduateTeachingAssistants());                
                 }
             });
 
@@ -89,16 +114,16 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
         //THIS WILL STORE OUR OFFICE HOURS
         AppGUIModule gui = app.getGUIModule();
         TableView<TimeSlot> officeHoursTableView = (TableView)gui.getGUINode(CSG_OH_TABLEVIEW);
-        officeHours = officeHoursTableView.getItems(); 
-        officeHours.clear();
-        for (int i = startHour; i <= endHour; i++) {
+        setOfficeHours(officeHoursTableView.getItems()); 
+        getOfficeHours().clear();
+        for (int i = getStartHour(); i <= getEndHour(); i++) {
             TimeSlot timeSlot = new TimeSlot(   this.getTimeString(i, true),
                                                 this.getTimeString(i, false));
-            officeHours.add(timeSlot);
+            getOfficeHours().add(timeSlot);
             
             TimeSlot halfTimeSlot = new TimeSlot(   this.getTimeString(i, false),
                                                     this.getTimeString(i+1, true));
-            officeHours.add(halfTimeSlot);
+            getOfficeHours().add(halfTimeSlot);
         }
     }
     
@@ -128,8 +153,8 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
         if (initStartHour <= initEndHour) {
             // THESE ARE VALID HOURS SO KEEP THEM
             // NOTE THAT THESE VALUES MUST BE PRE-VERIFIED
-            startHour = initStartHour;
-            endHour = initEndHour;
+            setStartHour(initStartHour);
+            setEndHour(initEndHour);
         }
         resetOfficeHours();
     }
@@ -140,11 +165,11 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
      */
     @Override
     public void reset() {
-        startHour = MIN_START_HOUR;
-        endHour = MAX_END_HOUR;
-        undergraduateTeachingAssistants.clear();
-        graduateTeachingAssistants.clear();
-        teachingAssistants.clear();
+        setStartHour(MIN_START_HOUR);
+        setEndHour(MAX_END_HOUR);
+        getUndergraduateTeachingAssistants().clear();
+        getGraduateTeachingAssistants().clear();
+        getTeachingAssistants().clear();
         resetOfficeHours();
 //        
 //        for (int i = 0; i < officeHours.size(); i++) {
@@ -179,23 +204,23 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
         AppGUIModule gui = app.getGUIModule();
         TableView<TeachingAssistantPrototype> officeHoursTableView = (TableView)gui.getGUINode(CSG_OH_TAS_TABLE_VIEW); 
         if (type.equals(TA_TYPE_UNDERGRA) && !undergraduateTeachingAssistants.contains(ta)){
-            undergraduateTeachingAssistants.add(ta);        
-            undergraduateTeachingAssistants.sort((TeachingAssistantPrototype o1, TeachingAssistantPrototype o2) -> o1.getName().compareTo(o2.getName()));
+            getUndergraduateTeachingAssistants().add(ta);        
+            getUndergraduateTeachingAssistants().sort((TeachingAssistantPrototype o1, TeachingAssistantPrototype o2) -> o1.getName().compareTo(o2.getName()));
         }
         else if(!graduateTeachingAssistants.contains(ta))
-            graduateTeachingAssistants.add(ta);
-            graduateTeachingAssistants.sort((TeachingAssistantPrototype o1, TeachingAssistantPrototype o2) -> o1.getName().compareTo(o2.getName()));
+            getGraduateTeachingAssistants().add(ta);
+            getGraduateTeachingAssistants().sort((TeachingAssistantPrototype o1, TeachingAssistantPrototype o2) -> o1.getName().compareTo(o2.getName()));
     }
     
     public void removeTA(TeachingAssistantPrototype ta) {
         // REMOVE THE TA FROM THE LIST OF TAs
         if(ta.getType().equals(TA_TYPE_UNDERGRA)){
-            undergraduateTeachingAssistants.remove(ta);    
+            getUndergraduateTeachingAssistants().remove(ta);    
             for(TimeSlot oh: ta.getOH().keySet()){
                 oh.removeTA(ta);
             }
         }else{
-            graduateTeachingAssistants.remove(ta);        
+            getGraduateTeachingAssistants().remove(ta);        
             for(TimeSlot oh: ta.getOH().keySet()){                
                 oh.removeTA(ta);
             }
@@ -213,15 +238,15 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
     }
 
     public Iterator<TeachingAssistantPrototype> teachingAssistantsIterator() {
-        return teachingAssistants.iterator();
+        return getTeachingAssistants().iterator();
     }
     
     public Iterator<TimeSlot> officeHoursIterator() {
-        return officeHours.iterator();
+        return getOfficeHours().iterator();
     }
 
     public TeachingAssistantPrototype getTAWithName(String name) {
-        Iterator<TeachingAssistantPrototype> taIterator = teachingAssistants.iterator();
+        Iterator<TeachingAssistantPrototype> taIterator = getTeachingAssistants().iterator();
         while (taIterator.hasNext()) {
             TeachingAssistantPrototype ta = taIterator.next();
             if (ta.getName().equals(name))
@@ -231,7 +256,7 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
     }
 
     public TimeSlot getTimeSlot(String startTime) {
-        Iterator<TimeSlot> timeSlotsIterator = officeHours.iterator();
+        Iterator<TimeSlot> timeSlotsIterator = getOfficeHours().iterator();
         while (timeSlotsIterator.hasNext()) {
             TimeSlot timeSlot = timeSlotsIterator.next();
             String timeSlotStartTime = timeSlot.getStartTime().replace(":", "_");
@@ -242,7 +267,7 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
     }
     
     public boolean containsTA(String name){
-        for(TeachingAssistantPrototype ta: teachingAssistants){
+        for(TeachingAssistantPrototype ta: getTeachingAssistants()){
             if(ta.getName().equals(name))
                 return true;
         }
@@ -250,7 +275,7 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
     }
     
     public boolean containsEmail(String email){
-        for(TeachingAssistantPrototype ta: teachingAssistants){
+        for(TeachingAssistantPrototype ta: getTeachingAssistants()){
             if(ta.getEmail().equals(email))
                 return true;
         }
@@ -276,27 +301,27 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
     public void setGraduateTA(){        
         AppGUIModule gui = app.getGUIModule();
         TableView<TeachingAssistantPrototype> taTableView = (TableView)gui.getGUINode(CSG_OH_TAS_TABLE_VIEW);
-        taTableView.setItems(graduateTeachingAssistants);
-        for(TimeSlot oh: officeHours)
+        taTableView.setItems(getGraduateTeachingAssistants());
+        for(TimeSlot oh: getOfficeHours())
             oh.setGradTA();
     }
         
     public void setUndergraduateTA(){
         AppGUIModule gui = app.getGUIModule();
         TableView<TeachingAssistantPrototype> taTableView = (TableView)gui.getGUINode(CSG_OH_TAS_TABLE_VIEW);
-        taTableView.setItems(undergraduateTeachingAssistants);
-        for(TimeSlot oh: officeHours)
+        taTableView.setItems(getUndergraduateTeachingAssistants());
+        for(TimeSlot oh: getOfficeHours())
             oh.setUndergraTA();
     }
         
     public void setAllTA(){
         AppGUIModule gui = app.getGUIModule();
         TableView<TeachingAssistantPrototype> taTableView = (TableView)gui.getGUINode(CSG_OH_TAS_TABLE_VIEW);
-        teachingAssistants.clear();
-        teachingAssistants.addAll(graduateTeachingAssistants);
-        teachingAssistants.addAll(undergraduateTeachingAssistants);
-        taTableView.setItems(teachingAssistants);
-        for(TimeSlot oh: officeHours){
+        getTeachingAssistants().clear();
+        getTeachingAssistants().addAll(getGraduateTeachingAssistants());
+        getTeachingAssistants().addAll(getUndergraduateTeachingAssistants());
+        taTableView.setItems(getTeachingAssistants());
+        for(TimeSlot oh: getOfficeHours()){
             oh.setAllTA();
         }
     }
@@ -308,20 +333,203 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
     
     public void doTypeEdited(TeachingAssistantPrototype TA){
         if(TA.getType().equals(TA_TYPE_UNDERGRA)){
-            graduateTeachingAssistants.remove(TA);
-            undergraduateTeachingAssistants.add(TA);            
-            undergraduateTeachingAssistants.sort((TeachingAssistantPrototype o1, TeachingAssistantPrototype o2) -> o1.getName().compareTo(o2.getName()));
+            getGraduateTeachingAssistants().remove(TA);
+            getUndergraduateTeachingAssistants().add(TA);            
+            getUndergraduateTeachingAssistants().sort((TeachingAssistantPrototype o1, TeachingAssistantPrototype o2) -> o1.getName().compareTo(o2.getName()));
             for(TimeSlot oh: TA.getOH().keySet()){
                 oh.fromGraToUndergra(TA);
             }
         }else{
-            undergraduateTeachingAssistants.remove(TA);
-            graduateTeachingAssistants.add(TA);            
-            graduateTeachingAssistants.sort((TeachingAssistantPrototype o1, TeachingAssistantPrototype o2) -> o1.getName().compareTo(o2.getName()));
+            getUndergraduateTeachingAssistants().remove(TA);
+            getGraduateTeachingAssistants().add(TA);            
+            getGraduateTeachingAssistants().sort((TeachingAssistantPrototype o1, TeachingAssistantPrototype o2) -> o1.getName().compareTo(o2.getName()));
             for(TimeSlot oh: TA.getOH().keySet()){
                 oh.fromUndergraToGra(TA);
             }
         }
     }
 
+    
+    /**
+     * @return the bannerText
+     */
+    public String getBannerText(int i) {
+        return bannerText[i];
+    }
+
+    /**
+     * @param bannerText the bannerText to set
+     */
+    public void setBannerText(int i, String bannerText) {
+        this.bannerText[i] = bannerText;
+    }
+
+    public boolean hasBannerText(){
+        for(int i = 0 ; i < 4; i++)
+            if(bannerText[i] == "")
+                return false;
+        return true;
+    }
+    /**
+     * @return the exportDir
+     */
+    public String getExportDir() {
+        return exportDir;
+    }
+
+    public void updateExportDir(){
+        if(hasBannerText())
+            exportDir = ".\\export\\" + bannerText[0] + "_ "+bannerText[1] + "_ "+ bannerText[2] + "_ "+ 
+                bannerText[3] + "\\public_html";
+    }
+    /**
+     * @param exportDir the exportDir to set
+     */
+    public void setExportDir(String exportDir) {
+        this.exportDir = exportDir;
+    }
+
+    /**
+     * @return the pages
+     */
+    public boolean getPages(int i) {
+        return pages[i];
+    }
+
+    /**
+     * @param pages the pages to set
+     */
+    public void setPages(int i, boolean pages) {
+        this.pages[i] = pages;
+    }
+
+    /**
+     * @return the styleImages
+     */
+    public String getStyleImages(int i) {
+        return styleImages[i];
+    }
+
+    /**
+     * @param styleImages the styleImages to set
+     */
+    public void setStyleImages(String styleImages, int i) {
+        this.styleImages[i] = styleImages;
+    }
+
+    /**
+     * @return the instructor
+     */
+    public Instructor getInstructor() {
+        return instructor;
+    }
+
+    /**
+     * @return the subjectOptions
+     */
+    public ObservableList<String> getSubjectOptions() {
+        return subjectOptions;
+    }
+
+    /**
+     * @return the numberOptions
+     */
+    public ObservableList<String> getNumberOptions() {
+        return numberOptions;
+    }
+
+    /**
+     * @return the semesterOptions
+     */
+    public ObservableList<String> getSemesterOptions() {
+        return semesterOptions;
+    }
+
+
+    /**
+     * @return the yearOptions
+     */
+    public ObservableList<String> getYearOptions() {
+        return yearOptions;
+    }
+
+    /**
+     * @return the syllabusText
+     */
+    public String[] getSyllabusText(int i) {
+        return syllabusText;
+    }
+
+    /**
+     * @param syllabusText the syllabusText to set
+     */
+    public void setSyllabusText(int i, String syllabusText) {
+        this.syllabusText[i] = syllabusText;
+    }
+
+    /**
+     * @return the teachingAssistants
+     */
+    public ObservableList<TeachingAssistantPrototype> getTeachingAssistants() {
+        return teachingAssistants;
+    }
+
+    /**
+     * @return the graduateTeachingAssistants
+     */
+    public ObservableList<TeachingAssistantPrototype> getGraduateTeachingAssistants() {
+        return graduateTeachingAssistants;
+    }
+
+    /**
+     * @return the undergraduateTeachingAssistants
+     */
+    public ObservableList<TeachingAssistantPrototype> getUndergraduateTeachingAssistants() {
+        return undergraduateTeachingAssistants;
+    }
+
+    /**
+     * @return the officeHours
+     */
+    public ObservableList<TimeSlot> getOfficeHours() {
+        return officeHours;
+    }
+
+    /**
+     * @param startHour the startHour to set
+     */
+    public void setStartHour(int startHour) {
+        this.startHour = startHour;
+    }
+
+    /**
+     * @param endHour the endHour to set
+     */
+    public void setEndHour(int endHour) {
+        this.endHour = endHour;
+    }
+    
+    /**
+     * @param officeHours the officeHours to set
+     */
+    public void setOfficeHours(ObservableList<TimeSlot> officeHours) {
+        this.officeHours = officeHours;
+    }
+    
+    
+    /**
+     * @return the stylesheet
+     */
+    public String getStylesheet() {
+        return stylesheet;
+    }
+
+    /**
+     * @param stylesheet the stylesheet to set
+     */
+    public void setStylesheet(String stylesheet) {
+        this.stylesheet = stylesheet;
+    }
+
 }
+
