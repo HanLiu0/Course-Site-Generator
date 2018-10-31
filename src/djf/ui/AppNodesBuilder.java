@@ -1,5 +1,7 @@
 package djf.ui;
 
+import static djf.AppPropertyType.APP_PATH_IMAGES;
+import static djf.AppPropertyType.IMAGE_PLACEHOLDER_ICON;
 import static djf.AppTemplate.PATH_ICONS;
 import djf.modules.AppGUIModule;
 import djf.modules.AppLanguageModule;
@@ -491,6 +493,7 @@ public class AppNodesBuilder {
             boolean enabled) {
         // NOW MAKE THE TEXT FIELD
         TextField textField = new TextField();
+        languageSettings.addLabeledControlProperty(nodeId.toString() + "_TEXT", textField.promptTextProperty());
 
         // INITIALIZE THE OTHER SETTINGS
         initNode(nodeId, textField, parent, col, row, colSpan, rowSpan, styleClass, enabled);
@@ -605,5 +608,21 @@ public class AppNodesBuilder {
 
         // AND RETURN THE COMPLETED BUTTON
         return dp;
+    }
+    
+    public ImageView buildImageView(Object nodeId,
+            GridPane parent,
+            int col, int row, int colSpan, int rowSpan,
+            String styleClass,
+            boolean enabled) {
+        ImageView iv = new ImageView();
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        String imagePath = FILE_PROTOCOL + props.getProperty(APP_PATH_IMAGES) + props.getProperty(IMAGE_PLACEHOLDER_ICON);
+        Image image = new Image(imagePath);
+        iv.setImage(image);
+        iv.setFitHeight(45);
+        iv.setPreserveRatio(true);
+        initNode(nodeId, iv, parent, col, row, colSpan, rowSpan, styleClass, enabled);
+        return iv;
     }
 }

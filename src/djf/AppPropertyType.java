@@ -75,7 +75,7 @@ public enum AppPropertyType {
     
     // HELP TOOLBAR CONTROLS
     HELP_BUTTON, LANGUAGE_BUTTON, ABOUT_BUTTON,
-    
+    IMAGE_PLACEHOLDER_ICON,
     // LOADED FROM LANGUAGE SPECIFIC language_properties_XX.xml
     // WHERE XX WOULD BE THE LANGUAGE CODE, LIKE EN (English)
     
