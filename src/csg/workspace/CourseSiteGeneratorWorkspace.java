@@ -220,6 +220,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
@@ -859,5 +860,13 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             ((RadioButton) gui.getGUINode(CSG_OH_TAS_ALL_RB)).setSelected(true);
             ((TextField) gui.getGUINode(CSG_OH_TAS_NAME_TEXT_FIELD)).clear();
             ((TextField) gui.getGUINode(CSG_OH_TAS_EMAIL_TEXT_FIELD)).clear();
+            ((DatePicker) gui.getGUINode(CSG_SCHEDULE_STARTING_MONDAY_DP)).setValue(null);
+            ((DatePicker) gui.getGUINode(CSG_SCHEDULE_ENDING_FRIDAY_DP)).setValue(null);
+            ((ComboBox) gui.getGUINode(CSG_SCHEDULE_TYPE_CB)).getSelectionModel().clearSelection();
+            ((DatePicker) gui.getGUINode(CSG_SCHEDULE_DATE_DP)).setValue(null);
+            ((TextField) gui.getGUINode(CSG_SCHEDULE_TITLE_TF)).clear();
+            ((TextField) gui.getGUINode(CSG_SCHEDULE_TOPIC_TF)).clear();
+            ((TextField) gui.getGUINode(CSG_SCHEDULE_LINK_TF)).clear();
+            ((Button) gui.getGUINode(CSG_SCHEDULE_ADD_UPDATE_BT)).setText(props.getProperty(CSG_SCHEDULE_ADD_UPDATE_BT + "_TEXT"));
         }
 }
