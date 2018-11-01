@@ -64,7 +64,6 @@
         <property name="ABOUT_BUTTON_ICON"       value="About.png"></property>
 
         <property name="IMAGE_PLACEHOLDER_ICON"       value="ImagePlaceHolder.png"></property>
-        <property name="IMAGE_CHOOSER_TITLE"       value="Choose Image"></property>
         <!-- OH BUTTONS TOOLBAR -->
         
         <!-- THIS IS THE FILE WE'LL USE TO MAKE OUR EXPORTED WEB FILE -->

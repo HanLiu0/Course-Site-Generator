@@ -22,11 +22,11 @@
         <property name="PROPERTIES_ERROR_CONTENT"   value="There was an Error Loading a Properties File"></property>
 
         <!-- FILE TOOLBAR TOOLTIPS -->
-        <property name="NEW_BUTTON_TOOLTIP"         value="New Office Hours"></property>
-        <property name="LOAD_BUTTON_TOOLTIP"        value="Load Office Hours"></property>
-        <property name="CLOSE_BUTTON_TOOLTIP"       value="Close Office Hours"></property>
-        <property name="SAVE_BUTTON_TOOLTIP"        value="Save Office Hours"></property>
-        <property name="EXPORT_BUTTON_TOOLTIP"      value="Export Office Hours"></property>
+        <property name="NEW_BUTTON_TOOLTIP"         value="New Course Site Generator"></property>
+        <property name="LOAD_BUTTON_TOOLTIP"        value="Load Course Site Generator"></property>
+        <property name="CLOSE_BUTTON_TOOLTIP"       value="Close Course Site Generator"></property>
+        <property name="SAVE_BUTTON_TOOLTIP"        value="Save Course Site Generator"></property>
+        <property name="EXPORT_BUTTON_TOOLTIP"      value="Export Course Site Generator"></property>
         <property name="EXIT_BUTTON_TOOLTIP"        value="Exit"></property>
 
         <!-- CLIPBOARD TOOLBAR TOOLTIPS -->
@@ -117,13 +117,13 @@
         <!-- FOR CSG SYLLABUS TAB -->        
         <property name="CSG_SYLLABUS_DESCRIPTION_TP_TEXT"           value="Description:"></property>
         <property name="CSG_SYLLABUS_TOPICS_TP_TEXT"           value="Topics:"></property>
-        <property name="CSG_SYLLABUS_PREREQUISITES_TP_TEXT"           value="Prerequisites"></property>
-        <property name="CSG_SYLLABUS_OUTCOMES_TP_TEXT"           value="Outcomes"></property>
-        <property name="CSG_SYLLABUS_TEXTBOOKS_TP_TEXT"           value="Textbooks"></property>
-        <property name="CSG_SYLLABUS_GRADED_COMPONENTS_TP_TEXT"           value="Graded Components"></property>
-        <property name="CSG_SYLLABUS_GRADING_NOTE_TP_TEXT"           value="Grading Note"></property>
-        <property name="CSG_SYLLABUS_ACADEMIC_DISHONESTY_TP_TEXT"           value="Academic Dishonesty"></property>
-        <property name="CSG_SYLLABUS_SPECIAL_ASSISTANCE_TP_TEXT"           value="Special Assistantce"></property>
+        <property name="CSG_SYLLABUS_PREREQUISITES_TP_TEXT"           value="Prerequisites:"></property>
+        <property name="CSG_SYLLABUS_OUTCOMES_TP_TEXT"           value="Outcomes:"></property>
+        <property name="CSG_SYLLABUS_TEXTBOOKS_TP_TEXT"           value="Textbooks:"></property>
+        <property name="CSG_SYLLABUS_GRADED_COMPONENTS_TP_TEXT"           value="Graded Components:"></property>
+        <property name="CSG_SYLLABUS_GRADING_NOTE_TP_TEXT"           value="Grading Note:"></property>
+        <property name="CSG_SYLLABUS_ACADEMIC_DISHONESTY_TP_TEXT"           value="Academic Dishonesty:"></property>
+        <property name="CSG_SYLLABUS_SPECIAL_ASSISTANCE_TP_TEXT"           value="Special Assistance:"></property>
         <property name="CSG_SYLLABUS_DESCRIPTION_TA_TEXT"           value="Enter description"></property>
         <property name="CSG_SYLLABUS_TOPICS_TA_TEXT"           value="Enter topics in Json format"></property>
         <property name="CSG_SYLLABUS_PREREQUISITES_TA_TEXT"           value="Enter prerequisites"></property>
@@ -132,7 +132,7 @@
         <property name="CSG_SYLLABUS_GRADED_COMPONENTS_TA_TEXT"           value="Enter graded components in Json format"></property>
         <property name="CSG_SYLLABUS_GRADING_NOTE_TA_TEXT"           value="Enter grading note"></property>
         <property name="CSG_SYLLABUS_ACADEMIC_DISHONESTY_TA_TEXT"           value="Enter academic dishonesty"></property>
-        <property name="CSG_SYLLABUS_SPECIAL_ASSISTANCE_TA_TEXT"           value="Enter special assistantce"></property>        
+        <property name="CSG_SYLLABUS_SPECIAL_ASSISTANCE_TA_TEXT"           value="Enter special assistance"></property>        
 
         <!-- FOR CSG MEETING TIMES TAB -->                  
         <property name="CSG_LECTURES_ADD_BT_TEXT"           value="+"></property>        
@@ -228,7 +228,8 @@
         <property name="LANGUAGE_DIALOG_CONTENT_TEXT"   value="Select a Language for the User Interface."></property>
 
         <property name="WORK_FILE_EXT"          value="*.json"></property>
-	<property name="WORK_FILE_EXT_DESC"     value="Teaching Assistant Files (*.json)"></property>
+        <property name="WORK_FILE_EXT_DESC"     value="CSG Files (*.json)"></property>
+        <property name="IMAGE_CHOOSER_TITLE"       value="Choose Image"></property>
 
     </property_list>
     
