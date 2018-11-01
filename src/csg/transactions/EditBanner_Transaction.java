@@ -10,15 +10,17 @@ import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import jtps.jTPS_Transaction;
 
 /**
  *
  * @author hanli
  */
-public class EditBanner_Transaction {
+public class EditBanner_Transaction implements jTPS_Transaction{
     CourseSiteGeneratorData data;
     Node node;
     Label exportDirLbl;
+    String oldDir;
     int index;
     String bannerText;
     String oldBannerText;
@@ -28,6 +30,7 @@ public class EditBanner_Transaction {
         this.data = data;
         this.node = node;
         this.exportDirLbl = exportDirLbl;
+        this.oldDir = exportDirLbl.getText();
         this.index = index;
         this.bannerText = bannerText;
         this.oldBannerText = data.getBannerText(index);
@@ -38,18 +41,33 @@ public class EditBanner_Transaction {
         data.updateExportDir();
         if(data.getExportDir() != "")
             exportDirLbl.setText(data.getExportDir());
-        if(index <4)
+        else
+            exportDirLbl.setText(oldDir);            
+        data.setTriggerListener(false);
+        if(index <4){
             ((ComboBox)node).setValue(bannerText);
+            ((ComboBox)node).getEditor().setText(bannerText);
+        }
         else
             ((TextField)node).setText(bannerText);      
+        data.setTriggerListener(true);
     }
     
     public void undoTransaction(){
         data.setBannerText(index, oldBannerText);
-        if(index <4)
+        data.updateExportDir();
+        if(data.getExportDir() != "")
+            exportDirLbl.setText(data.getExportDir());
+        else
+            exportDirLbl.setText(oldDir);            
+        data.setTriggerListener(false);
+        if(index <4){
             ((ComboBox)node).setValue(oldBannerText);
+            ((ComboBox)node).getEditor().setText(oldBannerText);
+        }
         else
             ((TextField)node).setText(oldBannerText);            
+        data.setTriggerListener(true);
     }
     
     public int getIndex(){

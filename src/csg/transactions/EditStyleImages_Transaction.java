@@ -8,12 +8,13 @@ package csg.transactions;
 import csg.data.CourseSiteGeneratorData;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import jtps.jTPS_Transaction;
 
 /**
  *
  * @author hanli
  */
-public class EditStyleImages_Transaction {
+public class EditStyleImages_Transaction implements jTPS_Transaction{
     CourseSiteGeneratorData data;
     ImageView imageView;
     Image newImage;
@@ -27,7 +28,7 @@ public class EditStyleImages_Transaction {
         this.index = index;
         this.imageView = imageView;
         oldImage = imageView.getImage();
-        newImage = new Image(path);
+        newImage = new Image("file:" + path);
         this.path = path;
         oldPath = data.getStyleImages(index);
     }

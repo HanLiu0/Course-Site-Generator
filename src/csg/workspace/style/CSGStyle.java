@@ -41,4 +41,5 @@ public class CSGStyle {
     public static final String CLASS_CSG_DAY_OF_WEEK_COLUMN = "csg_day_of_week_column";
     public static final String CLASS_CSG_TITLEDPANE    = "csg_titledpane";
     public static final String CLASS_CSG_DP   = "csg_datepicker";
+    public static final String CLASS_CSG_IMAGE   = "csg_image";
 }

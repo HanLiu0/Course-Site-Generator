@@ -106,6 +106,7 @@ import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_EMAIL_LABEL;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_EMAIL_TF;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_EXPORT_DIR_LABEL;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_FAVICON_BUTTON;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_FAVICON_IMAGE;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_HOMEPAGE_LABEL;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_HOMEPAGE_TF;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_HOME_CB;
@@ -114,9 +115,11 @@ import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_INSTRUCTORINFO_PANE;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_INSTRUCTOR_LABEL;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_INSTRUCTOR_PANE;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_LEFT_FOOTER_BUTTON;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_LEFT_FOOTER_IMAGE;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_NAME_LABEL;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_NAME_TF;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_NAVBAR_BUTTON;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_NAVBAR_IMAGE;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_NUMBER_CB;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_NUMBER_LABEL;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_OH_TA;
@@ -125,6 +128,7 @@ import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_PAGES_LABEL;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_PAGES_PANE;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_PANE;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_RIGHT_FOOTER_BUTTON;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_RIGHT_FOOTER_IMAGE;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_ROOM_LABEL;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_ROOM_TF;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_SCHEDULE_CB;
@@ -187,6 +191,7 @@ import static csg.workspace.style.CSGStyle.CLASS_CSG_COLUMN;
 import static csg.workspace.style.CSGStyle.CLASS_CSG_DAY_OF_WEEK_COLUMN;
 import static csg.workspace.style.CSGStyle.CLASS_CSG_DP;
 import static csg.workspace.style.CSGStyle.CLASS_CSG_HEADER_LABEL;
+import static csg.workspace.style.CSGStyle.CLASS_CSG_IMAGE;
 import static csg.workspace.style.CSGStyle.CLASS_CSG_LARGE_BUTTON;
 import static csg.workspace.style.CSGStyle.CLASS_CSG_OFFICE_HOURS_TABLE_VIEW;
 import static csg.workspace.style.CSGStyle.CLASS_CSG_PANE;
@@ -199,14 +204,22 @@ import static csg.workspace.style.CSGStyle.CLASS_CSG_TEXT_AREA;
 import static csg.workspace.style.CSGStyle.CLASS_CSG_TEXT_FIELD;
 import static csg.workspace.style.CSGStyle.CLASS_CSG_TIME_COLUMN;
 import static csg.workspace.style.CSGStyle.CLASS_CSG_TITLEDPANE;
+import static djf.AppPropertyType.APP_PATH_IMAGES;
+import static djf.AppPropertyType.APP_PATH_STYLESHEET;
+import static djf.AppPropertyType.IMAGE_PLACEHOLDER_ICON;
 import djf.components.AppWorkspaceComponent;
 import djf.modules.AppFoolproofModule;
 import djf.modules.AppGUIModule;
 import static djf.modules.AppGUIModule.ENABLED;
+import static djf.modules.AppLanguageModule.FILE_PROTOCOL;
 import djf.ui.AppNodesBuilder;
+import java.io.File;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SelectionMode;
@@ -219,6 +232,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -329,9 +344,17 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             bt2.setPrefWidth(200);
             bt3.setPrefWidth(200);
             bt4.setPrefWidth(200);
+            csgBuilder.buildImageView(CSG_SITE_FAVICON_IMAGE, stylePane, 3, 1, 2, 1, CLASS_CSG_IMAGE, ENABLED);
+            csgBuilder.buildImageView(CSG_SITE_NAVBAR_IMAGE, stylePane, 3, 2, 2, 1, CLASS_CSG_IMAGE, ENABLED);
+            csgBuilder.buildImageView(CSG_SITE_LEFT_FOOTER_IMAGE, stylePane, 3, 3, 2, 1, CLASS_CSG_IMAGE, ENABLED);
+            csgBuilder.buildImageView(CSG_SITE_RIGHT_FOOTER_IMAGE, stylePane, 3, 4, 2, 1, CLASS_CSG_IMAGE, ENABLED);
             csgBuilder.buildLabel(CSG_SITE_STYLESHEET_LABEL, stylePane, 0, 5, 2, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
             csgBuilder.buildLabel(CSG_SITE_STYLESHEET_NOTE_LABEL, stylePane, 0, 6, 7, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
-            csgBuilder.buildComboBox(CSG_SITE_STYLESHEET_CB, stylePane, 2, 5, 2, 1, CLASS_CSG_CB, ENABLED,  false);
+            ComboBox stylesheet = csgBuilder.buildComboBox(CSG_SITE_STYLESHEET_CB, stylePane, 2, 5, 2, 1, CLASS_CSG_CB, ENABLED,  false);
+            File f = new File(props.getProperty(APP_PATH_STYLESHEET));
+            ObservableList ol = FXCollections.observableArrayList();
+            ol.addAll(f.list());
+            stylesheet.setItems(ol);
             
             //Instructor
             VBox instuctorPane = csgBuilder.buildVBox(CSG_SITE_INSTRUCTOR_PANE, sitePane, CLASS_CSG_PANE, ENABLED);
@@ -526,7 +549,7 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             // MAKE SURE IT'S THE TABLE THAT ALWAYS GROWS IN THE LEFT PANE
             VBox.setVgrow(taTable, Priority.ALWAYS);
 
-            // INIT THE HEADER ON THE RIGHT
+            // INIT THE HEADER ON THE BUTTOM
             VBox ohsPane = csgBuilder.buildVBox(CSG_OH_PANE, ohPane, CLASS_CSG_PANE, ENABLED);
             ohsPane.setSpacing(10);
             HBox officeHoursHeaderBox = csgBuilder.buildHBox(CSG_OH_HEADER_PANE, ohsPane, null, ENABLED);
@@ -535,10 +558,10 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             Region region1 = new Region();
             HBox.setHgrow(region1, Priority.ALWAYS);
             officeHoursHeaderBox.getChildren().add(region1);            
-            csgBuilder.buildLabel(CSG_OH_START_TIME_LABEL, officeHoursHeaderBox, CLASS_CSG_HEADER_LABEL, ENABLED);
-            csgBuilder.buildComboBox(CSG_OH_START_TIME_CB,  officeHoursHeaderBox, CLASS_CSG_HEADER_LABEL, ENABLED, false);
-            csgBuilder.buildLabel(CSG_OH_END_TIME_LABEL, officeHoursHeaderBox, CLASS_CSG_HEADER_LABEL, ENABLED);
-            csgBuilder.buildComboBox(CSG_OH_END_TIME_CB,  officeHoursHeaderBox, CLASS_CSG_HEADER_LABEL, ENABLED, false);
+            csgBuilder.buildLabel(CSG_OH_START_TIME_LABEL, officeHoursHeaderBox, CLASS_CSG_BOLD_LABEL, ENABLED);
+            csgBuilder.buildComboBox(CSG_OH_START_TIME_CB,  officeHoursHeaderBox, CLASS_CSG_CB, ENABLED, false);
+            csgBuilder.buildLabel(CSG_OH_END_TIME_LABEL, officeHoursHeaderBox, CLASS_CSG_BOLD_LABEL, ENABLED);
+            csgBuilder.buildComboBox(CSG_OH_END_TIME_CB,  officeHoursHeaderBox, CLASS_CSG_CB, ENABLED, false);
             Region region2 = new Region();
             HBox.setHgrow(region2, Priority.ALWAYS);
             officeHoursHeaderBox.getChildren().add(region2);            
@@ -617,6 +640,7 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             csgBuilder.buildLabel(CSG_SCHEDULE_ENDING_FRIDAY_LABEL, datePane, CLASS_CSG_BOLD_LABEL, ENABLED);
             csgBuilder.buildDatePicker(CSG_SCHEDULE_ENDING_FRIDAY_DP, datePane, CLASS_CSG_DP, ENABLED);
             VBox scheduleItemsPane = csgBuilder.buildVBox(CSG_SCHEDULE_ITEMS_PANE, schedulePane, CLASS_CSG_PANE, ENABLED);
+            scheduleItemsPane.setSpacing(10);
             HBox scheduleHeaderPane = csgBuilder.buildHBox(CSG_SCHEDULE_ITEMS_HEADER_PANE, scheduleItemsPane, null, ENABLED);
             scheduleHeaderPane.setSpacing(10);
             csgBuilder.buildTextButton(CSG_SCHEDULE_REMOVE_BT, scheduleHeaderPane, CLASS_CSG_SMALL_BUTTON, ENABLED);
@@ -659,6 +683,74 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
         private void initControllers() {
             CourseSiteGeneratorController controller = new CourseSiteGeneratorController((CourseSiteGeneratorApp) app);
             AppGUIModule gui = app.getGUIModule();        
+            ((ComboBox) gui.getGUINode(CSG_SITE_SUBJECT_CB)).getEditor().textProperty().addListener(e->{
+                if(((CourseSiteGeneratorData)app.getDataComponent()).getTriggerListener())
+                    controller.processEditBanner(0, CSG_SITE_SUBJECT_CB);
+            });
+            ((ComboBox) gui.getGUINode(CSG_SITE_NUMBER_CB)).getEditor().textProperty().addListener(e->{
+                if(((CourseSiteGeneratorData)app.getDataComponent()).getTriggerListener())
+                    controller.processEditBanner(1, CSG_SITE_NUMBER_CB);
+            });
+            ((ComboBox) gui.getGUINode(CSG_SITE_SEMESTER_CB)).getEditor().textProperty().addListener(e->{
+                if(((CourseSiteGeneratorData)app.getDataComponent()).getTriggerListener())
+                    controller.processEditBanner(2, CSG_SITE_SEMESTER_CB);
+            });
+            ((ComboBox) gui.getGUINode(CSG_SITE_YEAR_CB)).getEditor().textProperty().addListener(e->{
+                if(((CourseSiteGeneratorData)app.getDataComponent()).getTriggerListener())
+                    controller.processEditBanner(3, CSG_SITE_YEAR_CB);
+            });           
+            ((TextField) gui.getGUINode(CSG_SITE_TITLE_TF)).textProperty().addListener(e->{
+                if(((CourseSiteGeneratorData)app.getDataComponent()).getTriggerListener())
+                    controller.processEditBanner(4, CSG_SITE_TITLE_TF);
+            });
+            ((CheckBox) gui.getGUINode(CSG_SITE_HOME_CB)).setOnAction(e->{
+                controller.processEditPages(0, CSG_SITE_HOME_CB);
+            });
+            ((CheckBox) gui.getGUINode(CSG_SITE_SYLLABUS_CB)).setOnAction(e->{
+                controller.processEditPages(1, CSG_SITE_SYLLABUS_CB);
+            });
+            ((CheckBox) gui.getGUINode(CSG_SITE_SCHEDULE_CB)).setOnAction(e->{
+                controller.processEditPages(2, CSG_SITE_SCHEDULE_CB);
+            });
+            ((CheckBox) gui.getGUINode(CSG_SITE_HWS_CB)).setOnAction(e->{
+                controller.processEditPages(3, CSG_SITE_HWS_CB);
+            });
+            ((Button) gui.getGUINode(CSG_SITE_FAVICON_BUTTON)).setOnAction(e->{
+                controller.processEditStyleImages(0, CSG_SITE_FAVICON_IMAGE);
+            });
+            ((Button) gui.getGUINode(CSG_SITE_NAVBAR_BUTTON)).setOnAction(e->{
+                controller.processEditStyleImages(1, CSG_SITE_NAVBAR_IMAGE);
+            });
+            ((Button) gui.getGUINode(CSG_SITE_LEFT_FOOTER_BUTTON)).setOnAction(e->{
+                controller.processEditStyleImages(2, CSG_SITE_LEFT_FOOTER_IMAGE);
+            });
+            ((Button) gui.getGUINode(CSG_SITE_RIGHT_FOOTER_BUTTON)).setOnAction(e->{
+                controller.processEditStyleImages(3, CSG_SITE_RIGHT_FOOTER_IMAGE);
+            });
+            ((TextField) gui.getGUINode(CSG_SITE_NAME_TF)).textProperty().addListener(e->{
+                if(((CourseSiteGeneratorData)app.getDataComponent()).getTriggerListener())
+                    controller.processEditInstructor(0, CSG_SITE_NAME_TF);
+            });
+            ((TextField) gui.getGUINode(CSG_SITE_ROOM_TF)).textProperty().addListener(e->{
+                if(((CourseSiteGeneratorData)app.getDataComponent()).getTriggerListener())
+                    controller.processEditInstructor(1, CSG_SITE_ROOM_TF);
+            });
+            ((TextField) gui.getGUINode(CSG_SITE_EMAIL_TF)).textProperty().addListener(e->{
+                if(((CourseSiteGeneratorData)app.getDataComponent()).getTriggerListener())
+                    controller.processEditInstructor(2, CSG_SITE_EMAIL_TF);
+            });
+            ((TextField) gui.getGUINode(CSG_SITE_HOMEPAGE_TF)).textProperty().addListener(e->{
+                if(((CourseSiteGeneratorData)app.getDataComponent()).getTriggerListener())
+                    controller.processEditInstructor(3, CSG_SITE_HOMEPAGE_TF);
+            });
+            ((TextArea) gui.getGUINode(CSG_SITE_OH_TA)).textProperty().addListener(e->{
+                if(((CourseSiteGeneratorData)app.getDataComponent()).getTriggerListener())
+                    controller.processEditInstructor(4, CSG_SITE_OH_TA);
+            });
+            ((ComboBox) gui.getGUINode(CSG_SITE_STYLESHEET_CB)).setOnAction(e->{
+                if(((CourseSiteGeneratorData)app.getDataComponent()).getTriggerListener())
+                    controller.processEditStyleSheet(CSG_SITE_STYLESHEET_CB);
+            });
             TableView taTableView = (TableView) gui.getGUINode(CSG_OH_TAS_TABLE_VIEW);
             TableView officeHoursTableView = (TableView) gui.getGUINode(CSG_OH_TABLEVIEW);
             ((TextField) gui.getGUINode(CSG_OH_TAS_NAME_TEXT_FIELD)).setOnAction(e -> {
@@ -725,17 +817,27 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
         }
         
         public void resetUserInterface(){
-            AppGUIModule gui = app.getGUIModule();        
+            AppGUIModule gui = app.getGUIModule();       
+            PropertiesManager props = PropertiesManager.getPropertiesManager();
             ((ComboBox) gui.getGUINode(CSG_SITE_SUBJECT_CB)).setValue("");
             ((ComboBox) gui.getGUINode(CSG_SITE_NUMBER_CB)).setValue("");
             ((ComboBox) gui.getGUINode(CSG_SITE_SEMESTER_CB)).setValue("");
             ((ComboBox) gui.getGUINode(CSG_SITE_YEAR_CB)).setValue("");
             ((TextField) gui.getGUINode(CSG_SITE_TITLE_TF)).clear();
-            /////////////stylesheet
+            ((Label) gui.getGUINode(CSG_SITE_DIR_LABEL)).setText(props.getProperty(CSG_SITE_DIR_LABEL + "_TEXT"));
             ((CheckBox) gui.getGUINode(CSG_SITE_HOME_CB)).setSelected(false);
             ((CheckBox) gui.getGUINode(CSG_SITE_SYLLABUS_CB)).setSelected(false);
             ((CheckBox) gui.getGUINode(CSG_SITE_SCHEDULE_CB)).setSelected(false);
             ((CheckBox) gui.getGUINode(CSG_SITE_HWS_CB)).setSelected(false);
+            ((ImageView) gui.getGUINode(CSG_SITE_FAVICON_IMAGE)).setImage
+                (new Image(FILE_PROTOCOL + props.getProperty(APP_PATH_IMAGES) + props.getProperty(IMAGE_PLACEHOLDER_ICON)));
+            ((ImageView) gui.getGUINode(CSG_SITE_NAVBAR_IMAGE)).setImage
+                (new Image(FILE_PROTOCOL + props.getProperty(APP_PATH_IMAGES) + props.getProperty(IMAGE_PLACEHOLDER_ICON)));            
+            ((ImageView) gui.getGUINode(CSG_SITE_LEFT_FOOTER_IMAGE)).setImage
+                (new Image(FILE_PROTOCOL + props.getProperty(APP_PATH_IMAGES) + props.getProperty(IMAGE_PLACEHOLDER_ICON)));            
+            ((ImageView) gui.getGUINode(CSG_SITE_RIGHT_FOOTER_IMAGE)).setImage
+                (new Image(FILE_PROTOCOL + props.getProperty(APP_PATH_IMAGES) + props.getProperty(IMAGE_PLACEHOLDER_ICON)));     
+            ((ComboBox) gui.getGUINode(CSG_SITE_STYLESHEET_CB)).getSelectionModel().clearSelection();
             ((TextField) gui.getGUINode(CSG_SITE_NAME_TF)).clear();
             ((TextField) gui.getGUINode(CSG_SITE_ROOM_TF)).clear();
             ((TextField) gui.getGUINode(CSG_SITE_EMAIL_TF)).clear();

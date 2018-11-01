@@ -114,6 +114,7 @@ and open the template in the editor.
 .csg_header_label{
     -fx-font-weight: bold;
     -fx-font-size: 19px;
+    -fx-padding: 0 20 0 0;
 }
 
 .csg_bold_label{

@@ -11,7 +11,7 @@
         <!-- DESKTOP JAVA FRAMEWORK CONTROLS SETTINGS -->
         <property name="APP_TITLE"	    value="CourseSiteGenerator"></property>
         <property name="APP_BANNER"         value="CourseSiteGeneratorWelcomeBanner.png"></property>
-        <property name="APP_LOGO"	    value="OfficeHoursLogo.png"></property>
+        <property name="APP_LOGO"	    value="CourseSiteGeneratorLogo.png"></property>
         <property name="APP_EXPORT_PAGE"    value="index.html"></property>
         <property name="APP_HELP_PAGE"      value="Help.html"></property>
         <property name="APP_CSS"	    value="csg_style.css"></property>
@@ -20,6 +20,7 @@
         <property name="APP_PATH_ICONS"     value="./images/icons/"></property>
         <property name="APP_PATH_IMAGES"    value="./images/"></property>
         <property name="APP_PATH_WEB"       value="./app_data/web/"></property>
+        <property name="APP_PATH_STYLESHEET"     value="./work/css"></property>
         <property name="WORK_FILE_EXT"       value="*.json"></property>
         <property name="WORK_FILE_EXT_DESC"       value="JSON files (*.json)"></property>
         <property name="PREF_WIDTH"         value="800"></property>
@@ -61,6 +62,8 @@
         <property name="HELP_BUTTON_ICON"       value="Help.png"></property>
         <property name="ABOUT_BUTTON_ICON"       value="About.png"></property>
 
+        <property name="IMAGE_PLACEHOLDER_ICON"       value="ImagePlaceHolder.png"></property>
+        <property name="IMAGE_CHOOSER_TITLE"       value="Choose Image"></property>
         <!-- OH BUTTONS TOOLBAR -->
         
         <!-- THIS IS THE FILE WE'LL USE TO MAKE OUR EXPORTED WEB FILE -->

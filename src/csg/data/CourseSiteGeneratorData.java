@@ -11,6 +11,10 @@ import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_ALL_RB;
 import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_GRAD_RB;
 import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_TABLE_VIEW;
 import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_UNDERGRA_RB;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_NUMBER_CB;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_SEMESTER_CB;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_SUBJECT_CB;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_YEAR_CB;
 import static csg.data.TeachingAssistantPrototype.TA_TYPE_GRA;
 import static csg.data.TeachingAssistantPrototype.TA_TYPE_UNDERGRA;
 import csg.data.TimeSlot.DayOfWeek;
@@ -20,6 +24,7 @@ import java.util.Iterator;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableView;
 
@@ -42,7 +47,6 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
         private ObservableList<String> semesterOptions;
         private ObservableList<String> yearOptions;
         
-        
         private String[] syllabusText;
 
         // NOTE THAT THIS DATA STRUCTURE WILL DIRECTLY STORE THE
@@ -64,11 +68,16 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
         public static final int MIN_START_HOUR = 9;
         public static final int MAX_END_HOUR = 20;
     
+        boolean triggerListener;
+ 
         public CourseSiteGeneratorData(CourseSiteGeneratorApp initApp) {
             // KEEP THIS FOR LATER
             app = initApp;
             AppGUIModule gui = app.getGUIModule();
+            triggerListener = true;
             bannerText = new String[5];
+            for(int i = 0 ; i < bannerText.length; i++)
+                bannerText[i] = "";
             exportDir = "";
             pages = new boolean[4];
             styleImages = new String[4];
@@ -77,7 +86,10 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
             numberOptions = FXCollections.observableArrayList();
             semesterOptions = FXCollections.observableArrayList();
             yearOptions = FXCollections.observableArrayList();
-            
+            ((ComboBox) gui.getGUINode(CSG_SITE_SUBJECT_CB)).setItems(subjectOptions);
+            ((ComboBox) gui.getGUINode(CSG_SITE_NUMBER_CB)).setItems(numberOptions);
+            ((ComboBox) gui.getGUINode(CSG_SITE_SEMESTER_CB)).setItems(semesterOptions);
+            ((ComboBox) gui.getGUINode(CSG_SITE_YEAR_CB)).setItems(yearOptions);           
             syllabusText = new String[9];
             
             graduateTeachingAssistants = FXCollections.observableArrayList();
@@ -165,6 +177,15 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
      */
     @Override
     public void reset() {
+        triggerListener = true;
+        bannerText = new String[5];
+        for(int i = 0 ; i < bannerText.length; i++)
+            bannerText[i] = "";
+        exportDir = "";
+        pages = new boolean[4];
+        styleImages = new String[4];
+        instructor = new Instructor("", "", "", "", "");
+        syllabusText = new String[9];
         setStartHour(MIN_START_HOUR);
         setEndHour(MAX_END_HOUR);
         getUndergraduateTeachingAssistants().clear();
@@ -366,7 +387,7 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
 
     public boolean hasBannerText(){
         for(int i = 0 ; i < 4; i++)
-            if(bannerText[i] == "")
+            if(bannerText[i] == null || bannerText[i].isEmpty())
                 return false;
         return true;
     }
@@ -381,6 +402,8 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
         if(hasBannerText())
             exportDir = ".\\export\\" + bannerText[0] + "_ "+bannerText[1] + "_ "+ bannerText[2] + "_ "+ 
                 bannerText[3] + "\\public_html";
+        else
+            exportDir = "";
     }
     /**
      * @param exportDir the exportDir to set
@@ -530,6 +553,13 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
     public void setStylesheet(String stylesheet) {
         this.stylesheet = stylesheet;
     }
-
+    
+    public boolean getTriggerListener(){
+        return triggerListener;
+    }
+    
+    public void setTriggerListener(boolean triggerListener){
+        this.triggerListener = triggerListener;
+    }
 }
 

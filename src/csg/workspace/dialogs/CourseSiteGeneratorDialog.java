@@ -13,6 +13,7 @@ import static csg.CourseSiteGeneratorPropertyType.CSG_EDIT_DIALOG_NAME_PROMPT;
 import static csg.CourseSiteGeneratorPropertyType.CSG_EDIT_DIALOG_TITLE;
 import static csg.CourseSiteGeneratorPropertyType.CSG_EDIT_DIALOG_TYPE;
 import static csg.CourseSiteGeneratorPropertyType.CSG_EDIT_DIALOG_UNDERGRADUATE;
+import static csg.CourseSiteGeneratorPropertyType.IMAGE_CHOOSER_TITLE;
 import csg.data.CourseSiteGeneratorData;
 import csg.data.TeachingAssistantPrototype;
 import static csg.data.TeachingAssistantPrototype.TA_TYPE_GRA;
@@ -20,6 +21,7 @@ import static csg.data.TeachingAssistantPrototype.TA_TYPE_UNDERGRA;
 import csg.transactions.EditTA_Transaction;
 import djf.AppTemplate;
 import djf.ui.dialogs.AppDialogsFacade;
+import java.io.File;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,6 +36,8 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import properties_manager.PropertiesManager;
 
 /**
@@ -41,6 +45,21 @@ import properties_manager.PropertiesManager;
  * @author hanli
  */
 public class CourseSiteGeneratorDialog extends AppDialogsFacade{
+    
+    public static String showChooseImageDialog(Stage window){
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle(props.getProperty(IMAGE_CHOOSER_TITLE));
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("PNG", "*.png"),
+                new FileChooser.ExtensionFilter("JPG", "*.jpg")
+            );
+        File selectedFile = fileChooser.showOpenDialog(window);
+        if(selectedFile == null)
+            return null;
+        else
+            return selectedFile.getAbsolutePath();
+    }
     public static void showEditDialog(AppTemplate app, TeachingAssistantPrototype TA){
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         Dialog<ButtonType> dialog = new Dialog();

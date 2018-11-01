@@ -10,12 +10,13 @@ import csg.data.Instructor;
 import javafx.scene.Node;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import jtps.jTPS_Transaction;
 
 /**
  *
  * @author hanli
  */
-public class EditInstructor_Transaction {
+public class EditInstructor_Transaction implements jTPS_Transaction{
     CourseSiteGeneratorData data;
     Node node;
     int index;
@@ -35,18 +36,22 @@ public class EditInstructor_Transaction {
             
     public void doTransaction(){
         instructor.setInfo(index, text);
+        data.setTriggerListener(false);
         if(index <4)
             ((TextField)node).setText(text);
         else
             ((TextArea)node).setText(text);      
+        data.setTriggerListener(true);
     }
     
     public void undoTransaction(){
         instructor.setInfo(index, oldText);
+        data.setTriggerListener(false);
         if(index <4)
             ((TextField)node).setText(oldText);
         else
             ((TextArea)node).setText(oldText);            
+        data.setTriggerListener(true);
     }
     
     public int getIndex(){

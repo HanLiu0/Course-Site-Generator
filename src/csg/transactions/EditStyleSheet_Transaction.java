@@ -7,12 +7,13 @@ package csg.transactions;
 
 import csg.data.CourseSiteGeneratorData;
 import javafx.scene.control.ComboBox;
+import jtps.jTPS_Transaction;
 
 /**
  *
  * @author hanli
  */
-public class EditStyleSheet_Transaction {
+public class EditStyleSheet_Transaction implements jTPS_Transaction{
     CourseSiteGeneratorData data;
     ComboBox styleSheetComboBox;
     String stylesheet;
@@ -27,12 +28,16 @@ public class EditStyleSheet_Transaction {
             
     public void doTransaction(){
         data.setStylesheet(stylesheet);
-        styleSheetComboBox.setValue(stylesheet);
+        data.setTriggerListener(false);
+        styleSheetComboBox.getSelectionModel().select(stylesheet);
+        data.setTriggerListener(true);
     }
     
     public void undoTransaction(){
         data.setStylesheet(oldStylesheet);
-        styleSheetComboBox.setValue(oldStylesheet);
+        data.setTriggerListener(false);
+        styleSheetComboBox.getSelectionModel().select(oldStylesheet);
+        data.setTriggerListener(true);
     }
     
 }

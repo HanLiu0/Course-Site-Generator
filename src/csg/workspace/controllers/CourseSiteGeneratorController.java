@@ -10,18 +10,32 @@ import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TABLEVIEW;
 import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_EMAIL_TEXT_FIELD;
 import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_NAME_TEXT_FIELD;
 import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_TABLE_VIEW;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_DIR_LABEL;
 import csg.data.CourseSiteGeneratorData;
 import csg.data.TeachingAssistantPrototype;
 import csg.data.TimeSlot;
 import csg.data.TimeSlot.DayOfWeek;
 import csg.transactions.AddOH_Transaction;
 import csg.transactions.AddTA_Transaction;
+import csg.transactions.EditBanner_Transaction;
+import csg.transactions.EditInstructor_Transaction;
+import csg.transactions.EditPages_Transaction;
+import csg.transactions.EditStyleImages_Transaction;
+import csg.transactions.EditStyleSheet_Transaction;
 import csg.transactions.RemoveOH_Transaction;
 import csg.workspace.dialogs.CourseSiteGeneratorDialog;
 import djf.modules.AppGUIModule;
+import javafx.scene.Node;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import jtps.jTPS;
+import jtps.jTPS_Transaction;
 
 /**
  *
@@ -33,6 +47,78 @@ public class CourseSiteGeneratorController {
 
     public CourseSiteGeneratorController(CourseSiteGeneratorApp initApp) {
         app = initApp;
+    }
+    
+    public void processEditBanner(int index, Object nodeId){
+        AppGUIModule gui = app.getGUIModule();
+        Node node = gui.getGUINode(nodeId);
+        String text;
+        if(index < 4)
+            text = (String)((ComboBox)node).getEditor().getText();
+        else
+            text = (String)((TextField)node).getText();
+        Label exportDIrLabel = (Label)gui.getGUINode(CSG_SITE_DIR_LABEL);
+        CourseSiteGeneratorData data = (CourseSiteGeneratorData)app.getDataComponent();
+        jTPS jtps = app.getTPS();
+        jTPS_Transaction t = jtps.getMostRecentTransaction();
+        if(t != null && t instanceof EditBanner_Transaction){
+            if (((EditBanner_Transaction)t).getIndex() == index){
+                ((EditBanner_Transaction)t).updateTransaction(text);
+                return;
+            }
+        }
+        EditBanner_Transaction transaction = new EditBanner_Transaction(data, node, exportDIrLabel, index, text);
+        app.processTransaction(transaction);
+    }
+
+    public void processEditPages(int index, Object nodeId){
+        AppGUIModule gui = app.getGUIModule();
+        CheckBox cb = (CheckBox)gui.getGUINode(nodeId);
+        boolean selected = cb.isSelected();
+        CourseSiteGeneratorData data = (CourseSiteGeneratorData)app.getDataComponent();
+        EditPages_Transaction transaction = new EditPages_Transaction(data, cb, index, selected);
+        app.processTransaction(transaction);
+    }
+    
+    public void processEditStyleImages(int index, Object nodeId){
+        AppGUIModule gui = app.getGUIModule();
+        ImageView imageview = (ImageView)gui.getGUINode(nodeId);
+        CourseSiteGeneratorData data = (CourseSiteGeneratorData)app.getDataComponent();
+        String path = CourseSiteGeneratorDialog.showChooseImageDialog(gui.getWindow());
+        if(path == null)
+            return;
+        EditStyleImages_Transaction transaction = new EditStyleImages_Transaction(data, imageview, path, index);
+        app.processTransaction(transaction);    
+    }
+
+    public void processEditStyleSheet(Object nodeId){
+        AppGUIModule gui = app.getGUIModule();
+        ComboBox cb = (ComboBox)gui.getGUINode(nodeId);
+        String text = (String)cb.getValue();
+        CourseSiteGeneratorData data = (CourseSiteGeneratorData)app.getDataComponent();
+        EditStyleSheet_Transaction transaction = new EditStyleSheet_Transaction(data, cb, text);
+        app.processTransaction(transaction);    
+    }
+    
+    public void processEditInstructor(int index, Object nodeId){
+        AppGUIModule gui = app.getGUIModule();
+        Node node = gui.getGUINode(nodeId);
+        String text;
+        if(index < 4)
+            text = ((TextField)node).getText();
+        else
+            text = ((TextArea)node).getText();
+        CourseSiteGeneratorData data = (CourseSiteGeneratorData)app.getDataComponent();
+        jTPS jtps = app.getTPS();
+        jTPS_Transaction t = jtps.getMostRecentTransaction();
+        if(t != null && t instanceof EditInstructor_Transaction){
+            if (((EditInstructor_Transaction)t).getIndex() == index){
+                ((EditInstructor_Transaction)t).updateTransaction(text);
+                return;
+            }
+        }
+        EditInstructor_Transaction transaction = new EditInstructor_Transaction(data, node, index, text);
+        app.processTransaction(transaction);      
     }
 
     public void processAddTA() {

@@ -7,12 +7,13 @@ package csg.transactions;
 
 import csg.data.CourseSiteGeneratorData;
 import javafx.scene.control.CheckBox;
+import jtps.jTPS_Transaction;
 
 /**
  *
  * @author hanli
  */
-public class EditPages_Transaction {
+public class EditPages_Transaction implements jTPS_Transaction{
     CourseSiteGeneratorData data;
     CheckBox checkBox;
     int index;
