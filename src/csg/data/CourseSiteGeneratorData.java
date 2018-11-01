@@ -6,11 +6,17 @@
 package csg.data;
 
 import csg.CourseSiteGeneratorApp;
+import static csg.CourseSiteGeneratorPropertyType.CSG_LABS_TABLEVIEW;
+import static csg.CourseSiteGeneratorPropertyType.CSG_LECTURES_TABLEVIEW;
+import static csg.CourseSiteGeneratorPropertyType.CSG_OH_END_TIME_CB;
+import static csg.CourseSiteGeneratorPropertyType.CSG_OH_START_TIME_CB;
 import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TABLEVIEW;
 import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_ALL_RB;
 import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_GRAD_RB;
 import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_TABLE_VIEW;
 import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_UNDERGRA_RB;
+import static csg.CourseSiteGeneratorPropertyType.CSG_REC_TABLEVIEW;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_TABLEVIEW;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_NUMBER_CB;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_SEMESTER_CB;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_SUBJECT_CB;
@@ -20,6 +26,7 @@ import static csg.data.TeachingAssistantPrototype.TA_TYPE_UNDERGRA;
 import csg.data.TimeSlot.DayOfWeek;
 import djf.components.AppDataComponent;
 import djf.modules.AppGUIModule;
+import java.time.LocalDate;
 import java.util.Iterator;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -49,6 +56,11 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
         
         private String[] syllabusText;
 
+        private ObservableList<LectureItem> lectureItems;
+        private ObservableList<RecitationItem> recitationItems;
+        private ObservableList<LabItem> labItems;
+        private ObservableList<ScheduleItem> scheduleItems;
+        
         // NOTE THAT THIS DATA STRUCTURE WILL DIRECTLY STORE THE
         // DATA IN THE ROWS OF THE TABLE VIEW
         private ObservableList<TeachingAssistantPrototype> teachingAssistants;
@@ -63,11 +75,15 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
         // NO MEANS FOR CHANGING THESE VALUES
         private int startHour;
         private int endHour;
+        private ObservableList<String> startTimes;
+        private ObservableList<String> endTimes;
 
         // DEFAULT VALUES FOR START AND END HOURS IN MILITARY HOURS
-        public static final int MIN_START_HOUR = 9;
-        public static final int MAX_END_HOUR = 20;
+        public static final int MIN_START_HOUR = 8;
+        public static final int MAX_END_HOUR = 22;
     
+        private LocalDate startingMonday;
+        private LocalDate endingFriday;
         boolean triggerListener;
  
         public CourseSiteGeneratorData(CourseSiteGeneratorApp initApp) {
@@ -92,6 +108,11 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
             ((ComboBox) gui.getGUINode(CSG_SITE_YEAR_CB)).setItems(yearOptions);           
             syllabusText = new String[9];
             
+            lectureItems = ((TableView)gui.getGUINode(CSG_LECTURES_TABLEVIEW)).getItems();
+            recitationItems = ((TableView)gui.getGUINode(CSG_REC_TABLEVIEW)).getItems();
+            labItems = ((TableView)gui.getGUINode(CSG_LABS_TABLEVIEW)).getItems();
+            scheduleItems = ((TableView)gui.getGUINode(CSG_SCHEDULE_TABLEVIEW)).getItems();
+            
             graduateTeachingAssistants = FXCollections.observableArrayList();
             undergraduateTeachingAssistants = FXCollections.observableArrayList();
 
@@ -115,14 +136,22 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
                 }
             });
 
+            startTimes = FXCollections.observableArrayList();
+            endTimes = FXCollections.observableArrayList();
             // THESE ARE THE DEFAULT OFFICE HOURS
+            ((ComboBox) gui.getGUINode(CSG_OH_START_TIME_CB)).setItems(startTimes);
+            ((ComboBox) gui.getGUINode(CSG_OH_END_TIME_CB)).setItems(endTimes);
             startHour = MIN_START_HOUR;
             endHour = MAX_END_HOUR;
 
             resetOfficeHours();
+            ((ComboBox) gui.getGUINode(CSG_OH_START_TIME_CB)).getSelectionModel().selectFirst();
+            ((ComboBox) gui.getGUINode(CSG_OH_END_TIME_CB)).getSelectionModel().selectLast();
         }
         
     private void resetOfficeHours() {
+        startTimes.clear();
+        endTimes.clear();
         //THIS WILL STORE OUR OFFICE HOURS
         AppGUIModule gui = app.getGUIModule();
         TableView<TimeSlot> officeHoursTableView = (TableView)gui.getGUINode(CSG_OH_TABLEVIEW);
@@ -136,7 +165,11 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
             TimeSlot halfTimeSlot = new TimeSlot(   this.getTimeString(i, false),
                                                     this.getTimeString(i+1, true));
             getOfficeHours().add(halfTimeSlot);
+            startTimes.addAll(this.getTimeString(i, true), this.getTimeString(i, false));
+            endTimes.addAll(this.getTimeString(i, false), this.getTimeString(i+1, true));
         }
+        ((ComboBox) gui.getGUINode(CSG_OH_START_TIME_CB)).getSelectionModel().selectFirst();
+        ((ComboBox) gui.getGUINode(CSG_OH_END_TIME_CB)).getSelectionModel().selectLast();
     }
     
     private String getTimeString(int militaryHour, boolean onHour) {
@@ -186,12 +219,18 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
         styleImages = new String[4];
         instructor = new Instructor("", "", "", "", "");
         syllabusText = new String[9];
+        lectureItems.clear();
+        recitationItems.clear();
+        labItems.clear();
+        scheduleItems.clear();
         setStartHour(MIN_START_HOUR);
         setEndHour(MAX_END_HOUR);
         getUndergraduateTeachingAssistants().clear();
         getGraduateTeachingAssistants().clear();
         getTeachingAssistants().clear();
         resetOfficeHours();
+        startingMonday = null;
+        endingFriday = null;
 //        
 //        for (int i = 0; i < officeHours.size(); i++) {
 //            TimeSlot timeSlot = officeHours.get(i);

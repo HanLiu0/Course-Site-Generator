@@ -23,6 +23,7 @@ import csg.transactions.EditPages_Transaction;
 import csg.transactions.EditStyleImages_Transaction;
 import csg.transactions.EditStyleSheet_Transaction;
 import csg.transactions.RemoveOH_Transaction;
+import csg.transactions.RemoveTA_Transaction;
 import csg.workspace.dialogs.CourseSiteGeneratorDialog;
 import djf.modules.AppGUIModule;
 import javafx.scene.Node;
@@ -137,7 +138,25 @@ public class CourseSiteGeneratorController {
         nameTF.requestFocus();
     }
     
-    public void processAddOrRemoveCSG(){
+    public void processEditTA(){        
+        AppGUIModule gui = app.getGUIModule();
+        TableView<TeachingAssistantPrototype> taTable = (TableView<TeachingAssistantPrototype>)gui.getGUINode(CSG_OH_TAS_TABLE_VIEW);
+        TeachingAssistantPrototype selectedTA = taTable.getSelectionModel().getSelectedItem();
+        CourseSiteGeneratorDialog.showEditDialog(app, selectedTA);
+    }    
+    
+    public void processRemoveTA(){
+        AppGUIModule gui = app.getGUIModule();
+        CourseSiteGeneratorData data = (CourseSiteGeneratorData)app.getDataComponent();
+        TableView<TeachingAssistantPrototype> taTable = (TableView<TeachingAssistantPrototype>)gui.getGUINode(CSG_OH_TAS_TABLE_VIEW);
+        TeachingAssistantPrototype selectedTA = taTable.getSelectionModel().getSelectedItem();
+        if(selectedTA == null)
+            return;
+        RemoveTA_Transaction removeTATransaction = new RemoveTA_Transaction(data, selectedTA);
+        app.processTransaction(removeTATransaction);        
+    }
+    
+    public void processAddOrRemoveOH(){
         AppGUIModule gui = app.getGUIModule();
         CourseSiteGeneratorData ohData = (CourseSiteGeneratorData)app.getDataComponent();
         TableView<TeachingAssistantPrototype> taTable = (TableView<TeachingAssistantPrototype>)gui.getGUINode(CSG_OH_TAS_TABLE_VIEW);
@@ -162,7 +181,7 @@ public class CourseSiteGeneratorController {
         }
     }
     
-    public void setGraduateTA(){
+    public void processSetGraduateTA(){
         AppGUIModule gui = app.getGUIModule();
         CourseSiteGeneratorData ohData = (CourseSiteGeneratorData)app.getDataComponent();
         ohData.setGraduateTA();            
@@ -170,7 +189,7 @@ public class CourseSiteGeneratorController {
         officeHoursTable.refresh();
     }
     
-    public void setUndergraduateTA(){
+    public void processSetUndergraduateTA(){
         AppGUIModule gui = app.getGUIModule();
         CourseSiteGeneratorData ohData = (CourseSiteGeneratorData)app.getDataComponent();
         ohData.setUndergraduateTA();          
@@ -179,19 +198,12 @@ public class CourseSiteGeneratorController {
 
     }
         
-    public void setAllTA(){
+    public void processSetAllTA(){
         AppGUIModule gui = app.getGUIModule();
         CourseSiteGeneratorData ohData = (CourseSiteGeneratorData)app.getDataComponent();
         ohData.setAllTA();               
         TableView<TimeSlot> officeHoursTable = (TableView<TimeSlot>)gui.getGUINode(CSG_OH_TABLEVIEW);
         officeHoursTable.refresh();
     }
-    
-    public void showEditDialog(){        
-        AppGUIModule gui = app.getGUIModule();
-        CourseSiteGeneratorData ohData = (CourseSiteGeneratorData)app.getDataComponent();
-        TableView<TeachingAssistantPrototype> taTable = (TableView<TeachingAssistantPrototype>)gui.getGUINode(CSG_OH_TAS_TABLE_VIEW);
-        TeachingAssistantPrototype selectedTA = taTable.getSelectionModel().getSelectedItem();
-        CourseSiteGeneratorDialog.showEditDialog(app, selectedTA);
-    }
+
 }

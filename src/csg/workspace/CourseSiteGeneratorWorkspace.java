@@ -53,6 +53,7 @@ import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_HEADER_PANE;
 import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_NAME_TABLE_COLUMN;
 import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_NAME_TEXT_FIELD;
 import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_PANE;
+import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_REMOVE_BT;
 import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_SLOTS_TABLE_COLUMN;
 import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_TABLE_VIEW;
 import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_TYPE_TABLE_COLUMN;
@@ -752,6 +753,9 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
                     controller.processEditStyleSheet(CSG_SITE_STYLESHEET_CB);
             });
             TableView taTableView = (TableView) gui.getGUINode(CSG_OH_TAS_TABLE_VIEW);
+            ((Button) gui.getGUINode(CSG_OH_TAS_REMOVE_BT)).setOnAction(e->{
+                controller.processRemoveTA();
+            });
             TableView officeHoursTableView = (TableView) gui.getGUINode(CSG_OH_TABLEVIEW);
             ((TextField) gui.getGUINode(CSG_OH_TAS_NAME_TEXT_FIELD)).setOnAction(e -> {
                 if(!((Button) gui.getGUINode(CSG_OH_TAS_ADD_TA_BUTTON)).isDisabled())
@@ -773,25 +777,25 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             ((RadioButton) gui.getGUINode(CSG_OH_TAS_ALL_RB)).setOnAction(e -> {
                 taTableView.getSelectionModel().clearSelection();
                 app.getFoolproofModule().updateAll();
-                controller.setAllTA();
+                controller.processSetAllTA();
             });
             ((RadioButton) gui.getGUINode(CSG_OH_TAS_ALL_RB)).setSelected(true);
             ((RadioButton) gui.getGUINode(CSG_OH_TAS_GRAD_RB)).setOnAction(e -> {
                 taTableView.getSelectionModel().clearSelection();
                 app.getFoolproofModule().updateAll();
-                controller.setGraduateTA();
+                controller.processSetGraduateTA();
             });
             ((RadioButton) gui.getGUINode(CSG_OH_TAS_UNDERGRA_RB)).setOnAction(e -> {
                 taTableView.getSelectionModel().clearSelection();
                app.getFoolproofModule().updateAll();
-               controller.setUndergraduateTA();
+               controller.processSetUndergraduateTA();
             });        
             taTableView.setOnMouseClicked(e->{
                app.getFoolproofModule().updateAll();
                officeHoursTableView.refresh();
                 if(e.getButton().equals(MouseButton.PRIMARY)){
                     if(e.getClickCount() == 2 && ((CourseSiteGeneratorData)app.getDataComponent()).isTASelected()){
-                        controller.showEditDialog();
+                        controller.processEditTA();
                     }
                 }
             });
@@ -800,7 +804,7 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
                 ((TableColumn)officeHoursTableView.getColumns().get(i)).setSortable(false);
             }
             officeHoursTableView.setOnMouseClicked(e -> {
-                controller.processAddOrRemoveCSG();
+                controller.processAddOrRemoveOH();
             });
         }
 
@@ -855,6 +859,5 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             ((RadioButton) gui.getGUINode(CSG_OH_TAS_ALL_RB)).setSelected(true);
             ((TextField) gui.getGUINode(CSG_OH_TAS_NAME_TEXT_FIELD)).clear();
             ((TextField) gui.getGUINode(CSG_OH_TAS_EMAIL_TEXT_FIELD)).clear();
-            ////////office hours
         }
 }

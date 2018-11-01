@@ -63,7 +63,7 @@ public class CourseSiteGeneratorDialog extends AppDialogsFacade{
     public static void showEditDialog(AppTemplate app, TeachingAssistantPrototype TA){
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         Dialog<ButtonType> dialog = new Dialog();
-        dialog.getDialogPane().setStyle("-fx-background-color : #DDE9E8;");
+        dialog.getDialogPane().setStyle("-fx-background-color : #fff5ee;");
         dialog.setTitle("");
         ButtonType OKButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(OKButton, ButtonType.CANCEL);
