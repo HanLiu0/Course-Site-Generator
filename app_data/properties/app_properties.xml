@@ -14,6 +14,7 @@
         <property name="APP_LOGO"	    value="CourseSiteGeneratorLogo.png"></property>
         <property name="APP_EXPORT_PAGE"    value="index.html"></property>
         <property name="APP_HELP_PAGE"      value="Help.html"></property>
+        <property name="APP_ABOUT_PAGE"      value="About.html"></property>
         <property name="APP_CSS"	    value="csg_style.css"></property>
         <property name="APP_PATH_CSS"	    value="workspace/style/"></property>
         <property name="APP_PATH_EXPORT"    value="./export/"></property>
