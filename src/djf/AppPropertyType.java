@@ -37,6 +37,7 @@ public enum AppPropertyType {
     APP_HELP_PAGE,
     APP_ABOUT_PAGE,
     APP_CSS,
+    APP_PATH_STYLESHEET,
     APP_PATH_CSS,
     APP_PATH_EXPORT,
     APP_PATH_IMAGES,
