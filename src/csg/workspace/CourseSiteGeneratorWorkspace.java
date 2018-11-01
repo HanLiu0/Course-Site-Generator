@@ -608,7 +608,7 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
                                 break;
                         }
                         if(containsTA)
-                            this.setStyle("-fx-background-color: #fae7b5");
+                            this.setStyle("-fx-background-color: #ffe9b7");
                         else
                             this.setStyle(null);
                    }
@@ -800,6 +800,14 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
                     }
                 }
             });
+            ((ComboBox) gui.getGUINode(CSG_OH_START_TIME_CB)).setOnAction(e->{
+                if(((CourseSiteGeneratorData)app.getDataComponent()).getTriggerListener())
+                    controller.processSelectTimeRange(0, CSG_OH_START_TIME_CB);
+            });
+            ((ComboBox) gui.getGUINode(CSG_OH_END_TIME_CB)).setOnAction(e->{
+                if(((CourseSiteGeneratorData)app.getDataComponent()).getTriggerListener())
+                    controller.processSelectTimeRange(1, CSG_OH_END_TIME_CB);
+            });
             // DON'T LET ANYONE SORT THE TABLES
             for (int i = 0; i < officeHoursTableView.getColumns().size(); i++) {
                 ((TableColumn)officeHoursTableView.getColumns().get(i)).setSortable(false);
@@ -824,6 +832,7 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
         public void resetUserInterface(){
             AppGUIModule gui = app.getGUIModule();       
             PropertiesManager props = PropertiesManager.getPropertiesManager();
+            ((CourseSiteGeneratorData)app.getDataComponent()).setTriggerListener(false);
             ((ComboBox) gui.getGUINode(CSG_SITE_SUBJECT_CB)).setValue("");
             ((ComboBox) gui.getGUINode(CSG_SITE_NUMBER_CB)).setValue("");
             ((ComboBox) gui.getGUINode(CSG_SITE_SEMESTER_CB)).setValue("");
@@ -868,5 +877,6 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             ((TextField) gui.getGUINode(CSG_SCHEDULE_TOPIC_TF)).clear();
             ((TextField) gui.getGUINode(CSG_SCHEDULE_LINK_TF)).clear();
             ((Button) gui.getGUINode(CSG_SCHEDULE_ADD_UPDATE_BT)).setText(props.getProperty(CSG_SCHEDULE_ADD_UPDATE_BT + "_TEXT"));
+            ((CourseSiteGeneratorData)app.getDataComponent()).setTriggerListener(true);
         }
 }

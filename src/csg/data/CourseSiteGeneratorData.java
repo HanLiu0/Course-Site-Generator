@@ -40,6 +40,7 @@ import javafx.scene.control.TableView;
  * @author hanli
  */
 public class CourseSiteGeneratorData  implements AppDataComponent{
+
         CourseSiteGeneratorApp app;
         
         // Site
@@ -68,6 +69,7 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
         private ObservableList<TeachingAssistantPrototype> undergraduateTeachingAssistants;
 
         private ObservableList<TimeSlot> officeHours;
+        private ObservableList<TimeSlot> allOfficeHours;
 
         // THESE ARE THE TIME BOUNDS FOR THE OFFICE HOURS GRID. NOTE
         // THAT THESE VALUES CAN BE DIFFERENT FOR DIFFERENT FILES, BUT
@@ -77,6 +79,10 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
         private int endHour;
         private ObservableList<String> startTimes;
         private ObservableList<String> endTimes;
+        private ObservableList<String> allStartTimes;
+        private ObservableList<String> allEndTimes;
+        private String startTime;
+        private String endTime;
 
         // DEFAULT VALUES FOR START AND END HOURS IN MILITARY HOURS
         public static final int MIN_START_HOUR = 8;
@@ -135,41 +141,81 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
                     getTeachingAssistants().addAll(getUndergraduateTeachingAssistants());                
                 }
             });
-
+            
+            
             startTimes = FXCollections.observableArrayList();
             endTimes = FXCollections.observableArrayList();
+            allStartTimes = FXCollections.observableArrayList();
+            allEndTimes = FXCollections.observableArrayList();            
             // THESE ARE THE DEFAULT OFFICE HOURS
             ((ComboBox) gui.getGUINode(CSG_OH_START_TIME_CB)).setItems(startTimes);
             ((ComboBox) gui.getGUINode(CSG_OH_END_TIME_CB)).setItems(endTimes);
             startHour = MIN_START_HOUR;
             endHour = MAX_END_HOUR;
-
+            allOfficeHours = FXCollections.observableArrayList();
             resetOfficeHours();
-            ((ComboBox) gui.getGUINode(CSG_OH_START_TIME_CB)).getSelectionModel().selectFirst();
-            ((ComboBox) gui.getGUINode(CSG_OH_END_TIME_CB)).getSelectionModel().selectLast();
         }
         
     private void resetOfficeHours() {
         startTimes.clear();
         endTimes.clear();
+        allStartTimes.clear();
+        allEndTimes.clear();
         //THIS WILL STORE OUR OFFICE HOURS
         AppGUIModule gui = app.getGUIModule();
         TableView<TimeSlot> officeHoursTableView = (TableView)gui.getGUINode(CSG_OH_TABLEVIEW);
         setOfficeHours(officeHoursTableView.getItems()); 
         getOfficeHours().clear();
-        for (int i = getStartHour(); i <= getEndHour(); i++) {
+        allOfficeHours.clear();
+        for (int i = MIN_START_HOUR; i <= MAX_END_HOUR; i++) {
             TimeSlot timeSlot = new TimeSlot(   this.getTimeString(i, true),
                                                 this.getTimeString(i, false));
-            getOfficeHours().add(timeSlot);
+            allOfficeHours.add(timeSlot);
             
             TimeSlot halfTimeSlot = new TimeSlot(   this.getTimeString(i, false),
                                                     this.getTimeString(i+1, true));
-            getOfficeHours().add(halfTimeSlot);
-            startTimes.addAll(this.getTimeString(i, true), this.getTimeString(i, false));
-            endTimes.addAll(this.getTimeString(i, false), this.getTimeString(i+1, true));
+            allOfficeHours.add(halfTimeSlot);
+            allStartTimes.addAll(this.getTimeString(i, true), this.getTimeString(i, false));
+            allEndTimes.addAll(this.getTimeString(i, false), this.getTimeString(i+1, true));
         }
+        startTime = allStartTimes.get(0);
+        endTime = allEndTimes.get(allEndTimes.size()-1);
+        resetTimeRange();
+        triggerListener = false;
         ((ComboBox) gui.getGUINode(CSG_OH_START_TIME_CB)).getSelectionModel().selectFirst();
         ((ComboBox) gui.getGUINode(CSG_OH_END_TIME_CB)).getSelectionModel().selectLast();
+        triggerListener = true;
+    }
+    
+    public void reloadOfficeHours(){
+        getOfficeHours().clear();
+        for(int i = 0; i < allOfficeHours.size(); i++){
+            if(startTime != null && startTime.equals(allOfficeHours.get(i).getStartTime())){
+                for(int j = i; j < allOfficeHours.size(); j++){
+                    officeHours.add(allOfficeHours.get(j));
+                    if(allOfficeHours.get(j).getEndTime().equals(endTime))
+                        return;
+                 }
+                return;
+            }
+        }
+    }
+    
+    public void resetTimeRange(){
+        AppGUIModule gui = app.getGUIModule();
+        startTimes.clear();
+        endTimes.clear();
+        for(int i = 0 ; i < allStartTimes.size() && endTime != null && !endTime.equals(allStartTimes.get(i)); i++){
+            startTimes.add(allStartTimes.get(i));
+        }
+        for(int i = allEndTimes.indexOf(startTime) + 1 ; i < allEndTimes.size(); i++){
+            endTimes.add(allEndTimes.get(i));
+        }
+        triggerListener = false;
+        ((ComboBox) gui.getGUINode(CSG_OH_START_TIME_CB)).getSelectionModel().select(startTime);
+        ((ComboBox) gui.getGUINode(CSG_OH_END_TIME_CB)).getSelectionModel().select(endTime);
+        triggerListener = true;        
+        reloadOfficeHours();
     }
     
     private String getTimeString(int militaryHour, boolean onHour) {
@@ -599,6 +645,37 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
     
     public void setTriggerListener(boolean triggerListener){
         this.triggerListener = triggerListener;
+    }
+    
+    
+    /**
+     * @return the startTime
+     */
+    public String getStartTime() {
+        return startTime;
+    }
+
+    /**
+     * @param startTime the startTime to set
+     */
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+        resetTimeRange();
+    }
+
+    /**
+     * @return the endTime
+     */
+    public String getEndTime() {
+        return endTime;
+    }
+
+    /**
+     * @param endTime the endTime to set
+     */
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+        resetTimeRange();
     }
 }
 

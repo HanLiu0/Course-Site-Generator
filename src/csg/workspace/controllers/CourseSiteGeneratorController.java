@@ -24,6 +24,7 @@ import csg.transactions.EditStyleImages_Transaction;
 import csg.transactions.EditStyleSheet_Transaction;
 import csg.transactions.RemoveOH_Transaction;
 import csg.transactions.RemoveTA_Transaction;
+import csg.transactions.SelectTimeRange_Transaction;
 import csg.workspace.dialogs.CourseSiteGeneratorDialog;
 import djf.modules.AppGUIModule;
 import javafx.scene.Node;
@@ -156,9 +157,18 @@ public class CourseSiteGeneratorController {
         app.processTransaction(removeTATransaction);        
     }
     
+    public void processSelectTimeRange(int index, Object nodeId){
+        AppGUIModule gui = app.getGUIModule();
+        CourseSiteGeneratorData data = (CourseSiteGeneratorData)app.getDataComponent();
+        ComboBox cb = (ComboBox)gui.getGUINode(nodeId);
+        String time = (String)cb.getSelectionModel().getSelectedItem();
+        SelectTimeRange_Transaction transaction = new SelectTimeRange_Transaction(data, cb, time, index);
+        app.processTransaction(transaction);            
+    }
+    
     public void processAddOrRemoveOH(){
         AppGUIModule gui = app.getGUIModule();
-        CourseSiteGeneratorData ohData = (CourseSiteGeneratorData)app.getDataComponent();
+        CourseSiteGeneratorData data = (CourseSiteGeneratorData)app.getDataComponent();
         TableView<TeachingAssistantPrototype> taTable = (TableView<TeachingAssistantPrototype>)gui.getGUINode(CSG_OH_TAS_TABLE_VIEW);
         TeachingAssistantPrototype selectedTA = taTable.getSelectionModel().getSelectedItem();
         //User didn't choose a TA
@@ -167,10 +177,10 @@ public class CourseSiteGeneratorController {
         TableView<TimeSlot> officeHoursTable = (TableView<TimeSlot>)gui.getGUINode(CSG_OH_TABLEVIEW);
         TablePosition selectedCell = officeHoursTable.getSelectionModel().getSelectedCells().get(0);
         //User didn't choose a day
-        if(!ohData.isDayOfWeekColumn(selectedCell.getColumn()))
+        if(!data.isDayOfWeekColumn(selectedCell.getColumn()))
             return;
         TimeSlot selectedTimeSlot = officeHoursTable.getSelectionModel().getSelectedItem();
-        DayOfWeek day = ohData.getColumnDayOfWeek(selectedCell.getColumn());
+        DayOfWeek day = data.getColumnDayOfWeek(selectedCell.getColumn());
         if(selectedTimeSlot.containsTA(selectedTA, day)){
             RemoveOH_Transaction removeCSGTransaction = new RemoveOH_Transaction(officeHoursTable, selectedTimeSlot, selectedTA, day);
             app.processTransaction(removeCSGTransaction);
