@@ -27,6 +27,7 @@ import csg.transactions.RemoveTA_Transaction;
 import csg.transactions.SelectTimeRange_Transaction;
 import csg.workspace.dialogs.CourseSiteGeneratorDialog;
 import djf.modules.AppGUIModule;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -175,7 +176,12 @@ public class CourseSiteGeneratorController {
         if(selectedTA == null)
             return;        
         TableView<TimeSlot> officeHoursTable = (TableView<TimeSlot>)gui.getGUINode(CSG_OH_TABLEVIEW);
-        TablePosition selectedCell = officeHoursTable.getSelectionModel().getSelectedCells().get(0);
+        ObservableList<TablePosition> tablePosition = officeHoursTable.getSelectionModel().getSelectedCells();
+        TablePosition selectedCell = null;
+        if(tablePosition.size() > 0)
+            selectedCell = tablePosition.get(0);
+        else
+            return;
         //User didn't choose a day
         if(!data.isDayOfWeekColumn(selectedCell.getColumn()))
             return;

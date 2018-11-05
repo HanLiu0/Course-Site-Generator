@@ -10,12 +10,17 @@ import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_ADD_TA_BUTTON;
 import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_ALL_RB;
 import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_EMAIL_TEXT_FIELD;
 import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_NAME_TEXT_FIELD;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_HOME_CB;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_HWS_CB;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_SCHEDULE_CB;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_SYLLABUS_CB;
 import csg.data.CourseSiteGeneratorData;
 import djf.modules.AppGUIModule;
 import djf.ui.foolproof.FoolproofDesign;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 
@@ -33,6 +38,37 @@ public class CourseSiteGeneratorFoolproofDesign implements FoolproofDesign {
     @Override
     public void updateControls() {
         AppGUIModule gui = app.getGUIModule();
+        CheckBox homeCB = ((CheckBox)gui.getGUINode(CSG_SITE_HOME_CB));
+        CheckBox syllabusCB = ((CheckBox)gui.getGUINode(CSG_SITE_SYLLABUS_CB));
+        CheckBox scheduleCB = ((CheckBox)gui.getGUINode(CSG_SITE_SCHEDULE_CB));
+        CheckBox hwsCB = ((CheckBox)gui.getGUINode(CSG_SITE_HWS_CB));
+        int numOfPages = 0;
+        CheckBox selectedCheckBox = null;
+        if(homeCB.isSelected()){
+            numOfPages++;
+            selectedCheckBox = homeCB;
+        }
+        if(syllabusCB.isSelected()){
+            numOfPages++;
+            selectedCheckBox = syllabusCB;
+        }
+        if(scheduleCB.isSelected()){
+            numOfPages++;
+            selectedCheckBox = scheduleCB;
+        }
+        if(hwsCB.isSelected()){
+            numOfPages++;
+            selectedCheckBox = hwsCB;
+        }
+        if(numOfPages == 1){
+            selectedCheckBox.setDisable(true);
+        }
+        else{
+            homeCB.setDisable(false);
+            syllabusCB.setDisable(false);
+            scheduleCB.setDisable(false);
+            hwsCB.setDisable(false);
+        }
         TextField nameTF = (TextField) gui.getGUINode(CSG_OH_TAS_NAME_TEXT_FIELD);
         TextField emailTF = (TextField) gui.getGUINode(CSG_OH_TAS_EMAIL_TEXT_FIELD);            
         Button addBt = (Button) gui.getGUINode(CSG_OH_TAS_ADD_TA_BUTTON);        

@@ -111,7 +111,11 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
             ((ComboBox) gui.getGUINode(CSG_SITE_SUBJECT_CB)).setItems(subjectOptions);
             ((ComboBox) gui.getGUINode(CSG_SITE_NUMBER_CB)).setItems(numberOptions);
             ((ComboBox) gui.getGUINode(CSG_SITE_SEMESTER_CB)).setItems(semesterOptions);
-            ((ComboBox) gui.getGUINode(CSG_SITE_YEAR_CB)).setItems(yearOptions);           
+            ((ComboBox) gui.getGUINode(CSG_SITE_YEAR_CB)).setItems(yearOptions);        
+            subjectOptions.addAll("CSE", "AMS", "ISE");
+            numberOptions.addAll("101", "114", "214", "215", "219");
+            semesterOptions.addAll("Spring", "Fall", "WInter", "Summer");
+            yearOptions.addAll(LocalDate.now().getYear() + "", LocalDate.now().getYear()+1+"");
             syllabusText = new String[9];
             
             lectureItems = ((TableView)gui.getGUINode(CSG_LECTURES_TABLEVIEW)).getItems();

@@ -707,15 +707,19 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             });
             ((CheckBox) gui.getGUINode(CSG_SITE_HOME_CB)).setOnAction(e->{
                 controller.processEditPages(0, CSG_SITE_HOME_CB);
+                app.getFoolproofModule().updateAll();
             });
             ((CheckBox) gui.getGUINode(CSG_SITE_SYLLABUS_CB)).setOnAction(e->{
                 controller.processEditPages(1, CSG_SITE_SYLLABUS_CB);
+                app.getFoolproofModule().updateAll();
             });
             ((CheckBox) gui.getGUINode(CSG_SITE_SCHEDULE_CB)).setOnAction(e->{
                 controller.processEditPages(2, CSG_SITE_SCHEDULE_CB);
+                app.getFoolproofModule().updateAll();
             });
             ((CheckBox) gui.getGUINode(CSG_SITE_HWS_CB)).setOnAction(e->{
                 controller.processEditPages(3, CSG_SITE_HWS_CB);
+                app.getFoolproofModule().updateAll();
             });
             ((Button) gui.getGUINode(CSG_SITE_FAVICON_BUTTON)).setOnAction(e->{
                 controller.processEditStyleImages(0, CSG_SITE_FAVICON_IMAGE);
@@ -839,10 +843,10 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             ((ComboBox) gui.getGUINode(CSG_SITE_YEAR_CB)).setValue("");
             ((TextField) gui.getGUINode(CSG_SITE_TITLE_TF)).clear();
             ((Label) gui.getGUINode(CSG_SITE_DIR_LABEL)).setText(props.getProperty(CSG_SITE_DIR_LABEL + "_TEXT"));
-            ((CheckBox) gui.getGUINode(CSG_SITE_HOME_CB)).setSelected(false);
-            ((CheckBox) gui.getGUINode(CSG_SITE_SYLLABUS_CB)).setSelected(false);
-            ((CheckBox) gui.getGUINode(CSG_SITE_SCHEDULE_CB)).setSelected(false);
-            ((CheckBox) gui.getGUINode(CSG_SITE_HWS_CB)).setSelected(false);
+            ((CheckBox) gui.getGUINode(CSG_SITE_HOME_CB)).setSelected(true);
+            ((CheckBox) gui.getGUINode(CSG_SITE_SYLLABUS_CB)).setSelected(true);
+            ((CheckBox) gui.getGUINode(CSG_SITE_SCHEDULE_CB)).setSelected(true);
+            ((CheckBox) gui.getGUINode(CSG_SITE_HWS_CB)).setSelected(true);
             ((ImageView) gui.getGUINode(CSG_SITE_FAVICON_IMAGE)).setImage
                 (new Image(FILE_PROTOCOL + props.getProperty(APP_PATH_IMAGES) + props.getProperty(IMAGE_PLACEHOLDER_ICON)));
             ((ImageView) gui.getGUINode(CSG_SITE_NAVBAR_IMAGE)).setImage
