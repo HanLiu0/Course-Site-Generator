@@ -64,6 +64,7 @@ public class AppNodesBuilder {
             String styleClass,
             boolean enabled) {
         CheckBox checkBox = new CheckBox();
+        checkBox.setSelected(true);
         initNode(nodeId.toString(), checkBox, parentPane, styleClass, enabled);
 
         // MAKE SURE THE LANGUAGE MANAGER HAS IT
@@ -80,6 +81,7 @@ public class AppNodesBuilder {
             String styleClass,
             boolean enabled) {
         CheckBox checkBox = new CheckBox();
+        checkBox.setSelected(true);
         initNode(nodeId.toString(), checkBox, parent, col, row, colSpan, rowSpan, styleClass, enabled);
 
         // MAKE SURE THE LANGUAGE MANAGER HAS IT
