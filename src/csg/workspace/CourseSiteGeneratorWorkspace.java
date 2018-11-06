@@ -297,7 +297,6 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
         private void initSiteTab(Tab siteTab){
             PropertiesManager props = PropertiesManager.getPropertiesManager();
 
-            // THIS WILL BUILD ALL OF OUR JavaFX COMPONENTS FOR US
             AppNodesBuilder csgBuilder = app.getGUIModule().getNodesBuilder();    
             ScrollPane sp = new ScrollPane();
             VBox sitePane = csgBuilder.buildVBox(CSG_SITE_PANE, null, CLASS_CSG_TABPANE, ENABLED);
@@ -317,7 +316,8 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             csgBuilder.buildLabel(CSG_SITE_EXPORT_DIR_LABEL, bannerPane, 0, 4, 1, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
             csgBuilder.buildLabel(CSG_SITE_NUMBER_LABEL, bannerPane, 3, 1, 1, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
             csgBuilder.buildLabel(CSG_SITE_YEAR_LABEL, bannerPane, 3, 2, 1, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
-            csgBuilder.buildLabel(CSG_SITE_DIR_LABEL, bannerPane, 1, 4, 2, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
+            Label dirLabel = csgBuilder.buildLabel(CSG_SITE_DIR_LABEL, bannerPane, 1, 4, 2, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
+            dirLabel.setText(".\\export\\[subject]_[number]_[semester]_[year]\\public_html");
             csgBuilder.buildComboBox(CSG_SITE_SUBJECT_CB, bannerPane, 1, 1, 2, 1, CLASS_CSG_CB, ENABLED,  true);
             csgBuilder.buildComboBox(CSG_SITE_SEMESTER_CB, bannerPane, 1, 2, 2, 1, CLASS_CSG_CB, ENABLED, true);
             csgBuilder.buildComboBox(CSG_SITE_NUMBER_CB, bannerPane, 4, 1, 2, 1, CLASS_CSG_CB, ENABLED, true);
@@ -842,7 +842,7 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             ((ComboBox) gui.getGUINode(CSG_SITE_SEMESTER_CB)).setValue("");
             ((ComboBox) gui.getGUINode(CSG_SITE_YEAR_CB)).setValue("");
             ((TextField) gui.getGUINode(CSG_SITE_TITLE_TF)).clear();
-            ((Label) gui.getGUINode(CSG_SITE_DIR_LABEL)).setText(props.getProperty(CSG_SITE_DIR_LABEL + "_TEXT"));
+            ((Label) gui.getGUINode(CSG_SITE_DIR_LABEL)).setText(".\\export\\[subject]_[number]_[semester]_[year]\\public_html");
             ((CheckBox) gui.getGUINode(CSG_SITE_HOME_CB)).setSelected(true);
             ((CheckBox) gui.getGUINode(CSG_SITE_SYLLABUS_CB)).setSelected(true);
             ((CheckBox) gui.getGUINode(CSG_SITE_SCHEDULE_CB)).setSelected(true);

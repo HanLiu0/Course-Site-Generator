@@ -89,7 +89,6 @@
         <property name="CSG_SITE_TITLE_LABEL_TEXT"           value="Título:"></property>        
         <property name="CSG_SITE_TITLE_TF_TEXT"           value="Título"></property>        
         <property name="CSG_SITE_EXPORT_DIR_LABEL_TEXT"           value="Exportar Dir:"></property>
-        <property name="CSG_SITE_DIR_LABEL_TEXT"           value="Por favor ingrese la información del curso arriba"></property>
         <property name="CSG_SITE_PAGES_LABEL_TEXT"           value="Páginas"></property>
         <property name="CSG_SITE_HOME_CB_TEXT"           value="Casa"></property>
         <property name="CSG_SITE_SYLLABUS_CB_TEXT"           value="Silaba"></property>
@@ -101,8 +100,7 @@
         <property name="CSG_SITE_LEFT_FOOTER_BUTTON_TEXT"           value="Imagen del pie izquierdo:"></property>
         <property name="CSG_SITE_RIGHT_FOOTER_BUTTON_TEXT"           value="Imagen de pie derecho:"></property>
         <property name="CSG_SITE_STYLESHEET_LABEL_TEXT"             value="Fuentes &amp; Hojas de estilo de colores:"></property>
-        <property name="CSG_SITE_STYLESHEET_NOTE_LABEL_TEXT"           value="Nota: las hojas de estilo deben colocarse 
-                    dentro de work / css para que se puedan seleccionar"></property>
+        <property name="CSG_SITE_STYLESHEET_NOTE_LABEL_TEXT"           value="Nota: las hojas de estilo deben colocarse dentro de work / css para que se puedan seleccionar"></property>
         <property name="CSG_SITE_INSTRUCTOR_LABEL_TEXT"           value="Instructor"></property>
         <property name="CSG_SITE_NAME_LABEL_TEXT"           value="Nombre:"></property>
         <property name="CSG_SITE_EMAIL_LABEL_TEXT"           value="Email:"></property>

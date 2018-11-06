@@ -89,7 +89,6 @@
         <property name="CSG_SITE_TITLE_LABEL_TEXT"           value="Title:"></property>        
         <property name="CSG_SITE_TITLE_TF_TEXT"           value="Title"></property>        
         <property name="CSG_SITE_EXPORT_DIR_LABEL_TEXT"           value="Export Dir:"></property>
-        <property name="CSG_SITE_DIR_LABEL_TEXT"           value="Please enter course information above"></property>
         <property name="CSG_SITE_PAGES_LABEL_TEXT"           value="Pages"></property>
         <property name="CSG_SITE_HOME_CB_TEXT"           value="Home"></property>
         <property name="CSG_SITE_SYLLABUS_CB_TEXT"           value="Syllabus"></property>
