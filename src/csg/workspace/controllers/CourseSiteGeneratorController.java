@@ -151,10 +151,11 @@ public class CourseSiteGeneratorController {
         AppGUIModule gui = app.getGUIModule();
         CourseSiteGeneratorData data = (CourseSiteGeneratorData)app.getDataComponent();
         TableView<TeachingAssistantPrototype> taTable = (TableView<TeachingAssistantPrototype>)gui.getGUINode(CSG_OH_TAS_TABLE_VIEW);
+        TableView<TimeSlot> ohTable = (TableView<TimeSlot>)gui.getGUINode(CSG_OH_TABLEVIEW);        
         TeachingAssistantPrototype selectedTA = taTable.getSelectionModel().getSelectedItem();
         if(selectedTA == null)
             return;
-        RemoveTA_Transaction removeTATransaction = new RemoveTA_Transaction(data, selectedTA);
+        RemoveTA_Transaction removeTATransaction = new RemoveTA_Transaction(data, selectedTA, ohTable);
         app.processTransaction(removeTATransaction);        
     }
     

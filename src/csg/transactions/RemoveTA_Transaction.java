@@ -12,6 +12,7 @@ import csg.data.TimeSlot.DayOfWeek;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import javafx.scene.control.TableView;
 import jtps.jTPS_Transaction;
 
 /**
@@ -19,14 +20,16 @@ import jtps.jTPS_Transaction;
  * @author hanli
  */
 public class RemoveTA_Transaction implements jTPS_Transaction {
+    TableView<TimeSlot> officeHoursTable;
     CourseSiteGeneratorData data;
     TeachingAssistantPrototype ta;
     HashMap<TimeSlot, ArrayList<DayOfWeek>> ohs;
     
-    public RemoveTA_Transaction(CourseSiteGeneratorData initData, TeachingAssistantPrototype initTA) {
+    public RemoveTA_Transaction(CourseSiteGeneratorData initData, TeachingAssistantPrototype initTA, TableView<TimeSlot> ohTable) {
         data = initData;
         ta = initTA;
         ohs = new HashMap<>();
+        officeHoursTable = ohTable;
         HashMap<TimeSlot, ArrayList<DayOfWeek>> oldOH = initTA.getOH();
         for(Map.Entry<TimeSlot, ArrayList<DayOfWeek>> entry: oldOH.entrySet()){
             ohs.put(entry.getKey(), new ArrayList<>(entry.getValue()));
@@ -36,6 +39,7 @@ public class RemoveTA_Transaction implements jTPS_Transaction {
     @Override
     public void doTransaction() {
         data.removeTA(ta);
+        officeHoursTable.refresh();
     }
 
     @Override
@@ -46,5 +50,6 @@ public class RemoveTA_Transaction implements jTPS_Transaction {
                 oh.getKey().addTA(ta, dow.toString());
             }
         }
+        officeHoursTable.refresh();
     }
 }

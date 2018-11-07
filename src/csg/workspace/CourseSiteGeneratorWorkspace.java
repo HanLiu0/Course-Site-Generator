@@ -355,7 +355,10 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             ComboBox stylesheet = csgBuilder.buildComboBox(CSG_SITE_STYLESHEET_CB, stylePane, 2, 5, 2, 1, CLASS_CSG_CB, ENABLED,  false);
             File f = new File(props.getProperty(APP_PATH_STYLESHEET));
             ObservableList ol = FXCollections.observableArrayList();
-            ol.addAll(f.list());
+            for(String file: f.list()){
+                if(file.endsWith(".css"))
+                    ol.add(file);
+            }
             stylesheet.setItems(ol);
             
             //Instructor
