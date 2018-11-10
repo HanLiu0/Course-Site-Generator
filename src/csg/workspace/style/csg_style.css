@@ -97,6 +97,8 @@ and open the template in the editor.
     -fx-background-color: SWATCH_NEUTRAL;
 }
 
+
+
 .csg_pane {
     -fx-border-color: black;
     -fx-padding: 20px;
@@ -266,6 +268,12 @@ and open the template in the editor.
     -fx-text-fill: black;
 }
 
+.tab {
+    -fx-focus-color: transparent; 
+    -fx-faint-focus-color: transparent;
+}
+
 .root { 
-    -fx-focus-color: #ffcba4; 
+    -fx-focus-color: #ffcba4;
+    -fx-font-family: "Segoe UI";
 }

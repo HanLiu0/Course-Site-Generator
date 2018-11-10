@@ -92,7 +92,7 @@
         <property name="CSG_SITE_PAGES_LABEL_TEXT"           value="Páginas"></property>
         <property name="CSG_SITE_HOME_CB_TEXT"           value="Casa"></property>
         <property name="CSG_SITE_SYLLABUS_CB_TEXT"           value="Silaba"></property>
-        <property name="CSG_SITE_SCHEDULE_CB_TEXT"           value="Schedule"></property>
+        <property name="CSG_SITE_SCHEDULE_CB_TEXT"           value="Programar"></property>
         <property name="CSG_SITE_HWS_CB_TEXT"           value="HWs"></property>
         <property name="CSG_SITE_STYLE_LABEL_TEXT"           value="Estilo"></property>
         <property name="CSG_SITE_FAVICON_BUTTON_TEXT"           value="Favicon:"></property>

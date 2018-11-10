@@ -568,8 +568,8 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
     /**
      * @return the syllabusText
      */
-    public String[] getSyllabusText(int i) {
-        return syllabusText;
+    public String getSyllabusText(int i) {
+        return syllabusText[i];
     }
 
     /**

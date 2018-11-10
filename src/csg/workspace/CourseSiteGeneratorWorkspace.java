@@ -760,6 +760,42 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
                 if(((CourseSiteGeneratorData)app.getDataComponent()).getTriggerListener())
                     controller.processEditStyleSheet(CSG_SITE_STYLESHEET_CB);
             });
+            ((TextArea) gui.getGUINode(CSG_SYLLABUS_DESCRIPTION_TA)).textProperty().addListener(e->{
+                if(((CourseSiteGeneratorData)app.getDataComponent()).getTriggerListener())
+                    controller.processEditSyllabusDetails(0, CSG_SYLLABUS_DESCRIPTION_TA);
+            });
+            ((TextArea) gui.getGUINode(CSG_SYLLABUS_TOPICS_TA)).textProperty().addListener(e->{
+                if(((CourseSiteGeneratorData)app.getDataComponent()).getTriggerListener())
+                    controller.processEditSyllabusDetails(1, CSG_SYLLABUS_TOPICS_TA);
+            });
+            ((TextArea) gui.getGUINode(CSG_SYLLABUS_PREREQUISITES_TA)).textProperty().addListener(e->{
+                if(((CourseSiteGeneratorData)app.getDataComponent()).getTriggerListener())
+                    controller.processEditSyllabusDetails(2, CSG_SYLLABUS_PREREQUISITES_TA);
+            });
+            ((TextArea) gui.getGUINode(CSG_SYLLABUS_OUTCOMES_TA)).textProperty().addListener(e->{
+                if(((CourseSiteGeneratorData)app.getDataComponent()).getTriggerListener())
+                    controller.processEditSyllabusDetails(3, CSG_SYLLABUS_OUTCOMES_TA);
+            });
+            ((TextArea) gui.getGUINode(CSG_SYLLABUS_TEXTBOOKS_TA)).textProperty().addListener(e->{
+                if(((CourseSiteGeneratorData)app.getDataComponent()).getTriggerListener())
+                    controller.processEditSyllabusDetails(4, CSG_SYLLABUS_TEXTBOOKS_TA);
+            });
+            ((TextArea) gui.getGUINode(CSG_SYLLABUS_GRADED_COMPONENTS_TA)).textProperty().addListener(e->{
+                if(((CourseSiteGeneratorData)app.getDataComponent()).getTriggerListener())
+                    controller.processEditSyllabusDetails(5, CSG_SYLLABUS_GRADED_COMPONENTS_TA);
+            });
+            ((TextArea) gui.getGUINode(CSG_SYLLABUS_GRADING_NOTE_TA)).textProperty().addListener(e->{
+                if(((CourseSiteGeneratorData)app.getDataComponent()).getTriggerListener())
+                    controller.processEditSyllabusDetails(6, CSG_SYLLABUS_GRADING_NOTE_TA);
+            });
+            ((TextArea) gui.getGUINode(CSG_SYLLABUS_ACADEMIC_DISHONESTY_TA)).textProperty().addListener(e->{
+                if(((CourseSiteGeneratorData)app.getDataComponent()).getTriggerListener())
+                    controller.processEditSyllabusDetails(7, CSG_SYLLABUS_ACADEMIC_DISHONESTY_TA);
+            });
+            ((TextArea) gui.getGUINode(CSG_SYLLABUS_SPECIAL_ASSISTANCE_TA)).textProperty().addListener(e->{
+                if(((CourseSiteGeneratorData)app.getDataComponent()).getTriggerListener())
+                    controller.processEditSyllabusDetails(8, CSG_SYLLABUS_SPECIAL_ASSISTANCE_TA);
+            });
             TableView taTableView = (TableView) gui.getGUINode(CSG_OH_TAS_TABLE_VIEW);
             ((Button) gui.getGUINode(CSG_OH_TAS_REMOVE_BT)).setOnAction(e->{
                 controller.processRemoveTA();

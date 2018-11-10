@@ -22,6 +22,7 @@ import csg.transactions.EditInstructor_Transaction;
 import csg.transactions.EditPages_Transaction;
 import csg.transactions.EditStyleImages_Transaction;
 import csg.transactions.EditStyleSheet_Transaction;
+import csg.transactions.EditSyllabusDetails_Transaction;
 import csg.transactions.RemoveOH_Transaction;
 import csg.transactions.RemoveTA_Transaction;
 import csg.transactions.SelectTimeRange_Transaction;
@@ -121,6 +122,23 @@ public class CourseSiteGeneratorController {
             }
         }
         EditInstructor_Transaction transaction = new EditInstructor_Transaction(data, node, index, text);
+        app.processTransaction(transaction);      
+    }
+    
+    public void processEditSyllabusDetails(int index, Object nodeId){
+        AppGUIModule gui = app.getGUIModule();
+        TextArea textArea = (TextArea)gui.getGUINode(nodeId);
+        String text = textArea.getText();
+        CourseSiteGeneratorData data = (CourseSiteGeneratorData)app.getDataComponent();
+        jTPS jtps = app.getTPS();
+        jTPS_Transaction t = jtps.getMostRecentTransaction();
+        if(t != null && t instanceof EditSyllabusDetails_Transaction){
+            if (((EditSyllabusDetails_Transaction)t).getIndex() == index){
+                ((EditSyllabusDetails_Transaction)t).updateTransaction(text);
+                return;
+            }
+        }
+        EditSyllabusDetails_Transaction transaction = new EditSyllabusDetails_Transaction(data, textArea, index, text);
         app.processTransaction(transaction);      
     }
 
