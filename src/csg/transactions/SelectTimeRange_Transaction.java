@@ -33,10 +33,14 @@ public class SelectTimeRange_Transaction implements jTPS_Transaction{
             
     public void doTransaction(){        
         data.setTriggerListener(false);
-        if(index==0)
+        if(index==0){
             data.setStartTime(time);
-        else
+            data.resetTimeRange();
+        }
+        else{
             data.setEndTime(time);
+            data.resetTimeRange();
+        }
         cb.getSelectionModel().select(time);
         data.setTriggerListener(true);
     }

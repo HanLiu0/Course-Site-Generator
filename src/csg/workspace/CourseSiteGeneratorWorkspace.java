@@ -174,6 +174,7 @@ import static csg.CourseSiteGeneratorPropertyType.CSG_THURSDAY_TABLE_COLUMN;
 import static csg.CourseSiteGeneratorPropertyType.CSG_TUESDAY_TABLE_COLUMN;
 import static csg.CourseSiteGeneratorPropertyType.CSG_WEDNESDAY_TABLE_COLUMN;
 import csg.data.CourseSiteGeneratorData;
+import csg.data.Instructor;
 import csg.data.LabItem;
 import csg.data.LectureItem;
 import csg.data.RecitationItem;
@@ -314,14 +315,14 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             csgBuilder.buildLabel(CSG_SITE_SEMESTER_LABEL, bannerPane, 0, 2, 1, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
             csgBuilder.buildLabel(CSG_SITE_TITLE_LABEL, bannerPane, 0, 3, 1, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
             csgBuilder.buildLabel(CSG_SITE_EXPORT_DIR_LABEL, bannerPane, 0, 4, 1, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
-            csgBuilder.buildLabel(CSG_SITE_NUMBER_LABEL, bannerPane, 3, 1, 1, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
-            csgBuilder.buildLabel(CSG_SITE_YEAR_LABEL, bannerPane, 3, 2, 1, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
-            Label dirLabel = csgBuilder.buildLabel(CSG_SITE_DIR_LABEL, bannerPane, 1, 4, 2, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
+            csgBuilder.buildLabel(CSG_SITE_NUMBER_LABEL, bannerPane, 4, 1, 1, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
+            csgBuilder.buildLabel(CSG_SITE_YEAR_LABEL, bannerPane, 4, 2, 1, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
+            Label dirLabel = csgBuilder.buildLabel(CSG_SITE_DIR_LABEL, bannerPane, 1, 4, 6, 1, CLASS_CSG_BOLD_LABEL, ENABLED);
             dirLabel.setText(".\\export\\[subject]_[number]_[semester]_[year]\\public_html");
             csgBuilder.buildComboBox(CSG_SITE_SUBJECT_CB, bannerPane, 1, 1, 2, 1, CLASS_CSG_CB, ENABLED,  true);
             csgBuilder.buildComboBox(CSG_SITE_SEMESTER_CB, bannerPane, 1, 2, 2, 1, CLASS_CSG_CB, ENABLED, true);
-            csgBuilder.buildComboBox(CSG_SITE_NUMBER_CB, bannerPane, 4, 1, 2, 1, CLASS_CSG_CB, ENABLED, true);
-            csgBuilder.buildComboBox(CSG_SITE_YEAR_CB, bannerPane, 4, 2, 2, 1, CLASS_CSG_CB, ENABLED,  true);
+            csgBuilder.buildComboBox(CSG_SITE_NUMBER_CB, bannerPane, 5, 1, 3, 1, CLASS_CSG_CB, ENABLED, true);
+            csgBuilder.buildComboBox(CSG_SITE_YEAR_CB, bannerPane, 5, 2, 3, 1, CLASS_CSG_CB, ENABLED,  true);
             csgBuilder.buildTextField(CSG_SITE_TITLE_TF, bannerPane, 1, 3, 5, 1, CLASS_CSG_TEXT_FIELD, ENABLED);
             
             //Pages
@@ -870,6 +871,56 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
         @Override
         public void showNewDialog() {
             // WE AREN'T USING THIS FOR THIS APPLICATION
+        }
+        
+        public void loadDataToUI(){
+            AppGUIModule gui = app.getGUIModule();       
+            CourseSiteGeneratorData data = ((CourseSiteGeneratorData)app.getDataComponent());
+            PropertiesManager props = PropertiesManager.getPropertiesManager();
+            
+            ((CourseSiteGeneratorData)app.getDataComponent()).setTriggerListener(false);
+            ((ComboBox) gui.getGUINode(CSG_SITE_SUBJECT_CB)).setValue(data.getBannerText(0));
+            ((ComboBox) gui.getGUINode(CSG_SITE_NUMBER_CB)).setValue(data.getBannerText(1));
+            ((ComboBox) gui.getGUINode(CSG_SITE_SEMESTER_CB)).setValue(data.getBannerText(2));
+            ((ComboBox) gui.getGUINode(CSG_SITE_YEAR_CB)).setValue(data.getBannerText(3));
+            ((TextField) gui.getGUINode(CSG_SITE_TITLE_TF)).setText(data.getBannerText(4));
+            ((Label) gui.getGUINode(CSG_SITE_DIR_LABEL)).setText(data.getExportDir());
+            ((CheckBox) gui.getGUINode(CSG_SITE_HOME_CB)).setSelected(data.getPages(0));
+            ((CheckBox) gui.getGUINode(CSG_SITE_SYLLABUS_CB)).setSelected(data.getPages(1));
+            ((CheckBox) gui.getGUINode(CSG_SITE_SCHEDULE_CB)).setSelected(data.getPages(2));
+            ((CheckBox) gui.getGUINode(CSG_SITE_HWS_CB)).setSelected(data.getPages(3));
+            ((ImageView) gui.getGUINode(CSG_SITE_FAVICON_IMAGE)).setImage
+                (new Image(FILE_PROTOCOL + data.getStyleImages(0)));
+            ((ImageView) gui.getGUINode(CSG_SITE_NAVBAR_IMAGE)).setImage
+                (new Image(FILE_PROTOCOL+data.getStyleImages(1)));            
+            ((ImageView) gui.getGUINode(CSG_SITE_LEFT_FOOTER_IMAGE)).setImage
+                (new Image(FILE_PROTOCOL+data.getStyleImages(2)));            
+            ((ImageView) gui.getGUINode(CSG_SITE_RIGHT_FOOTER_IMAGE)).setImage
+                (new Image(FILE_PROTOCOL+data.getStyleImages(3)));     
+            ((ComboBox) gui.getGUINode(CSG_SITE_STYLESHEET_CB)).getSelectionModel().select(data.getStylesheet());
+            Instructor instructor = data.getInstructor();
+            ((TextField) gui.getGUINode(CSG_SITE_NAME_TF)).setText(instructor.getName());
+            ((TextField) gui.getGUINode(CSG_SITE_ROOM_TF)).setText(instructor.getRoom());
+            ((TextField) gui.getGUINode(CSG_SITE_EMAIL_TF)).setText(instructor.getEmail());
+            ((TextField) gui.getGUINode(CSG_SITE_HOMEPAGE_TF)).setText(instructor.getHomepage());
+            ((TextArea) gui.getGUINode(CSG_SITE_OH_TA)).setText(instructor.getOhs());
+            ((TextArea) gui.getGUINode(CSG_SYLLABUS_DESCRIPTION_TA)).setText(data.getSyllabusText(0));
+            ((TextArea) gui.getGUINode(CSG_SYLLABUS_TOPICS_TA)).setText(data.getSyllabusText(1));
+            ((TextArea) gui.getGUINode(CSG_SYLLABUS_PREREQUISITES_TA)).setText(data.getSyllabusText(2));
+            ((TextArea) gui.getGUINode(CSG_SYLLABUS_OUTCOMES_TA)).setText(data.getSyllabusText(3));
+            ((TextArea) gui.getGUINode(CSG_SYLLABUS_TEXTBOOKS_TA)).setText(data.getSyllabusText(4));
+            ((TextArea) gui.getGUINode(CSG_SYLLABUS_GRADED_COMPONENTS_TA)).setText(data.getSyllabusText(5));
+            ((TextArea) gui.getGUINode(CSG_SYLLABUS_GRADING_NOTE_TA)).setText(data.getSyllabusText(6));
+            ((TextArea) gui.getGUINode(CSG_SYLLABUS_ACADEMIC_DISHONESTY_TA)).setText(data.getSyllabusText(7));
+            ((TextArea) gui.getGUINode(CSG_SYLLABUS_SPECIAL_ASSISTANCE_TA)).setText(data.getSyllabusText(8));
+            ((RadioButton) gui.getGUINode(CSG_OH_TAS_ALL_RB)).setSelected(true);
+            data.setAllTA();
+            ((ComboBox) gui.getGUINode(CSG_OH_START_TIME_CB)).getSelectionModel().select(data.getStartTime());
+            ((ComboBox) gui.getGUINode(CSG_OH_END_TIME_CB)).getSelectionModel().select(data.getEndTime());
+            ((DatePicker) gui.getGUINode(CSG_SCHEDULE_STARTING_MONDAY_DP)).setValue(data.getStartingMonday());
+            ((DatePicker) gui.getGUINode(CSG_SCHEDULE_ENDING_FRIDAY_DP)).setValue(data.getEndingFriday());
+            ((Button) gui.getGUINode(CSG_SCHEDULE_ADD_UPDATE_BT)).setText(props.getProperty(CSG_SCHEDULE_ADD_UPDATE_BT + "_TEXT"));
+            ((CourseSiteGeneratorData)app.getDataComponent()).setTriggerListener(true);            
         }
         
         public void resetUserInterface(){

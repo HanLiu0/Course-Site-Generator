@@ -24,9 +24,13 @@ import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_YEAR_CB;
 import static csg.data.TeachingAssistantPrototype.TA_TYPE_GRA;
 import static csg.data.TeachingAssistantPrototype.TA_TYPE_UNDERGRA;
 import csg.data.TimeSlot.DayOfWeek;
+import static djf.AppPropertyType.APP_PATH_IMAGES;
+import static djf.AppPropertyType.IMAGE_PLACEHOLDER_ICON;
 import djf.components.AppDataComponent;
 import djf.modules.AppGUIModule;
+import static djf.modules.AppLanguageModule.FILE_PROTOCOL;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Iterator;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -34,6 +38,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableView;
+import properties_manager.PropertiesManager;
 
 /**
  *
@@ -93,15 +98,19 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
  
         public CourseSiteGeneratorData(CourseSiteGeneratorApp initApp) {
             // KEEP THIS FOR LATER
+            PropertiesManager props = PropertiesManager.getPropertiesManager();
             app = initApp;
             AppGUIModule gui = app.getGUIModule();
             triggerListener = true;
             bannerText = new String[5];
             for(int i = 0 ; i < bannerText.length; i++)
                 bannerText[i] = "";
-            exportDir = "";
+            exportDir = ".\\export\\[subject]_[number]_[semester]_[year]\\public_html";
             pages = new boolean[4];
+            Arrays.fill(pages, true);
             styleImages = new String[4];
+            Arrays.fill(styleImages, props.getProperty(APP_PATH_IMAGES) + props.getProperty(IMAGE_PLACEHOLDER_ICON));
+            stylesheet = "";
             instructor = new Instructor("", "", "", "", "");
             subjectOptions = FXCollections.observableArrayList();
             numberOptions = FXCollections.observableArrayList();
@@ -116,6 +125,7 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
             semesterOptions.addAll("Spring", "Fall", "WInter", "Summer");
             yearOptions.addAll(LocalDate.now().getYear() + "", LocalDate.now().getYear()+1+"");
             syllabusText = new String[9];
+            Arrays.fill(syllabusText, "");
             
             lectureItems = ((TableView)gui.getGUINode(CSG_LECTURES_TABLEVIEW)).getItems();
             recitationItems = ((TableView)gui.getGUINode(CSG_REC_TABLEVIEW)).getItems();
@@ -155,6 +165,9 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
             ((ComboBox) gui.getGUINode(CSG_OH_END_TIME_CB)).setItems(endTimes);
             startHour = MIN_START_HOUR;
             endHour = MAX_END_HOUR;
+
+            startTime = this.getTimeString(MIN_START_HOUR, true);
+            endTime = this.getTimeString(MAX_END_HOUR+1, true); 
             allOfficeHours = FXCollections.observableArrayList();
             resetOfficeHours();
             
@@ -184,12 +197,7 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
             allStartTimes.addAll(this.getTimeString(i, true), this.getTimeString(i, false));
             allEndTimes.addAll(this.getTimeString(i, false), this.getTimeString(i+1, true));
         }
-        startTime = allStartTimes.get(0);
-        endTime = allEndTimes.get(allEndTimes.size()-1);
-        resetTimeRange();
         triggerListener = false;
-        ((ComboBox) gui.getGUINode(CSG_OH_START_TIME_CB)).getSelectionModel().selectFirst();
-        ((ComboBox) gui.getGUINode(CSG_OH_END_TIME_CB)).getSelectionModel().selectLast();
         triggerListener = true;
     }
     
@@ -214,7 +222,7 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
         for(int i = 0 ; i < allStartTimes.size() && endTime != null && !endTime.equals(allStartTimes.get(i)); i++){
             startTimes.add(allStartTimes.get(i));
         }
-        for(int i = allEndTimes.indexOf(startTime) + 1 ; i < allEndTimes.size(); i++){
+        for(int i = allEndTimes.indexOf(startTime) + 1 ; i < allEndTimes.size() && startTime != null; i++){
             endTimes.add(allEndTimes.get(i));
         }
         triggerListener = false;
@@ -257,9 +265,10 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
     }
 
     public void initOhHours(String startHourText, String endHourText) {
+        resetOfficeHours();
         setStartTime(startHourText);
         setEndTime(endHourText);
-        resetOfficeHours();
+        resetTimeRange();
     }
     
     /**
@@ -268,15 +277,20 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
      */
     @Override
     public void reset() {
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
         triggerListener = true;
         bannerText = new String[5];
         for(int i = 0 ; i < bannerText.length; i++)
             bannerText[i] = "";
-        exportDir = "";
+        exportDir = ".\\export\\[subject]_[number]_[semester]_[year]\\public_html";
         pages = new boolean[4];
+        Arrays.fill(pages, true);
         styleImages = new String[4];
+        Arrays.fill(styleImages, props.getProperty(APP_PATH_IMAGES) + props.getProperty(IMAGE_PLACEHOLDER_ICON));
+        stylesheet = "";
         instructor = new Instructor("", "", "", "", "");
         syllabusText = new String[9];
+        Arrays.fill(syllabusText, "");
         lectureItems.clear();
         recitationItems.clear();
         labItems.clear();
@@ -286,7 +300,10 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
         getUndergraduateTeachingAssistants().clear();
         getGraduateTeachingAssistants().clear();
         getTeachingAssistants().clear();
-        resetOfficeHours();
+        resetOfficeHours();        
+        startTime = this.getTimeString(MIN_START_HOUR, true);
+        endTime = this.getTimeString(MAX_END_HOUR+1, true); 
+        resetTimeRange();
         setStartingMonday(null);
         setEndingFriday(null);
 //        
@@ -394,9 +411,17 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
     public Iterator<LabItem> labsIterator() {
         return labItems.iterator();
     }
+
+    public Iterator<ScheduleItem> schedulesIterator() {
+        return scheduleItems.iterator();
+    }
     
     public Iterator<TimeSlot> officeHoursIterator() {
         return getOfficeHours().iterator();
+    }
+    
+    public Iterator<TimeSlot> allOfficeHoursIterator(){
+        return allOfficeHours.iterator();
     }
 
     public TeachingAssistantPrototype getTAWithName(String name) {
@@ -410,7 +435,7 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
     }
 
     public TimeSlot getTimeSlot(String startTime) {
-        Iterator<TimeSlot> timeSlotsIterator = getOfficeHours().iterator();
+        Iterator<TimeSlot> timeSlotsIterator = allOfficeHours.iterator();
         while (timeSlotsIterator.hasNext()) {
             TimeSlot timeSlot = timeSlotsIterator.next();
             String timeSlotStartTime = timeSlot.getStartTime().replace(":", "_");
@@ -536,7 +561,7 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
             exportDir = ".\\export\\" + bannerText[0] + "_ "+bannerText[1] + "_ "+ bannerText[2] + "_ "+ 
                 bannerText[3] + "\\public_html";
         else
-            exportDir = "";
+            exportDir = ".\\export\\[subject]_[number]_[semester]_[year]\\public_html";
     }
     /**
      * @param exportDir the exportDir to set
@@ -708,7 +733,6 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
      */
     public void setStartTime(String startTime) {
         this.startTime = startTime;
-        resetTimeRange();
     }
 
     /**
@@ -723,7 +747,6 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
      */
     public void setEndTime(String endTime) {
         this.endTime = endTime;
-        resetTimeRange();
     }
     
     /**
