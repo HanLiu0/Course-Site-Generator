@@ -19,7 +19,7 @@ public class ScheduleItem {
     private final StringProperty topic;
     private final StringProperty link;
     
-    public ScheduleItem(String type, String title, String date, String topic, String link){
+    public ScheduleItem(String type, String date, String title, String topic, String link){
         this.type = new SimpleStringProperty(type);
         this.date = new SimpleStringProperty(date);
         this.title = new SimpleStringProperty(title);

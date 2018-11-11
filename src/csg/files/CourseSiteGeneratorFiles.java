@@ -6,9 +6,37 @@
 package csg.files;
 
 import csg.CourseSiteGeneratorApp;
+import csg.data.CourseSiteGeneratorData;
+import csg.data.LabItem;
+import csg.data.LectureItem;
+import csg.data.RecitationItem;
+import csg.data.ScheduleItem;
+import csg.data.TeachingAssistantPrototype;
+import static csg.data.TeachingAssistantPrototype.TA_TYPE_GRA;
+import static csg.data.TeachingAssistantPrototype.TA_TYPE_UNDERGRA;
+import csg.data.TimeSlot;
+import csg.data.TimeSlot.DayOfWeek;
 import djf.components.AppDataComponent;
 import djf.components.AppFileComponent;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+import javax.json.JsonWriter;
+import javax.json.JsonWriterFactory;
+import javax.json.stream.JsonGenerator;
 
 /**
  *
@@ -18,10 +46,49 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
         CourseSiteGeneratorApp app;
     
     // THESE ARE USED FOR IDENTIFYING JSON TYPES
-    static final String JSON_TAS = "tas";
+    static final String JSON_SUBJECT = "subject";
+    static final String JSON_NUMBER = "number";
+    static final String JSON_SEMESTER = "semester";
+    static final String JSON_YEAR = "year";
+    static final String JSON_TITLE = "title";
+    static final String JSON_SUBJECT_OPTIONS = "subjects";
+    static final String JSON_NUMBER_OPTIONS = "numbers";
+    static final String JSON_SEMESTER_OPTIONS = "semesters";
+    static final String JSON_YEAR_OPTIONS = "years";
+    static final String JSON_PAGES = "pages";
+    static final String JSON_STYLESHEET = "stylesheet";
+    static final String JSON_LOGOS = "logos";
+    static final String JSON_FAVICON = "favicon";
+    static final String JSON_NAVBAR = "navbar";
+    static final String JSON_BOTTOM_LEFT = "bottom_left";
+    static final String JSON_BOTTOM_RIGHT = "bottom_right";
+    static final String JSON_SRC = "src";
+    static final String JSON_INSTRUCTOR = "instructor";
+    static final String JSON_LINK = "link";
+    static final String JSON_ROOM = "room";
+    static final String JSON_DESCRIPTION = "courseDescription";
+    static final String JSON_TOPICS = "courseTopics";
+    static final String JSON_PREREQUISITES = "prerequisites";
+    static final String JSON_OUTCOMES = "courseOutcomes";
+    static final String JSON_TEXTBOOKS = "textbooks";
+    static final String JSON_GRADED_COMPONENETS = "courseComponents";
+    static final String JSON_GRADING_NOTE = "gradingNote";
+    static final String JSON_ACADEMIC_DISHONESTY = "academicDishonestyNote";
+    static final String JSON_SPECIAL_ASSISTANCE = "specialAssistanceNote";
+    static final String JSON_LECTURES = "lectures";
+    static final String JSON_SECTION = "section";
+    static final String JSON_DAYS = "days";
+    static final String JSON_TIME = "time";
+    static final String JSON_LABS = "labs";
+    static final String JSON_RECITATIONS = "recitations";
+    static final String JSON_DAYS_TIME = "day_time";
+    static final String JSON_LOCATION = "day_time";
+    static final String JSON_TA1 = "ta_1";
+    static final String JSON_TA2 = "ta_2";    
+    static final String JSON_GRAD_TAS = "grad_tas";
+    static final String JSON_UNDERGRAD_TAS = "undergrad_tas";
     static final String JSON_NAME = "name";
     static final String JSON_EMAIL = "email";
-    static final String JSON_TYPE = "type";
     static final String JSON_OFFICE_HOURS = "officeHours";
     static final String JSON_START_HOUR = "startHour";
     static final String JSON_END_HOUR = "endHour";
@@ -32,18 +99,233 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
     static final String JSON_WEDNESDAY = "wednesday";
     static final String JSON_THURSDAY = "thursday";
     static final String JSON_FRIDAY = "friday";
+    static final String JSON_STARTING_MONDAY = "starting_monday";
+    static final String JSON_ENDING_FRIDAY = "ending_friday";
+    static final String JSON_SCHEDULE = "schedule";
+    static final String JSON_TYPE = "type";
+    static final String JSON_DATE = "date";
+    static final String JSON_TOPIC = "topic";
 
     public CourseSiteGeneratorFiles(CourseSiteGeneratorApp initApp) {
         app = initApp;
     }
 
     @Override
-    public void saveData(AppDataComponent data, String filePath) {
+    public void saveData(AppDataComponent data, String filePath) throws IOException{
+	// GET THE DATA
+	CourseSiteGeneratorData dataManager = (CourseSiteGeneratorData)data;
+
+	// NOW BUILD THE TA JSON OBJCTS TO SAVE
+	JsonArrayBuilder graduateTaArrayBuilder = Json.createArrayBuilder();
+	Iterator<TeachingAssistantPrototype> graduaTasIterator = dataManager.graduateTeachingAssistantsIterator();
+                    while (graduaTasIterator.hasNext()) {
+                        TeachingAssistantPrototype ta = graduaTasIterator.next();
+	    JsonObject taJson = Json.createObjectBuilder()
+		    .add(JSON_NAME, ta.getName()).add(JSON_EMAIL, ta.getEmail()).build();
+	    graduateTaArrayBuilder.add(taJson);
+	}
+	JsonArray gradTAsArray = graduateTaArrayBuilder.build();
+	JsonArrayBuilder undergraduateTaArrayBuilder = Json.createArrayBuilder();
+	Iterator<TeachingAssistantPrototype> undergraduateTasIterator = dataManager.graduateTeachingAssistantsIterator();
+                    while (graduaTasIterator.hasNext()) {
+                        TeachingAssistantPrototype ta = graduaTasIterator.next();
+	    JsonObject taJson = Json.createObjectBuilder()
+		    .add(JSON_NAME, ta.getName()).add(JSON_EMAIL, ta.getEmail()).build();
+	    graduateTaArrayBuilder.add(taJson);
+	}
+	JsonArray undergradTAsArray = graduateTaArrayBuilder.build();        
+        	JsonArrayBuilder ohArrayBuilder = Json.createArrayBuilder();
+        	Iterator<TimeSlot> ohIterator = dataManager.officeHoursIterator();
+                    String[] dayOfWeek = new String[5];
+                    int index = 0;
+                    for(DayOfWeek dow: DayOfWeek.values())
+                        dayOfWeek[index++] = dow.toString();
+                    while (ohIterator.hasNext()) {
+                        TimeSlot oh = ohIterator.next();
+                        String[] ohs = new String[]{oh.getMonday(), oh.getTuesday(), oh.getWednesday(), oh.getThursday(), oh.getFriday()};
+                        for(int i = 0 ; i < ohs.length; i++){
+                            if(ohs[i] == null)
+                                continue;
+                            String[] taNames = ohs[i].split("\n");
+                            for(int j = 0 ; j < taNames.length; j++){
+                                JsonObject ohJson = Json.createObjectBuilder()
+                                        .add(JSON_START_TIME, oh.getStartTime().replace(":", "_")).add(JSON_DAY_OF_WEEK, dayOfWeek[i]).add(JSON_NAME, taNames[j]).build();
+                                ohArrayBuilder.add(ohJson);
+                            }
+                        }
+	}
+	JsonArray ohArray = ohArrayBuilder.build();
+
+        
+	// THEN PUT IT ALL TOGETHER IN A JsonObject
+	JsonObject dataManagerJSO = Json.createObjectBuilder()
+		.add(JSON_START_HOUR, "" + dataManager.getStartHour())
+		.add(JSON_END_HOUR, "" + dataManager.getEndHour())
+                                        .add(JSON_GRAD_TAS, gradTAsArray)
+                                        .add(JSON_UNDERGRAD_TAS, undergradTAsArray)
+                                        .add(JSON_OFFICE_HOURS, ohArray)
+		.build();
+	
+	// AND NOW OUTPUT IT TO A JSON FILE WITH PRETTY PRINTING
+	Map<String, Object> properties = new HashMap<>(1);
+	properties.put(JsonGenerator.PRETTY_PRINTING, true);
+	JsonWriterFactory writerFactory = Json.createWriterFactory(properties);
+	StringWriter sw = new StringWriter();
+	JsonWriter jsonWriter = writerFactory.createWriter(sw);
+	jsonWriter.writeObject(dataManagerJSO);
+	jsonWriter.close();
+
+	// INIT THE WRITER
+	OutputStream os = new FileOutputStream(filePath);
+	JsonWriter jsonFileWriter = Json.createWriter(os);
+	jsonFileWriter.writeObject(dataManagerJSO);
+	String prettyPrinted = sw.toString();
+	PrintWriter pw = new PrintWriter(filePath);
+	pw.write(prettyPrinted);
+	pw.close();    
     }
 
     @Override
     public void loadData(AppDataComponent data, String filePath) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	// CLEAR THE OLD DATA OUT
+        CourseSiteGeneratorData dataManager = (CourseSiteGeneratorData)data;
+        dataManager.reset();
+
+        // LOAD THE JSON FILE WITH ALL THE DATA
+        JsonObject json = loadJSONFile(filePath);
+
+        String subject = json.getString(JSON_SUBJECT);
+        String number = json.getString(JSON_NUMBER);
+        String semester = json.getString(JSON_SEMESTER);
+        String year = json.getString(JSON_YEAR);
+        String title = json.getString(JSON_TITLE);
+        dataManager.setBannerText(0, subject);
+        dataManager.setBannerText(1, number);
+        dataManager.setBannerText(2, semester);
+        dataManager.setBannerText(3, year);
+        dataManager.setBannerText(4, title);
+        dataManager.updateExportDir();
+        JsonArray jsonPagesArray = json.getJsonArray(JSON_PAGES);
+        for(int i = 0 ; i < jsonPagesArray.size(); i++)
+            dataManager.setPages(i, jsonPagesArray.getBoolean(i));
+        JsonObject jsonIogos= json.getJsonObject(JSON_LOGOS);
+        String favicon = jsonIogos.getJsonObject(JSON_FAVICON).getString(JSON_SRC);
+        String navbar = jsonIogos.getJsonObject(JSON_NAVBAR).getString(JSON_SRC);
+        String leftFooter = jsonIogos.getJsonObject(JSON_BOTTOM_LEFT).getString(JSON_SRC);
+        String rightFooter = jsonIogos.getJsonObject(JSON_BOTTOM_RIGHT).getString(JSON_SRC);
+        dataManager.setStyleImages(favicon, 0);
+        dataManager.setStyleImages(navbar, 1);
+        dataManager.setStyleImages(leftFooter, 2);
+        dataManager.setStyleImages(rightFooter, 3);
+        String stylesheet = json.getString(JSON_STYLESHEET);
+        dataManager.setStylesheet(stylesheet);
+        JsonObject jsonInstructor = json.getJsonObject(JSON_INSTRUCTOR);
+        dataManager.getInstructor().setName(jsonInstructor.getString(JSON_NAME));
+        dataManager.getInstructor().setEmail(jsonInstructor.getString(JSON_EMAIL));
+        dataManager.getInstructor().setRoom(jsonInstructor.getString(JSON_ROOM));
+        dataManager.getInstructor().setHomepage(jsonInstructor.getString(JSON_LINK));
+        dataManager.getInstructor().setOhs(jsonInstructor.getString(JSON_OFFICE_HOURS));
+        dataManager.setSyllabusText(0, json.getString(JSON_DESCRIPTION));
+        dataManager.setSyllabusText(1, json.getString(JSON_TOPICS));
+        dataManager.setSyllabusText(2, json.getString(JSON_PREREQUISITES));
+        dataManager.setSyllabusText(3, json.getString(JSON_OUTCOMES));
+        dataManager.setSyllabusText(4, json.getString(JSON_TEXTBOOKS));
+        dataManager.setSyllabusText(5, json.getString(JSON_GRADED_COMPONENETS));
+        dataManager.setSyllabusText(6, json.getString(JSON_GRADING_NOTE));
+        dataManager.setSyllabusText(7, json.getString(JSON_ACADEMIC_DISHONESTY));
+        dataManager.setSyllabusText(8, json.getString(JSON_SPECIAL_ASSISTANCE));
+        
+        JsonArray jsonLecturesArray = json.getJsonArray(JSON_LECTURES);
+        for(int i = 0 ; i  < jsonLecturesArray.size(); i++){
+            JsonObject jsonLecture = jsonLecturesArray.getJsonObject(i);
+            LectureItem lecture = new LectureItem(jsonLecture.getString(JSON_SECTION), jsonLecture.getString(JSON_DAYS),
+                jsonLecture.getString(JSON_TIME), jsonLecture.getString(JSON_ROOM));
+            dataManager.addLecture(lecture);
+        }
+
+        JsonArray jsonRecitationsArray = json.getJsonArray(JSON_LECTURES);
+        for(int i = 0 ; i  < jsonLecturesArray.size(); i++){
+            JsonObject jsonRecitation = jsonRecitationsArray.getJsonObject(i);
+            RecitationItem recitation = new RecitationItem(jsonRecitation.getString(JSON_SECTION), jsonRecitation.getString(JSON_DAYS_TIME),
+                jsonRecitation.getString(JSON_ROOM), jsonRecitation.getString(JSON_TA1), jsonRecitation.getString(JSON_TA2));
+            dataManager.addRecitation(recitation);
+        }
+
+        JsonArray jsonLabsArray = json.getJsonArray(JSON_LECTURES);
+        for(int i = 0 ; i  < jsonLabsArray.size(); i++){
+            JsonObject jsonLab = jsonLabsArray.getJsonObject(i);
+            LabItem lab = new LabItem(jsonLab.getString(JSON_SECTION), jsonLab.getString(JSON_DAYS_TIME),
+                jsonLab.getString(JSON_ROOM), jsonLab.getString(JSON_TA1), jsonLab.getString(JSON_TA2));
+            dataManager.addLab(lab);
+        }        
+        
+        // LOAD THE START AND END HOURS
+        String startHour = json.getString(JSON_START_HOUR);
+        String endHour = json.getString(JSON_END_HOUR);
+        dataManager.initOhHours(startHour, endHour);
+
+        // NOW LOAD ALL THE GRAD TAs
+        JsonArray jsonGradTAArray = json.getJsonArray(JSON_GRAD_TAS);
+        for (int i = 0; i < jsonGradTAArray.size(); i++) {
+            JsonObject jsonTA = jsonGradTAArray.getJsonObject(i);
+            String name = jsonTA.getString(JSON_NAME);
+            String email = jsonTA.getString(JSON_EMAIL);
+            TeachingAssistantPrototype ta = new TeachingAssistantPrototype(name, email, TA_TYPE_GRA);
+            dataManager.addTA(ta, TA_TYPE_GRA);
+        }
+        
+        // NOW LOAD ALL THE UNDERGRAD TAs
+        JsonArray jsonUndergradTAArray = json.getJsonArray(JSON_UNDERGRAD_TAS);
+        for (int i = 0; i < jsonUndergradTAArray.size(); i++) {
+            JsonObject jsonTA = jsonUndergradTAArray.getJsonObject(i);
+            String name = jsonTA.getString(JSON_NAME);
+            String email = jsonTA.getString(JSON_EMAIL);
+            TeachingAssistantPrototype ta = new TeachingAssistantPrototype(name, email, TA_TYPE_UNDERGRA);
+            dataManager.addTA(ta, TA_TYPE_UNDERGRA);
+        }
+        
+        JsonArray jsonOHArray = json.getJsonArray(JSON_OFFICE_HOURS);
+        for (int i = 0; i < jsonOHArray.size(); i++) {
+            JsonObject jsonOH = jsonOHArray.getJsonObject(i);
+            String day = jsonOH.getString(JSON_DAY_OF_WEEK);
+            String name = jsonOH.getString(JSON_NAME);
+            String time = jsonOH.getString(JSON_START_TIME);
+            TeachingAssistantPrototype TA = dataManager.getTAWithName(name);
+            TimeSlot t = dataManager.getTimeSlot(time);
+            if(TA != null)
+                t.addTA(TA, day);
+        }
+        
+        String startingMonday = json.getString(JSON_STARTING_MONDAY);
+        if(startingMonday != null && !startingMonday.isEmpty())
+            dataManager.setStartingMonday(LocalDate.parse(startingMonday));
+        String endingFriday = json.getString(JSON_ENDING_FRIDAY);
+        if(endingFriday != null && !endingFriday.isEmpty())
+            dataManager.setEndingFriday(LocalDate.parse(endingFriday));
+        
+        JsonArray jsonScheduleArray = json.getJsonArray(JSON_SCHEDULE);
+        for(int i = 0 ; i < jsonScheduleArray.size(); i++){
+            JsonObject jsonSchedule = jsonScheduleArray.getJsonObject(i);
+            String type = jsonSchedule.getString(JSON_TYPE);
+            String date = jsonSchedule.getString(JSON_DATE);
+            String title1 = jsonSchedule.getString(JSON_TITLE);
+            String topic = jsonSchedule.getString(JSON_TOPIC);
+            String link = jsonSchedule.getString(JSON_LINK);
+            ScheduleItem schedule = new ScheduleItem(type, date, title1, topic, link);
+            dataManager.addSchedule(schedule);
+        }
+        
+        app.getFoolproofModule().updateAll();
+    }
+    
+        // HELPER METHOD FOR LOADING DATA FROM A JSON FORMAT
+    private JsonObject loadJSONFile(String jsonFilePath) throws IOException {
+	InputStream is = new FileInputStream(jsonFilePath);
+	JsonReader jsonReader = Json.createReader(is);
+	JsonObject json = jsonReader.readObject();
+	jsonReader.close();
+	is.close();
+	return json;
     }
 
     @Override

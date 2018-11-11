@@ -40,7 +40,6 @@ import javafx.scene.control.TableView;
  * @author hanli
  */
 public class CourseSiteGeneratorData  implements AppDataComponent{
-
         CourseSiteGeneratorApp app;
         
         // Site
@@ -158,6 +157,9 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
             endHour = MAX_END_HOUR;
             allOfficeHours = FXCollections.observableArrayList();
             resetOfficeHours();
+            
+            startingMonday = null;
+            endingFriday = null;
         }
         
     private void resetOfficeHours() {
@@ -253,7 +255,13 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
         }
         resetOfficeHours();
     }
-        
+
+    public void initOhHours(String startHourText, String endHourText) {
+        setStartTime(startHourText);
+        setEndTime(endHourText);
+        resetOfficeHours();
+    }
+    
     /**
      * Called each time new work is created or loaded, it resets all data
      * and data structures such that they can be used for new values.
@@ -279,8 +287,8 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
         getGraduateTeachingAssistants().clear();
         getTeachingAssistants().clear();
         resetOfficeHours();
-        startingMonday = null;
-        endingFriday = null;
+        setStartingMonday(null);
+        setEndingFriday(null);
 //        
 //        for (int i = 0; i < officeHours.size(); i++) {
 //            TimeSlot timeSlot = officeHours.get(i);
@@ -290,6 +298,22 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
     
     // ACCESSOR METHODS
 
+    public void addLecture(LectureItem lecture){
+        lectureItems.add(lecture);
+    }
+
+    public void addRecitation(RecitationItem recitation){
+        recitationItems.add(recitation);
+    }
+
+    public void addLab(LabItem lab){
+        labItems.add(lab);
+    }
+    
+    public void addSchedule(ScheduleItem schedule){
+        scheduleItems.add(schedule);
+    }
+    
     public int getStartHour() {
         return startHour;
     }
@@ -349,6 +373,26 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
 
     public Iterator<TeachingAssistantPrototype> teachingAssistantsIterator() {
         return getTeachingAssistants().iterator();
+    }
+    
+    public Iterator<TeachingAssistantPrototype> undergraduateTeachingAssistantsIterator() {
+        return getUndergraduateTeachingAssistants().iterator();
+    }
+    
+    public Iterator<TeachingAssistantPrototype> graduateTeachingAssistantsIterator() {
+        return getGraduateTeachingAssistants().iterator();
+    }
+    
+    public Iterator<LectureItem> lecturesIterator() {
+        return lectureItems.iterator();
+    }
+
+    public Iterator<RecitationItem> recitationsIterator() {
+        return recitationItems.iterator();
+    }
+
+    public Iterator<LabItem> labsIterator() {
+        return labItems.iterator();
     }
     
     public Iterator<TimeSlot> officeHoursIterator() {
@@ -681,5 +725,34 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
         this.endTime = endTime;
         resetTimeRange();
     }
+    
+    /**
+     * @return the startingMonday
+     */
+    public LocalDate getStartingMonday() {
+        return startingMonday;
+    }
+
+    /**
+     * @param startingMonday the startingMonday to set
+     */
+    public void setStartingMonday(LocalDate startingMonday) {
+        this.startingMonday = startingMonday;
+    }
+
+    /**
+     * @return the endingFriday
+     */
+    public LocalDate getEndingFriday() {
+        return endingFriday;
+    }
+
+    /**
+     * @param endingFriday the endingFriday to set
+     */
+    public void setEndingFriday(LocalDate endingFriday) {
+        this.endingFriday = endingFriday;
+    }
+
 }
 
