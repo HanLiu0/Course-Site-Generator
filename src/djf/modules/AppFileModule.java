@@ -159,11 +159,11 @@ public class AppFileModule {
                 try {
                     if (app.getWorkspaceComponent().getWorkspace().getWidth() > 0.0) {
                         app.getFileComponent().loadData(app.getDataComponent(), selectedFile.getAbsolutePath());
-                        saved = true;
                     }
                     else {
                         Thread.sleep(100);
                     }
+                        saved = true;
                 }
                 catch(Exception exc) {
                     exc.printStackTrace();
@@ -176,6 +176,7 @@ public class AppFileModule {
         String title = props.getProperty(APP_TITLE) + " - " + workFile.getName();
         app.getGUIModule().getWindow().setTitle(title);
         // RESET THE UI CONTROLS
+        saved = true;
         app.getFoolproofModule().updateAll();
     }
 }

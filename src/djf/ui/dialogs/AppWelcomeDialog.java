@@ -74,6 +74,7 @@ public class AppWelcomeDialog extends Stage {
         if (recentWork.size() == 0) {
             String noneText = props.getProperty(WELCOME_DIALOG_NONE_LABEL);
             Label noneLabel = new Label(noneText);
+            noneLabel.setStyle("-fx-font-size: 20px; -fx-padding: 20px;");
             recentlyEditedPane.getChildren().add(noneLabel);
         }
         else {        
