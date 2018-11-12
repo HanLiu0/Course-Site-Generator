@@ -554,6 +554,12 @@ public class AppNodesBuilder {
         return rb;
     }
     
+    public TabPane buildTabPane(Object nodeId){
+        TabPane tp = new TabPane();
+        gui.addGUINode(nodeId, tp);
+        return tp;
+    }
+    
     public Tab buildTab(Object nodeId, TabPane tabPane,
             String styleClass,
             boolean enabled){
