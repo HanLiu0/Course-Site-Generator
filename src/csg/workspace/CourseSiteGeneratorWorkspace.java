@@ -439,6 +439,7 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             
             TableView<LectureItem> lecturesTable = csgBuilder.buildTableView(CSG_LECTURES_TABLEVIEW, lecturePane, CLASS_CSG_TABLE_VIEW, ENABLED);
             lecturesTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+            lecturesTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY); 
             TableColumn sectionColumn = csgBuilder.buildTableColumn(CSG_LECTURES_SECTION_TABLE_COLUMN, lecturesTable, CLASS_CSG_COLUMN);
             sectionColumn.setCellValueFactory(new PropertyValueFactory<String, String>("section"));
             sectionColumn.prefWidthProperty().bind(lecturesTable.widthProperty().multiply(1.0/4.0));
@@ -459,7 +460,9 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             csgBuilder.buildTextButton(CSG_REC_ADD_BT, recHeaderPane, CLASS_CSG_SMALL_BUTTON, ENABLED);
             csgBuilder.buildTextButton(CSG_REC_REMOVE_BT, recHeaderPane, CLASS_CSG_SMALL_BUTTON, ENABLED);
             csgBuilder.buildLabel(CSG_REC_LABEL, recHeaderPane, CLASS_CSG_BOLD_LABEL, ENABLED);
+
             TableView<RecitationItem> recTable = csgBuilder.buildTableView(CSG_REC_TABLEVIEW, recPane, CLASS_CSG_TABLE_VIEW, ENABLED);
+            recTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY); 
             recTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
             TableColumn sectionColumn1 = csgBuilder.buildTableColumn(CSG_REC_SECTION_TABLE_COLUMN, recTable, CLASS_CSG_COLUMN);
             sectionColumn1.setCellValueFactory(new PropertyValueFactory<String, String>("section"));
@@ -485,10 +488,11 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             csgBuilder.buildTextButton(CSG_LABS_REMOVE_BT, labsHeaderPane, CLASS_CSG_SMALL_BUTTON, ENABLED);
             csgBuilder.buildLabel(CSG_LABS_LABEL, labsHeaderPane, CLASS_CSG_BOLD_LABEL, ENABLED);
             TableView<LabItem> labTable = csgBuilder.buildTableView(CSG_LABS_TABLEVIEW, labsPane, CLASS_CSG_TABLE_VIEW, ENABLED);
+            labTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY); 
             labTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
             TableColumn sectionColumn2 = csgBuilder.buildTableColumn(CSG_LABS_SECTION_TABLE_COLUMN, labTable, CLASS_CSG_COLUMN);
             sectionColumn2.setCellValueFactory(new PropertyValueFactory<String, String>("section"));
-            sectionColumn2.prefWidthProperty().bind(lecturesTable.widthProperty().multiply(0.2));
+            sectionColumn2.prefWidthProperty().bind(lecturesTable.widthProperty().multiply(0.20));
             TableColumn daysAndTimeColumn1 = csgBuilder.buildTableColumn(CSG_LABS_DAYSTIME_TABLE_COLUMN, labTable, CLASS_CSG_COLUMN);
             daysAndTimeColumn1.setCellValueFactory(new PropertyValueFactory<String, String>("daysAndTime"));
             daysAndTimeColumn1.prefWidthProperty().bind(lecturesTable.widthProperty().multiply(0.35));
@@ -532,6 +536,7 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
 
             // MAKE THE TABLE AND SETUP THE DATA MODEL
             TableView<TeachingAssistantPrototype> taTable = csgBuilder.buildTableView(CSG_OH_TAS_TABLE_VIEW, taPane, CLASS_CSG_TABLE_VIEW, ENABLED);
+            taTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY); 
             taTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
             taTable.prefHeightProperty().bind(ohPane.heightProperty().multiply(0.2));
             TableColumn nameColumn = csgBuilder.buildTableColumn(CSG_OH_TAS_NAME_TABLE_COLUMN, taTable, CLASS_CSG_COLUMN);
@@ -575,6 +580,7 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             officeHoursHeaderBox.getChildren().add(region2);            
             // SETUP THE OFFICE HOURS TABLE
             TableView<TimeSlot> officeHoursTable = csgBuilder.buildTableView(CSG_OH_TABLEVIEW, ohsPane, CLASS_CSG_OFFICE_HOURS_TABLE_VIEW, ENABLED);
+            officeHoursTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY); 
             officeHoursTable.prefHeightProperty().bind(ohPane.heightProperty().multiply(0.6));
             TableColumn startTimeColumn = csgBuilder.buildTableColumn(CSG_START_TIME_TABLE_COLUMN, officeHoursTable, CLASS_CSG_TIME_COLUMN);
             TableColumn endTimeColumn = csgBuilder.buildTableColumn(CSG_END_TIME_TABLE_COLUMN, officeHoursTable, CLASS_CSG_TIME_COLUMN);
@@ -655,6 +661,7 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             csgBuilder.buildLabel(CSG_SCHEDULE_ITEM_LABEL, scheduleHeaderPane, CLASS_CSG_HEADER_LABEL, ENABLED);
 
             TableView<ScheduleItem> scheduleTable = csgBuilder.buildTableView(CSG_SCHEDULE_TABLEVIEW, scheduleItemsPane, CLASS_CSG_TABLE_VIEW, ENABLED);
+            scheduleTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY); 
             scheduleTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
             TableColumn typeColumn = csgBuilder.buildTableColumn(CSG_SCHEDULE_TYPE_TABLE_COLUMN, scheduleTable, CLASS_CSG_COLUMN);
             typeColumn.setCellValueFactory(new PropertyValueFactory<String, String>("type"));
@@ -860,6 +867,24 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             }
             officeHoursTableView.setOnMouseClicked(e -> {
                 controller.processAddOrRemoveOH();
+            });
+            ((Button) gui.getGUINode(CSG_LECTURES_ADD_BT)).setOnAction(e->{
+                controller.processAddLecture();
+            });
+            ((Button) gui.getGUINode(CSG_REC_ADD_BT)).setOnAction(e->{
+                controller.processAddRecitation();
+            });
+            ((Button) gui.getGUINode(CSG_LABS_ADD_BT)).setOnAction(e->{
+                controller.processAddLab();
+            });            
+            ((Button) gui.getGUINode(CSG_LECTURES_REMOVE_BT)).setOnAction(e->{
+                controller.processRemoveLecture();
+            });
+            ((Button) gui.getGUINode(CSG_REC_REMOVE_BT)).setOnAction(e->{
+                controller.processRemoveRecitation();
+            });
+            ((Button) gui.getGUINode(CSG_LABS_REMOVE_BT)).setOnAction(e->{
+                controller.processRemoveLab();
             });
         }
 

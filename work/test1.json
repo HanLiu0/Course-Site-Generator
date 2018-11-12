@@ -48,8 +48,8 @@
     ],
     "labs":[
     ],
-    "startHour":"10:30am",
-    "endHour":"3:00pm",
+    "startHour":"8:00am",
+    "endHour":"11:00pm",
     "grad_tas":[
         {
             "name":"20",

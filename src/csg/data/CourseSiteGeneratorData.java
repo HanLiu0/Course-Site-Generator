@@ -331,6 +331,22 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
         scheduleItems.add(schedule);
     }
     
+    public void removeLecture(LectureItem lecture){
+        lectureItems.remove(lecture);
+    }
+
+    public void removeRecitation(RecitationItem recitation){
+        recitationItems.remove(recitation);
+    }
+
+    public void removeLab(LabItem lab){
+        labItems.remove(lab);
+    }
+    
+    public void removeSchedule(ScheduleItem schedule){
+        scheduleItems.remove(schedule);
+    }
+    
     public int getStartHour() {
         return startHour;
     }

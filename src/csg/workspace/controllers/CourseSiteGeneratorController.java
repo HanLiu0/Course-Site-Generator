@@ -6,16 +6,25 @@
 package csg.workspace.controllers;
 
 import csg.CourseSiteGeneratorApp;
+import static csg.CourseSiteGeneratorPropertyType.CSG_LABS_TABLEVIEW;
+import static csg.CourseSiteGeneratorPropertyType.CSG_LECTURES_TABLEVIEW;
 import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TABLEVIEW;
 import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_EMAIL_TEXT_FIELD;
 import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_NAME_TEXT_FIELD;
 import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_TABLE_VIEW;
+import static csg.CourseSiteGeneratorPropertyType.CSG_REC_TABLEVIEW;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_DIR_LABEL;
 import csg.data.CourseSiteGeneratorData;
+import csg.data.LabItem;
+import csg.data.LectureItem;
+import csg.data.RecitationItem;
 import csg.data.TeachingAssistantPrototype;
 import csg.data.TimeSlot;
 import csg.data.TimeSlot.DayOfWeek;
+import csg.transactions.AddLab_Transaction;
+import csg.transactions.AddLecture_Transaction;
 import csg.transactions.AddOH_Transaction;
+import csg.transactions.AddRecitation_Transaction;
 import csg.transactions.AddTA_Transaction;
 import csg.transactions.EditBanner_Transaction;
 import csg.transactions.EditInstructor_Transaction;
@@ -23,7 +32,10 @@ import csg.transactions.EditPages_Transaction;
 import csg.transactions.EditStyleImages_Transaction;
 import csg.transactions.EditStyleSheet_Transaction;
 import csg.transactions.EditSyllabusDetails_Transaction;
+import csg.transactions.RemoveLab_Transaction;
+import csg.transactions.RemoveLecture_Transaction;
 import csg.transactions.RemoveOH_Transaction;
+import csg.transactions.RemoveRecitation_Transaction;
 import csg.transactions.RemoveTA_Transaction;
 import csg.transactions.SelectTimeRange_Transaction;
 import csg.workspace.dialogs.CourseSiteGeneratorDialog;
@@ -241,4 +253,57 @@ public class CourseSiteGeneratorController {
         officeHoursTable.refresh();
     }
 
+    public void processAddLecture(){
+        AppGUIModule gui = app.getGUIModule();
+        CourseSiteGeneratorData data = (CourseSiteGeneratorData)app.getDataComponent();
+        AddLecture_Transaction transaction = new AddLecture_Transaction(data);
+        app.processTransaction(transaction);
+    }
+
+    public void processAddLab(){
+        AppGUIModule gui = app.getGUIModule();
+        CourseSiteGeneratorData data = (CourseSiteGeneratorData)app.getDataComponent();
+        AddLab_Transaction transaction = new AddLab_Transaction(data);
+        app.processTransaction(transaction);
+    }
+    
+    public void processAddRecitation(){
+        AppGUIModule gui = app.getGUIModule();
+        CourseSiteGeneratorData data = (CourseSiteGeneratorData)app.getDataComponent();
+        AddRecitation_Transaction transaction = new AddRecitation_Transaction(data);
+        app.processTransaction(transaction);
+    }    
+    
+    public void processRemoveLecture(){
+        AppGUIModule gui = app.getGUIModule();
+        CourseSiteGeneratorData data = (CourseSiteGeneratorData)app.getDataComponent();
+        TableView<LectureItem> lecturesTable = (TableView<LectureItem>)gui.getGUINode(CSG_LECTURES_TABLEVIEW);
+        LectureItem lecture = lecturesTable.getSelectionModel().getSelectedItem();
+        if(lecture != null){
+            RemoveLecture_Transaction transaction = new RemoveLecture_Transaction(data, lecture);
+            app.processTransaction(transaction);
+        }        
+    }
+    
+    public void processRemoveRecitation(){
+        AppGUIModule gui = app.getGUIModule();
+        CourseSiteGeneratorData data = (CourseSiteGeneratorData)app.getDataComponent();
+        TableView<RecitationItem> lecturesTable = (TableView<RecitationItem>)gui.getGUINode(CSG_REC_TABLEVIEW);
+        RecitationItem recitation = lecturesTable.getSelectionModel().getSelectedItem();
+        if(recitation != null){
+            RemoveRecitation_Transaction transaction = new RemoveRecitation_Transaction(data, recitation);
+             app.processTransaction(transaction);           
+        }        
+    }
+
+    public void processRemoveLab(){
+        AppGUIModule gui = app.getGUIModule();
+        CourseSiteGeneratorData data = (CourseSiteGeneratorData)app.getDataComponent();
+        TableView<LabItem> lecturesTable = (TableView<LabItem>)gui.getGUINode(CSG_LABS_TABLEVIEW);
+        LabItem lab = lecturesTable.getSelectionModel().getSelectedItem();
+        if(lab != null){
+            RemoveLab_Transaction transaction = new RemoveLab_Transaction(data, lab);
+             app.processTransaction(transaction);           
+        }        
+    }
 }

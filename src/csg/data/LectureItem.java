@@ -56,7 +56,7 @@ public class LectureItem {
     /**
      * @return the email
      */
-    public String getTimes() {
+    public String getTime() {
         return time.get();
     }
 

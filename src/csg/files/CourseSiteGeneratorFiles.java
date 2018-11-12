@@ -144,7 +144,7 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
                     while(lecturesIterator.hasNext()){
                         LectureItem lecture = lecturesIterator.next();
                         JsonObject lectureJson = Json.createObjectBuilder().add(JSON_SECTION, lecture.getSection())
-                                .add(JSON_DAYS, lecture.getDays()).add(JSON_TIME, lecture.getTimes())
+                                .add(JSON_DAYS, lecture.getDays()).add(JSON_TIME, lecture.getTime())
                                 .add(JSON_ROOM, lecture.getRoom()).build();
                         lecturesArrayBuilder.add(lectureJson);
                     }
