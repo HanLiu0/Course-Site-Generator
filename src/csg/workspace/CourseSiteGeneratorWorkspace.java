@@ -915,8 +915,8 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             ((TextArea) gui.getGUINode(CSG_SYLLABUS_SPECIAL_ASSISTANCE_TA)).setText(data.getSyllabusText(8));
             ((RadioButton) gui.getGUINode(CSG_OH_TAS_ALL_RB)).setSelected(true);
             data.setAllTA();
-            ((ComboBox) gui.getGUINode(CSG_OH_START_TIME_CB)).getSelectionModel().select(data.getStartTime());
-            ((ComboBox) gui.getGUINode(CSG_OH_END_TIME_CB)).getSelectionModel().select(data.getEndTime());
+            ((ComboBox) gui.getGUINode(CSG_OH_START_TIME_CB)).setValue(data.getStartTime());
+            ((ComboBox) gui.getGUINode(CSG_OH_END_TIME_CB)).setValue(data.getEndTime());
             ((DatePicker) gui.getGUINode(CSG_SCHEDULE_STARTING_MONDAY_DP)).setValue(data.getStartingMonday());
             ((DatePicker) gui.getGUINode(CSG_SCHEDULE_ENDING_FRIDAY_DP)).setValue(data.getEndingFriday());
             ((Button) gui.getGUINode(CSG_SCHEDULE_ADD_UPDATE_BT)).setText(props.getProperty(CSG_SCHEDULE_ADD_UPDATE_BT + "_TEXT"));

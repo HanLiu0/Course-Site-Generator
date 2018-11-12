@@ -47,10 +47,14 @@ public class SelectTimeRange_Transaction implements jTPS_Transaction{
     
     public void undoTransaction(){
         data.setTriggerListener(false);
-        if(index==0)
+        if(index==0){
             data.setStartTime(oldTime);
-        else
+            data.resetTimeRange();
+        }
+        else{
             data.setEndTime(oldTime);
+            data.resetTimeRange();
+        }
         cb.getSelectionModel().select(oldTime);
         data.setTriggerListener(true);
     }

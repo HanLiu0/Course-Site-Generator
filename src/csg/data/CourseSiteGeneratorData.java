@@ -176,8 +176,10 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
         }
         
     private void resetOfficeHours() {
+        triggerListener = false;
         startTimes.clear();
         endTimes.clear();
+        triggerListener = true;
         allStartTimes.clear();
         allEndTimes.clear();
         //THIS WILL STORE OUR OFFICE HOURS
