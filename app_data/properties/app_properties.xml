@@ -16,11 +16,13 @@
         <property name="APP_HELP_PAGE"      value="Help.html"></property>
         <property name="APP_ABOUT_PAGE"      value="About.html"></property>
         <property name="APP_CSS"	    value="csg_style.css"></property>
+        <property name="APP_CHOICES"	    value="choice_properties.json"></property>
         <property name="APP_PATH_CSS"	    value="workspace/style/"></property>
         <property name="APP_PATH_EXPORT"    value="./export/"></property>
         <property name="APP_PATH_ICONS"     value="./images/icons/"></property>
         <property name="APP_PATH_IMAGES"    value="./images/"></property>
         <property name="APP_PATH_WEB"       value="./app_data/web/"></property>
+        <property name="APP_PATH_SETTING"       value="./app_data/setting/"></property>
         <property name="APP_PATH_STYLESHEET"     value="./work/css"></property>
         <property name="WORK_FILE_EXT"       value="*.json"></property>
         <property name="WORK_FILE_EXT_DESC"       value="JSON files (*.json)"></property>

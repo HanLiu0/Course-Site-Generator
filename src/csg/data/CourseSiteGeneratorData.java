@@ -119,11 +119,9 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
             ((ComboBox) gui.getGUINode(CSG_SITE_SUBJECT_CB)).setItems(subjectOptions);
             ((ComboBox) gui.getGUINode(CSG_SITE_NUMBER_CB)).setItems(numberOptions);
             ((ComboBox) gui.getGUINode(CSG_SITE_SEMESTER_CB)).setItems(semesterOptions);
-            ((ComboBox) gui.getGUINode(CSG_SITE_YEAR_CB)).setItems(yearOptions);        
-            subjectOptions.addAll("CSE", "AMS", "ISE");
-            numberOptions.addAll("101", "114", "214", "215", "219");
-            semesterOptions.addAll("Spring", "Fall", "WInter", "Summer");
-            yearOptions.addAll(LocalDate.now().getYear() + "", LocalDate.now().getYear()+1+"");
+            ((ComboBox) gui.getGUINode(CSG_SITE_YEAR_CB)).setItems(yearOptions);
+            addYearOptions(LocalDate.now().getYear() + "");
+            addYearOptions(LocalDate.now().getYear()+1+"");
             syllabusText = new String[9];
             Arrays.fill(syllabusText, "");
             
@@ -389,7 +387,22 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
     public DayOfWeek getColumnDayOfWeek(int columnNumber) {
         return TimeSlot.DayOfWeek.values()[columnNumber-2];
     }
+    
+    public Iterator<String> subjectsIterator() {
+        return subjectOptions.iterator();
+    }    
 
+    public Iterator<String> yearsIterator() {
+        return yearOptions.iterator();
+    }    
+    
+    public Iterator<String> numbersIterator() {
+        return numberOptions.iterator();
+    }    
+    
+    public Iterator<String> semestersIterator() {
+        return semesterOptions.iterator();
+    }        
     public Iterator<TeachingAssistantPrototype> teachingAssistantsIterator() {
         return getTeachingAssistants().iterator();
     }
@@ -605,6 +618,26 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
      */
     public Instructor getInstructor() {
         return instructor;
+    }
+    
+    public void addSubjectOptions(String subject){
+        if(subject != null && !subject.isEmpty() &&!subjectOptions.contains(subject))
+             subjectOptions.add(subject);
+    }
+
+    public void addYearOptions(String year){
+        if(year != null && !year.isEmpty() &&!yearOptions.contains(year))
+            yearOptions.add(year);
+    }
+
+    public void addSemesterOptions(String semester){
+        if(semester != null && !semester.isEmpty() &&!semesterOptions.contains(semester))
+            semesterOptions.add(semester);
+    }
+
+    public void addNumberOptions(String number){
+        if(number != null && !number.isEmpty() && !numberOptions.contains(number))
+            numberOptions.add(number);
     }
 
     /**

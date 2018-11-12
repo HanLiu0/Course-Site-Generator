@@ -18,6 +18,8 @@ import static csg.data.TeachingAssistantPrototype.TA_TYPE_UNDERGRA;
 import csg.data.TimeSlot;
 import csg.data.TimeSlot.DayOfWeek;
 import csg.workspace.CourseSiteGeneratorWorkspace;
+import static djf.AppPropertyType.APP_CHOICES;
+import static djf.AppPropertyType.APP_PATH_SETTING;
 import djf.components.AppDataComponent;
 import djf.components.AppFileComponent;
 import java.io.FileInputStream;
@@ -41,6 +43,7 @@ import javax.json.JsonReader;
 import javax.json.JsonWriter;
 import javax.json.JsonWriterFactory;
 import javax.json.stream.JsonGenerator;
+import properties_manager.PropertiesManager;
 
 /**
  *
@@ -116,10 +119,10 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
 
     @Override
     public void saveData(AppDataComponent data, String filePath) throws IOException{
-	// GET THE DATA
-	CourseSiteGeneratorData dataManager = (CourseSiteGeneratorData)data;
+        // GET THE DATA
+        CourseSiteGeneratorData dataManager = (CourseSiteGeneratorData)data;
 
-	// NOW BUILD THE TA JSON OBJCTS TO SAVE
+        // NOW BUILD THE TA JSON OBJCTS TO SAVE
                     JsonArrayBuilder pagesArrayBuilder = Json.createArrayBuilder();
                     for(int i = 0 ; i < 4; i++){
                         pagesArrayBuilder.add(dataManager.getPages(i));
@@ -135,7 +138,7 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
                     JsonObject instructorObject = Json.createObjectBuilder().add(JSON_NAME, instructor.getName())
                                 .add(JSON_ROOM, instructor.getRoom()).add(JSON_EMAIL, instructor.getEmail()).add(JSON_LINK, instructor.getHomepage())
                                 .add(JSON_OFFICE_HOURS, instructor.getOhs()).build();
-                    
+
                     JsonArrayBuilder lecturesArrayBuilder = Json.createArrayBuilder();
                     Iterator<LectureItem> lecturesIterator = dataManager.lecturesIterator();
                     while(lecturesIterator.hasNext()){
@@ -157,7 +160,7 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
                         recitationsArrayBuilder.add(recitationJson);
                     }
                     JsonArray recitationsArray = recitationsArrayBuilder.build();
-                    
+
                     JsonArrayBuilder labsArrayBuilder = Json.createArrayBuilder();
                     Iterator<LabItem> labsIterator = dataManager.labsIterator();
                     while(labsIterator.hasNext()){
@@ -168,27 +171,27 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
                         labsArrayBuilder.add(labJson);
                     }
                     JsonArray labsArray = labsArrayBuilder.build();             
-                    
-	JsonArrayBuilder graduateTaArrayBuilder = Json.createArrayBuilder();
-	Iterator<TeachingAssistantPrototype> graduaTasIterator = dataManager.graduateTeachingAssistantsIterator();
+
+        JsonArrayBuilder graduateTaArrayBuilder = Json.createArrayBuilder();
+        Iterator<TeachingAssistantPrototype> graduaTasIterator = dataManager.graduateTeachingAssistantsIterator();
                     while (graduaTasIterator.hasNext()) {
                         TeachingAssistantPrototype ta = graduaTasIterator.next();
-	    JsonObject taJson = Json.createObjectBuilder()
-		    .add(JSON_NAME, ta.getName()).add(JSON_EMAIL, ta.getEmail()).build();
-	    graduateTaArrayBuilder.add(taJson);
-	}                    
-	JsonArray gradTAsArray = graduateTaArrayBuilder.build();
-	JsonArrayBuilder undergraduateTaArrayBuilder = Json.createArrayBuilder();
-	Iterator<TeachingAssistantPrototype> undergraduateTasIterator = dataManager.undergraduateTeachingAssistantsIterator();
+            JsonObject taJson = Json.createObjectBuilder()
+                    .add(JSON_NAME, ta.getName()).add(JSON_EMAIL, ta.getEmail()).build();
+            graduateTaArrayBuilder.add(taJson);
+        }                    
+        JsonArray gradTAsArray = graduateTaArrayBuilder.build();
+        JsonArrayBuilder undergraduateTaArrayBuilder = Json.createArrayBuilder();
+        Iterator<TeachingAssistantPrototype> undergraduateTasIterator = dataManager.undergraduateTeachingAssistantsIterator();
                     while (undergraduateTasIterator.hasNext()) {
                         TeachingAssistantPrototype ta = undergraduateTasIterator.next();
-	    JsonObject taJson = Json.createObjectBuilder()
-		    .add(JSON_NAME, ta.getName()).add(JSON_EMAIL, ta.getEmail()).build();
-	    undergraduateTaArrayBuilder.add(taJson);
-	}
-	JsonArray undergradTAsArray = undergraduateTaArrayBuilder.build();        
-        	JsonArrayBuilder ohArrayBuilder = Json.createArrayBuilder();
-        	Iterator<TimeSlot> ohIterator = dataManager.allOfficeHoursIterator();
+            JsonObject taJson = Json.createObjectBuilder()
+                    .add(JSON_NAME, ta.getName()).add(JSON_EMAIL, ta.getEmail()).build();
+            undergraduateTaArrayBuilder.add(taJson);
+        }
+        JsonArray undergradTAsArray = undergraduateTaArrayBuilder.build();        
+                JsonArrayBuilder ohArrayBuilder = Json.createArrayBuilder();
+                Iterator<TimeSlot> ohIterator = dataManager.allOfficeHoursIterator();
                     String[] dayOfWeek = new String[5];
                     int index = 0;
                     for(DayOfWeek dow: DayOfWeek.values())
@@ -206,9 +209,9 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
                                 ohArrayBuilder.add(ohJson);
                             }
                         }
-	}
-	JsonArray ohArray = ohArrayBuilder.build();
-                    
+        }
+        JsonArray ohArray = ohArrayBuilder.build();
+
                     JsonArrayBuilder schedulesArrayBuilder = Json.createArrayBuilder();
                     Iterator<ScheduleItem> schedulesIterator = dataManager.schedulesIterator();
                     while(schedulesIterator.hasNext()){
@@ -220,9 +223,9 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
                         schedulesArrayBuilder.add(scheduleJson);
                     }
                     JsonArray schedulesArray = schedulesArrayBuilder.build();             
-        
-	// THEN PUT IT ALL TOGETHER IN A JsonObject
-	JsonObject dataManagerJSO = Json.createObjectBuilder()
+
+        // THEN PUT IT ALL TOGETHER IN A JsonObject
+        JsonObject dataManagerJSO = Json.createObjectBuilder()
                                         .add(JSON_SUBJECT, dataManager.getBannerText(0))
                                         .add(JSON_NUMBER, dataManager.getBannerText(1))
                                         .add(JSON_SEMESTER, dataManager.getBannerText(2))
@@ -244,33 +247,90 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
                                         .add(JSON_LECTURES, lecturesArray)
                                         .add(JSON_RECITATIONS, recitationsArray)
                                         .add(JSON_LABS, labsArray)
-		.add(JSON_START_HOUR, "" + dataManager.getStartTime())
-		.add(JSON_END_HOUR, "" + dataManager.getEndTime())
+                .add(JSON_START_HOUR, "" + dataManager.getStartTime())
+                .add(JSON_END_HOUR, "" + dataManager.getEndTime())
                                         .add(JSON_GRAD_TAS, gradTAsArray)
                                         .add(JSON_UNDERGRAD_TAS, undergradTAsArray)
                                         .add(JSON_OFFICE_HOURS, ohArray)
                                         .add(JSON_STARTING_MONDAY, dataManager.getStartingMonday() != null ?  dataManager.getStartingMonday().toString() : "")
                                         .add(JSON_ENDING_FRIDAY, dataManager.getEndingFriday() != null? dataManager.getEndingFriday().toString(): "")
                                         .add(JSON_SCHEDULE, schedulesArray)
-		.build();
-	
-	// AND NOW OUTPUT IT TO A JSON FILE WITH PRETTY PRINTING
-	Map<String, Object> properties = new HashMap<>(1);
-	properties.put(JsonGenerator.PRETTY_PRINTING, true);
-	JsonWriterFactory writerFactory = Json.createWriterFactory(properties);
-	StringWriter sw = new StringWriter();
-	JsonWriter jsonWriter = writerFactory.createWriter(sw);
-	jsonWriter.writeObject(dataManagerJSO);
-	jsonWriter.close();
+                .build();
 
-	// INIT THE WRITER
-	OutputStream os = new FileOutputStream(filePath);
-	JsonWriter jsonFileWriter = Json.createWriter(os);
-	jsonFileWriter.writeObject(dataManagerJSO);
-	String prettyPrinted = sw.toString();
-	PrintWriter pw = new PrintWriter(filePath);
-	pw.write(prettyPrinted);
-	pw.close();    
+        // AND NOW OUTPUT IT TO A JSON FILE WITH PRETTY PRINTING
+        Map<String, Object> properties = new HashMap<>(1);
+        properties.put(JsonGenerator.PRETTY_PRINTING, true);
+        JsonWriterFactory writerFactory = Json.createWriterFactory(properties);
+        StringWriter sw = new StringWriter();
+        JsonWriter jsonWriter = writerFactory.createWriter(sw);
+        jsonWriter.writeObject(dataManagerJSO);
+        jsonWriter.close();
+
+        // INIT THE WRITER
+        OutputStream os = new FileOutputStream(filePath);
+        JsonWriter jsonFileWriter = Json.createWriter(os);
+        jsonFileWriter.writeObject(dataManagerJSO);
+        String prettyPrinted = sw.toString();
+        PrintWriter pw = new PrintWriter(filePath);
+        pw.write(prettyPrinted);
+        pw.close();    
+        
+        // For the choice settings
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        dataManager.addSubjectOptions(dataManager.getBannerText(0));
+        dataManager.addNumberOptions(dataManager.getBannerText(1));
+        dataManager.addSemesterOptions(dataManager.getBannerText(2));
+        dataManager.addYearOptions(dataManager.getBannerText(3));
+        Iterator<String> subjects = dataManager.subjectsIterator();
+        Iterator<String> years = dataManager.yearsIterator();
+        Iterator<String> numbers = dataManager.numbersIterator();
+        Iterator<String> semesters = dataManager.semestersIterator();
+        
+        JsonArrayBuilder subjectsArrayBuilder = Json.createArrayBuilder();
+        while(subjects.hasNext()){
+            subjectsArrayBuilder.add(subjects.next());
+        }
+        JsonArray subjectArray = subjectsArrayBuilder.build();
+
+        JsonArrayBuilder yearsArrayBuilder = Json.createArrayBuilder();
+        while(years.hasNext()){
+            yearsArrayBuilder.add(years.next());
+        }
+        JsonArray yearArray = yearsArrayBuilder.build();
+
+        JsonArrayBuilder numbersArrayBuilder = Json.createArrayBuilder();
+        while(numbers.hasNext()){
+            numbersArrayBuilder.add(numbers.next());
+        }
+        JsonArray numberArray = numbersArrayBuilder.build();
+
+        JsonArrayBuilder semestersArrayBuilder = Json.createArrayBuilder();
+        while(semesters.hasNext()){
+            semestersArrayBuilder.add(semesters.next());
+        }
+        JsonArray semesterArray = semestersArrayBuilder.build();       
+        
+        JsonObject settingObject = Json.createObjectBuilder().add(JSON_SUBJECT_OPTIONS, subjectArray)
+                .add(JSON_YEAR_OPTIONS, yearArray).add(JSON_NUMBER_OPTIONS, numberArray)
+                .add(JSON_SEMESTER_OPTIONS, semesterArray).build();
+
+        Map<String, Object> properties1 = new HashMap<>(1);
+        properties1.put(JsonGenerator.PRETTY_PRINTING, true);
+        JsonWriterFactory writerFactory1 = Json.createWriterFactory(properties1);
+        StringWriter sw1 = new StringWriter();
+        JsonWriter jsonWriter1 = writerFactory.createWriter(sw1);
+        jsonWriter1.writeObject(settingObject);
+        jsonWriter1.close();
+
+        // INIT THE WRITER
+        OutputStream os1 = new FileOutputStream((props.getProperty(APP_PATH_SETTING) + props.getProperty(APP_CHOICES)));
+        JsonWriter jsonFileWriter1 = Json.createWriter(os1);
+        jsonFileWriter1.writeObject(settingObject);
+        String prettyPrinted1 = sw1.toString();
+        PrintWriter pw1 = new PrintWriter(props.getProperty(APP_PATH_SETTING) + props.getProperty(APP_CHOICES));
+        pw1.write(prettyPrinted1);
+        pw1.close();    
+
     }
 
     @Override
@@ -402,6 +462,25 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
             ScheduleItem schedule = new ScheduleItem(type, date, title1, topic, link);
             dataManager.addSchedule(schedule);
         }
+        
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        JsonObject settings = loadJSONFile(props.getProperty(APP_PATH_SETTING) + props.getProperty(APP_CHOICES));
+        JsonArray subjects = settings.getJsonArray(JSON_SUBJECT_OPTIONS);
+        JsonArray numbers = settings.getJsonArray(JSON_NUMBER_OPTIONS);
+        JsonArray semesters = settings.getJsonArray(JSON_SEMESTER_OPTIONS);
+        JsonArray years = settings.getJsonArray(JSON_YEAR_OPTIONS);
+        for(int i = 0 ; i < subjects.size(); i++){
+            dataManager.addSubjectOptions(subjects.getString(i));
+        }
+        for(int i = 0 ; i < numbers.size(); i++){
+            dataManager.addNumberOptions(numbers.getString(i));
+        }
+        for(int i = 0 ; i < semesters.size(); i++){
+            dataManager.addSemesterOptions(semesters.getString(i));
+        }
+        for(int i = 0 ; i < years.size(); i++){
+            dataManager.addYearOptions(years.getString(i));
+        }        
         
         app.getFoolproofModule().updateAll();
         ((CourseSiteGeneratorWorkspace)app.getWorkspaceComponent()).loadDataToUI();

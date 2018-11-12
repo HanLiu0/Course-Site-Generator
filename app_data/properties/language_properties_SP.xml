@@ -21,6 +21,10 @@
         <property name="PROPERTIES_ERROR_TITLE"     value="Error de archivo de propiedades"></property>
         <property name="PROPERTIES_ERROR_CONTENT"   value="Hubo un error al cargar un archivo de propiedades"></property>
 
+        <!-- JSON ERROR MESSAGES -->
+        <property name="APP_INVALID_JSON_FILE_TITLE"     value="Error de archivo json"></property>
+        <property name="APP_INVALID_JSON_FILE_CONTENT"   value="El archivo Json no se puede cargar porque está en un formato incorrecto. "></property>
+        
         <!-- FILE TOOLBAR TOOLTIPS -->
         <property name="NEW_BUTTON_TOOLTIP"         value="Nuevo generador del sitio del curso"></property>
         <property name="LOAD_BUTTON_TOOLTIP"        value="Cargar generador de sitio de curso"></property>
