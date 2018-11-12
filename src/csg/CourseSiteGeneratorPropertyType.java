@@ -10,7 +10,7 @@ package csg;
  * @author hanli
  */
 public enum CourseSiteGeneratorPropertyType {
-    
+        CSG_TAB_PANE,
     // Tab
         CSG_SITE_TAB, CSG_SYLLABUS_TAB, CSG_MEETING_TIME_TAB, CSG_OH_TAB, CSG_SCHEDULE_TAB,
         CSG_SITE_PANE, CSG_SYLLABUS_PANE, CSG_MEETING_TIME_PANE, CSG_OH_PANE, CSG_SCHEDULE_PANE,

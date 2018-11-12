@@ -1,26 +1,17 @@
 
 {
     "subjects":[
-        "CSE",
-        "AMS",
-        "ISE"
+        "1"
     ],
     "years":[
         "2018",
         "2019",
-        "2015"
+        "4"
     ],
     "numbers":[
-        "101",
-        "114",
-        "214",
-        "215",
-        "219"
+        "2"
     ],
     "semesters":[
-        "Spring",
-        "Fall",
-        "Winter",
-        "Summer"
+        "3"
     ]
 }

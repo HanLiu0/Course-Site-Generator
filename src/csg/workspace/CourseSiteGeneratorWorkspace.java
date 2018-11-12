@@ -170,6 +170,7 @@ import static csg.CourseSiteGeneratorPropertyType.CSG_SYLLABUS_TEXTBOOKS_TP;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SYLLABUS_TEXT_AREA_PANE;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SYLLABUS_TOPICS_TA;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SYLLABUS_TOPICS_TP;
+import static csg.CourseSiteGeneratorPropertyType.CSG_TAB_PANE;
 import static csg.CourseSiteGeneratorPropertyType.CSG_THURSDAY_TABLE_COLUMN;
 import static csg.CourseSiteGeneratorPropertyType.CSG_TUESDAY_TABLE_COLUMN;
 import static csg.CourseSiteGeneratorPropertyType.CSG_WEDNESDAY_TABLE_COLUMN;
@@ -233,6 +234,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -274,7 +276,7 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             AppNodesBuilder csgBuilder = app.getGUIModule().getNodesBuilder();
 
             // BOTH PANES WILL NOW GO IN A SPLIT PANE
-            TabPane tPane = new TabPane();
+            TabPane tPane = csgBuilder.buildTabPane(CSG_TAB_PANE);
             workspace = new BorderPane();
             Tab siteTab = csgBuilder.buildTab(CSG_SITE_TAB, tPane, CLASS_CSG_TAB, ENABLED);
             initSiteTab(siteTab);
@@ -927,6 +929,7 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             AppGUIModule gui = app.getGUIModule();       
             PropertiesManager props = PropertiesManager.getPropertiesManager();
             ((CourseSiteGeneratorData)app.getDataComponent()).setTriggerListener(false);
+            ((TabPane) gui.getGUINode(CSG_TAB_PANE)).getSelectionModel().select(0);
             ((ComboBox) gui.getGUINode(CSG_SITE_SUBJECT_CB)).setValue("");
             ((ComboBox) gui.getGUINode(CSG_SITE_NUMBER_CB)).setValue("");
             ((ComboBox) gui.getGUINode(CSG_SITE_SEMESTER_CB)).setValue("");
@@ -960,6 +963,16 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             ((TextArea) gui.getGUINode(CSG_SYLLABUS_GRADING_NOTE_TA)).clear();
             ((TextArea) gui.getGUINode(CSG_SYLLABUS_ACADEMIC_DISHONESTY_TA)).clear();
             ((TextArea) gui.getGUINode(CSG_SYLLABUS_SPECIAL_ASSISTANCE_TA)).clear();
+            ((TitledPane) gui.getGUINode(CSG_SITE_OH_TITLEDPANE)).setExpanded(false);
+            ((TitledPane) gui.getGUINode(CSG_SYLLABUS_DESCRIPTION_TP)).setExpanded(false);
+            ((TitledPane) gui.getGUINode(CSG_SYLLABUS_TOPICS_TP)).setExpanded(false);
+            ((TitledPane) gui.getGUINode(CSG_SYLLABUS_PREREQUISITES_TP)).setExpanded(false);
+            ((TitledPane) gui.getGUINode(CSG_SYLLABUS_OUTCOMES_TP)).setExpanded(false);
+            ((TitledPane) gui.getGUINode(CSG_SYLLABUS_TEXTBOOKS_TP)).setExpanded(false);
+            ((TitledPane) gui.getGUINode(CSG_SYLLABUS_GRADED_COMPONENTS_TP)).setExpanded(false);
+            ((TitledPane) gui.getGUINode(CSG_SYLLABUS_GRADING_NOTE_TP)).setExpanded(false);
+            ((TitledPane) gui.getGUINode(CSG_SYLLABUS_ACADEMIC_DISHONESTY_TP)).setExpanded(false);
+            ((TitledPane) gui.getGUINode(CSG_SYLLABUS_SPECIAL_ASSISTANCE_TP)).setExpanded(false);
             ((RadioButton) gui.getGUINode(CSG_OH_TAS_ALL_RB)).setSelected(true);
             ((TextField) gui.getGUINode(CSG_OH_TAS_NAME_TEXT_FIELD)).clear();
             ((TextField) gui.getGUINode(CSG_OH_TAS_EMAIL_TEXT_FIELD)).clear();

@@ -1,28 +1,28 @@
 
 {
-    "subject":"11",
-    "number":"3",
-    "semester":"2",
+    "subject":"1",
+    "number":"2",
+    "semester":"3",
     "year":"4",
     "title":"5",
     "pages":[
         true,
-        false,
         true,
-        true
+        true,
+        false
     ],
     "logos":{
         "favicon":{
-            "src":"C:\\Users\\hanli\\Pictures\\幻想风II\\origin_75_20155151724CA0.jpg"
+            "src":"C:\\Users\\hanli\\Desktop\\DDPSY$YOTJFSX7{NE7]4Q$E.png"
         },
         "navbar":{
-            "src":"C:\\Users\\hanli\\Pictures\\幻想风II\\origin_051_2015741845870.jpg"
+            "src":"C:\\Users\\hanli\\Desktop\\DDPSY$YOTJFSX7{NE7]4Q$E.png"
         },
         "bottom_left":{
-            "src":"C:\\Users\\hanli\\Pictures\\幻想风II\\origin_053_201465103609.jpg"
+            "src":"C:\\Users\\hanli\\Desktop\\DDPSY$YOTJFSX7{NE7]4Q$E.png"
         },
         "bottom_right":{
-            "src":"C:\\Users\\hanli\\Pictures\\幻想风II\\origin_057_2013913174366.jpg"
+            "src":"C:\\Users\\hanli\\Desktop\\DDPSY$YOTJFSX7{NE7]4Q$E.png"
         }
     },
     "stylesheet":"1.css",
@@ -48,170 +48,130 @@
     ],
     "labs":[
     ],
-    "startHour":"10:00am",
-    "endHour":"11:00pm",
+    "startHour":"10:30am",
+    "endHour":"3:00pm",
     "grad_tas":[
         {
             "name":"20",
-            "email":"20@asd.asc"
+            "email":"20@asasc.aaa"
         }
     ],
     "undergrad_tas":[
         {
             "name":"21",
-            "email":"21@asc.asc"
+            "email":"21@sac.asc"
         }
     ],
     "officeHours":[
         {
             "time":"8_00am",
-            "day":"MONDAY",
-            "name":"20"
-        },
-        {
-            "time":"8_00am",
             "day":"TUESDAY",
             "name":"20"
         },
         {
-            "time":"8_00am",
-            "day":"WEDNESDAY",
-            "name":"20"
-        },
-        {
-            "time":"8_00am",
-            "day":"THURSDAY",
-            "name":"20"
-        },
-        {
-            "time":"8_00am",
+            "time":"8_30am",
             "day":"FRIDAY",
             "name":"20"
         },
         {
-            "time":"9_30am",
-            "day":"FRIDAY",
-            "name":"21"
+            "time":"9_00am",
+            "day":"MONDAY",
+            "name":"20"
         },
         {
             "time":"10_00am",
             "day":"MONDAY",
-            "name":"21"
-        },
-        {
-            "time":"10_00am",
-            "day":"TUESDAY",
             "name":"20"
         },
         {
             "time":"10_00am",
-            "day":"WEDNESDAY",
-            "name":"21"
-        },
-        {
-            "time":"10_30am",
-            "day":"WEDNESDAY",
+            "day":"TUESDAY",
             "name":"20"
         },
         {
             "time":"10_30am",
-            "day":"WEDNESDAY",
-            "name":"21"
-        },
-        {
-            "time":"11_00am",
             "day":"MONDAY",
             "name":"20"
         },
         {
-            "time":"11_00am",
+            "time":"11_30am",
             "day":"TUESDAY",
-            "name":"21"
-        },
-        {
-            "time":"11_00am",
-            "day":"FRIDAY",
             "name":"20"
-        },
-        {
-            "time":"11_30am",
-            "day":"MONDAY",
-            "name":"21"
-        },
-        {
-            "time":"11_30am",
-            "day":"WEDNESDAY",
-            "name":"21"
         },
         {
             "time":"11_30am",
             "day":"THURSDAY",
-            "name":"21"
-        },
-        {
-            "time":"12_00pm",
-            "day":"MONDAY",
-            "name":"21"
-        },
-        {
-            "time":"12_30pm",
-            "day":"WEDNESDAY",
-            "name":"21"
-        },
-        {
-            "time":"1_00pm",
-            "day":"MONDAY",
-            "name":"21"
-        },
-        {
-            "time":"1_00pm",
-            "day":"TUESDAY",
             "name":"20"
-        },
-        {
-            "time":"1_30pm",
-            "day":"MONDAY",
-            "name":"20"
-        },
-        {
-            "time":"1_30pm",
-            "day":"TUESDAY",
-            "name":"21"
         },
         {
             "time":"2_00pm",
-            "day":"FRIDAY",
-            "name":"20"
-        },
-        {
-            "time":"2_30pm",
             "day":"TUESDAY",
-            "name":"20"
-        },
-        {
-            "time":"2_30pm",
-            "day":"THURSDAY",
-            "name":"20"
-        },
-        {
-            "time":"3_30pm",
-            "day":"MONDAY",
-            "name":"20"
-        },
-        {
-            "time":"3_30pm",
-            "day":"MONDAY",
             "name":"21"
         },
         {
-            "time":"4_00pm",
+            "time":"2_30pm",
             "day":"WEDNESDAY",
             "name":"20"
         },
         {
-            "time":"5_30pm",
+            "time":"5_00pm",
+            "day":"WEDNESDAY",
+            "name":"21"
+        },
+        {
+            "time":"7_00pm",
             "day":"MONDAY",
-            "name":"20"
+            "name":"21"
+        },
+        {
+            "time":"7_00pm",
+            "day":"FRIDAY",
+            "name":"21"
+        },
+        {
+            "time":"8_30pm",
+            "day":"MONDAY",
+            "name":"21"
+        },
+        {
+            "time":"9_00pm",
+            "day":"THURSDAY",
+            "name":"21"
+        },
+        {
+            "time":"9_00pm",
+            "day":"FRIDAY",
+            "name":"21"
+        },
+        {
+            "time":"9_30pm",
+            "day":"WEDNESDAY",
+            "name":"21"
+        },
+        {
+            "time":"10_00pm",
+            "day":"MONDAY",
+            "name":"21"
+        },
+        {
+            "time":"10_00pm",
+            "day":"TUESDAY",
+            "name":"21"
+        },
+        {
+            "time":"10_00pm",
+            "day":"FRIDAY",
+            "name":"21"
+        },
+        {
+            "time":"10_30pm",
+            "day":"TUESDAY",
+            "name":"21"
+        },
+        {
+            "time":"10_30pm",
+            "day":"WEDNESDAY",
+            "name":"21"
         }
     ],
     "starting_monday":"",
