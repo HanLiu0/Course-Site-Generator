@@ -484,6 +484,7 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
         
         app.getFoolproofModule().updateAll();
         ((CourseSiteGeneratorWorkspace)app.getWorkspaceComponent()).loadDataToUI();
+        dataManager.countTaOh();
     }
     
         // HELPER METHOD FOR LOADING DATA FROM A JSON FORMAT

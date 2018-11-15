@@ -215,6 +215,12 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
         }
     }
     
+    public void countTaOh(){
+        for(int i = 0 ; i < teachingAssistants.size(); i++){
+            teachingAssistants.get(i).countOh(startTime, endTime);
+        }
+    }
+    
     public void resetTimeRange(){
         AppGUIModule gui = app.getGUIModule();
         startTimes.clear();
@@ -230,6 +236,7 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
         ((ComboBox) gui.getGUINode(CSG_OH_END_TIME_CB)).getSelectionModel().select(endTime);
         triggerListener = true;        
         reloadOfficeHours();
+        countTaOh();
     }
     
     private String getTimeString(int militaryHour, boolean onHour) {

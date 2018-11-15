@@ -5,6 +5,7 @@ import java.util.HashMap;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import csg.data.TimeSlot.DayOfWeek;
+import java.util.Map;
 
 /**
  * This class represents a Teaching Assistant for the table of TAs.
@@ -42,6 +43,15 @@ public class TeachingAssistantPrototype {
     
     public void removeOH(TimeSlot time, DayOfWeek dow){
         ohs.get(time).remove(dow);
+    }
+    
+    public void countOh(String startTime, String endTime){
+        int count = 0;
+        for(Map.Entry<TimeSlot, ArrayList<DayOfWeek>> entry: ohs.entrySet()){
+            if(entry.getKey().compareTime(entry.getKey().getStartTime(), startTime) >= 0 && entry.getKey().compareTime(entry.getKey().getEndTime(), endTime) <= 0)
+                count += entry.getValue().size();
+        }        
+        setTimeslots(count + "");
     }
     
     public HashMap<TimeSlot, ArrayList<DayOfWeek>> getOH(){

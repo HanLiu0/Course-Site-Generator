@@ -295,4 +295,31 @@ public class TimeSlot {
          tas = undergratas;
          dayText = undergradayText;
      }
+     
+     public int compareTime(String time1, String time2){
+         if(time1.equals(time2))
+             return 0;
+         if(time1.charAt(time1.length() - 2) > time2.charAt(time2.length()-2))
+             return 1;
+         else if(time1.charAt(time1.length() - 2) < time2.charAt(time2.length()-2))
+             return -1;
+         int hour1 = Integer.parseInt(time1.substring(0, time1.indexOf(":")));
+         if(hour1 == 12)
+             hour1 = 0;
+         int hour2 = Integer.parseInt(time2.substring(0, time2.indexOf(":")));
+         if(hour2 == 12)
+             hour2 =0;
+         if(hour1 > hour2)
+             return 1;
+         else if(hour2 > hour1)
+             return -1;
+         else{
+             int minute1 = Integer.parseInt(time1.substring(time1.length()-4, time1.length()-2));
+             int minute2 = Integer.parseInt(time2.substring(time2.length()-4, time2.length()-2));     
+             if(minute1 > minute2)
+                return 1;
+             else
+                 return -1;
+         }
+     }
 }

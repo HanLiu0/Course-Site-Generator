@@ -49,7 +49,7 @@
     "labs":[
     ],
     "startHour":"8:00am",
-    "endHour":"11:00pm",
+    "endHour":"12:00pm",
     "grad_tas":[
         {
             "name":"20",
@@ -104,6 +104,11 @@
             "name":"20"
         },
         {
+            "time":"1_30pm",
+            "day":"THURSDAY",
+            "name":"20"
+        },
+        {
             "time":"2_00pm",
             "day":"TUESDAY",
             "name":"21"
@@ -111,6 +116,21 @@
         {
             "time":"2_30pm",
             "day":"WEDNESDAY",
+            "name":"20"
+        },
+        {
+            "time":"2_30pm",
+            "day":"THURSDAY",
+            "name":"20"
+        },
+        {
+            "time":"3_30pm",
+            "day":"THURSDAY",
+            "name":"20"
+        },
+        {
+            "time":"4_00pm",
+            "day":"TUESDAY",
             "name":"20"
         },
         {
