@@ -21,10 +21,6 @@
         <!-- PROPERTIES ERROR MESSAGES -->
         <property name="PROPERTIES_ERROR_TITLE"     value="Properties File Error"></property>
         <property name="PROPERTIES_ERROR_CONTENT"   value="There was an Error Loading a Properties File"></property>
-
-        <!-- JSON ERROR MESSAGES -->
-        <property name="APP_INVALID_JSON_FILE_TITLE"     value="Json File Error"></property>
-        <property name="APP_INVALID_JSON_FILE_CONTENT"   value="The Json file is not loadable because it is in the incorrect format. "></property>
         
         <!-- FILE TOOLBAR TOOLTIPS -->
         <property name="NEW_BUTTON_TOOLTIP"         value="New Course Site Generator"></property>

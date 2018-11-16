@@ -392,7 +392,7 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
         }
 
         JsonArray jsonRecitationsArray = json.getJsonArray(JSON_RECITATIONS);
-        for(int i = 0 ; i  < jsonLecturesArray.size(); i++){
+        for(int i = 0 ; i  < jsonRecitationsArray.size(); i++){
             JsonObject jsonRecitation = jsonRecitationsArray.getJsonObject(i);
             RecitationItem recitation = new RecitationItem(jsonRecitation.getString(JSON_SECTION), jsonRecitation.getString(JSON_DAYS_TIME),
                 jsonRecitation.getString(JSON_ROOM), jsonRecitation.getString(JSON_TA1), jsonRecitation.getString(JSON_TA2));

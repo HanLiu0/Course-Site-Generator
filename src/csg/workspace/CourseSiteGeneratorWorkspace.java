@@ -217,11 +217,14 @@ import static djf.modules.AppGUIModule.ENABLED;
 import static djf.modules.AppLanguageModule.FILE_PROTOCOL;
 import djf.ui.AppNodesBuilder;
 import java.io.File;
+import java.time.LocalDate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -237,6 +240,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -440,18 +444,23 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             TableView<LectureItem> lecturesTable = csgBuilder.buildTableView(CSG_LECTURES_TABLEVIEW, lecturePane, CLASS_CSG_TABLE_VIEW, ENABLED);
             lecturesTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
             lecturesTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY); 
+            lecturesTable.setEditable(true);
             TableColumn sectionColumn = csgBuilder.buildTableColumn(CSG_LECTURES_SECTION_TABLE_COLUMN, lecturesTable, CLASS_CSG_COLUMN);
             sectionColumn.setCellValueFactory(new PropertyValueFactory<String, String>("section"));
             sectionColumn.prefWidthProperty().bind(lecturesTable.widthProperty().multiply(1.0/4.0));
+            sectionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
             TableColumn daysColumn = csgBuilder.buildTableColumn(CSG_LECTURES_DAYS_TABLE_COLUMN, lecturesTable, CLASS_CSG_COLUMN);
             daysColumn.setCellValueFactory(new PropertyValueFactory<String, String>("days"));
             daysColumn.prefWidthProperty().bind(lecturesTable.widthProperty().multiply(0.2));
+            daysColumn.setCellFactory(TextFieldTableCell.forTableColumn());
             TableColumn timeColumn = csgBuilder.buildTableColumn(CSG_LECTURES_TIME_TABLE_COLUMN, lecturesTable, CLASS_CSG_COLUMN);
             timeColumn.setCellValueFactory(new PropertyValueFactory<String, String>("time"));
             timeColumn.prefWidthProperty().bind(lecturesTable.widthProperty().multiply(0.3));        
+            timeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
             TableColumn roomColumn = csgBuilder.buildTableColumn(CSG_LECTURES_ROOM_TABLE_COLUMN, lecturesTable, CLASS_CSG_COLUMN);
             roomColumn.setCellValueFactory(new PropertyValueFactory<String, String>("room"));
             roomColumn.prefWidthProperty().bind(lecturesTable.widthProperty().multiply(1.0/4.0));
+            roomColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
             VBox recPane = csgBuilder.buildVBox(CSG_REC_PANE, meetingTimePane, CLASS_CSG_PANE, ENABLED);  
             recPane.setSpacing(10);
@@ -463,22 +472,28 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
 
             TableView<RecitationItem> recTable = csgBuilder.buildTableView(CSG_REC_TABLEVIEW, recPane, CLASS_CSG_TABLE_VIEW, ENABLED);
             recTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY); 
+            recTable.setEditable(true);
             recTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
             TableColumn sectionColumn1 = csgBuilder.buildTableColumn(CSG_REC_SECTION_TABLE_COLUMN, recTable, CLASS_CSG_COLUMN);
             sectionColumn1.setCellValueFactory(new PropertyValueFactory<String, String>("section"));
             sectionColumn1.prefWidthProperty().bind(lecturesTable.widthProperty().multiply(0.1));
+            sectionColumn1.setCellFactory(TextFieldTableCell.forTableColumn());
             TableColumn daysAndTimeColumn = csgBuilder.buildTableColumn(CSG_REC_DAYSTIME_TABLE_COLUMN, recTable, CLASS_CSG_COLUMN);
             daysAndTimeColumn.setCellValueFactory(new PropertyValueFactory<String, String>("daysAndTime"));
             daysAndTimeColumn.prefWidthProperty().bind(lecturesTable.widthProperty().multiply(0.25));
+            daysAndTimeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
             TableColumn roomColumn1 = csgBuilder.buildTableColumn(CSG_REC_ROOM_TABLE_COLUMN, recTable, CLASS_CSG_COLUMN);
             roomColumn1.setCellValueFactory(new PropertyValueFactory<String, String>("room"));
             roomColumn1.prefWidthProperty().bind(lecturesTable.widthProperty().multiply(0.15));
+            roomColumn1.setCellFactory(TextFieldTableCell.forTableColumn());
             TableColumn ta1Column = csgBuilder.buildTableColumn(CSG_REC_TA1_TABLE_COLUMN, recTable, CLASS_CSG_COLUMN);
             ta1Column.setCellValueFactory(new PropertyValueFactory<String, String>("ta1"));
             ta1Column.prefWidthProperty().bind(lecturesTable.widthProperty().multiply(0.25));
+            ta1Column.setCellFactory(TextFieldTableCell.forTableColumn());
             TableColumn ta2Column = csgBuilder.buildTableColumn(CSG_REC_TA2_TABLE_COLUMN, recTable, CLASS_CSG_COLUMN);
             ta2Column.setCellValueFactory(new PropertyValueFactory<String, String>("ta2"));
             ta2Column.prefWidthProperty().bind(lecturesTable.widthProperty().multiply(0.25));      
+            ta2Column.setCellFactory(TextFieldTableCell.forTableColumn());
             
             VBox labsPane = csgBuilder.buildVBox(CSG_LECTURES_PANE, meetingTimePane, CLASS_CSG_PANE, ENABLED);            
             labsPane.setSpacing(10);
@@ -490,21 +505,27 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             TableView<LabItem> labTable = csgBuilder.buildTableView(CSG_LABS_TABLEVIEW, labsPane, CLASS_CSG_TABLE_VIEW, ENABLED);
             labTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY); 
             labTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+            labTable.setEditable(true);
             TableColumn sectionColumn2 = csgBuilder.buildTableColumn(CSG_LABS_SECTION_TABLE_COLUMN, labTable, CLASS_CSG_COLUMN);
             sectionColumn2.setCellValueFactory(new PropertyValueFactory<String, String>("section"));
             sectionColumn2.prefWidthProperty().bind(lecturesTable.widthProperty().multiply(0.20));
+            sectionColumn2.setCellFactory(TextFieldTableCell.forTableColumn());
             TableColumn daysAndTimeColumn1 = csgBuilder.buildTableColumn(CSG_LABS_DAYSTIME_TABLE_COLUMN, labTable, CLASS_CSG_COLUMN);
             daysAndTimeColumn1.setCellValueFactory(new PropertyValueFactory<String, String>("daysAndTime"));
             daysAndTimeColumn1.prefWidthProperty().bind(lecturesTable.widthProperty().multiply(0.35));
+            daysAndTimeColumn1.setCellFactory(TextFieldTableCell.forTableColumn());
             TableColumn roomColumn2 = csgBuilder.buildTableColumn(CSG_LABS_ROOM_TABLE_COLUMN, labTable, CLASS_CSG_COLUMN);
             roomColumn2.setCellValueFactory(new PropertyValueFactory<String, String>("room"));
             roomColumn2.prefWidthProperty().bind(lecturesTable.widthProperty().multiply(0.15));
+            roomColumn2.setCellFactory(TextFieldTableCell.forTableColumn());
             TableColumn ta1Column1 = csgBuilder.buildTableColumn(CSG_LABS_TA1_TABLE_COLUMN, labTable, CLASS_CSG_COLUMN);
             ta1Column1.setCellValueFactory(new PropertyValueFactory<String, String>("ta1"));
             ta1Column1.prefWidthProperty().bind(lecturesTable.widthProperty().multiply(0.15));
+            ta1Column1.setCellFactory(TextFieldTableCell.forTableColumn());
             TableColumn ta2Column2 = csgBuilder.buildTableColumn(CSG_LABS_TA2_TABLE_COLUMN, labTable, CLASS_CSG_COLUMN);
             ta2Column2.setCellValueFactory(new PropertyValueFactory<String, String>("ta2"));
             ta2Column2.prefWidthProperty().bind(lecturesTable.widthProperty().multiply(0.15));  
+            ta2Column2.setCellFactory(TextFieldTableCell.forTableColumn());
             
             meetingTimeTab.setContent(sp);
         }        
@@ -653,6 +674,7 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             csgBuilder.buildDatePicker(CSG_SCHEDULE_STARTING_MONDAY_DP, datePane, CLASS_CSG_DP, ENABLED); 
             csgBuilder.buildLabel(CSG_SCHEDULE_ENDING_FRIDAY_LABEL, datePane, CLASS_CSG_BOLD_LABEL, ENABLED);
             csgBuilder.buildDatePicker(CSG_SCHEDULE_ENDING_FRIDAY_DP, datePane, CLASS_CSG_DP, ENABLED);
+
             VBox scheduleItemsPane = csgBuilder.buildVBox(CSG_SCHEDULE_ITEMS_PANE, schedulePane, CLASS_CSG_PANE, ENABLED);
             scheduleItemsPane.setSpacing(10);
             HBox scheduleHeaderPane = csgBuilder.buildHBox(CSG_SCHEDULE_ITEMS_HEADER_PANE, scheduleItemsPane, null, ENABLED);
@@ -806,6 +828,45 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
                 if(((CourseSiteGeneratorData)app.getDataComponent()).getTriggerListener())
                     controller.processEditSyllabusDetails(8, CSG_SYLLABUS_SPECIAL_ASSISTANCE_TA);
             });
+            TableView lectureTableView = (TableView) gui.getGUINode(CSG_LECTURES_TABLEVIEW);
+            ObservableList<TableColumn> lectureList = lectureTableView.getColumns();
+            for(int i = 0; i < lectureList.size(); i++){
+                int index = i;
+                lectureList.get(i).setOnEditCommit(            
+                    new EventHandler<TableColumn.CellEditEvent<LectureItem, String>>() {
+                        @Override 
+                        public void handle(TableColumn.CellEditEvent<LectureItem, String> t) {
+                            controller.processEditLecture(t.getRowValue(), t.getNewValue(), t.getOldValue(), index);
+                        }
+                });
+            }
+            
+            TableView recitationTableView = (TableView) gui.getGUINode(CSG_REC_TABLEVIEW);
+            ObservableList<TableColumn> recitationList = recitationTableView.getColumns();
+            for(int i = 0; i < recitationList.size(); i++){
+                recitationList.get(i).setEditable(true);
+                int index = i;
+                recitationList.get(i).setOnEditCommit(            
+                    new EventHandler<TableColumn.CellEditEvent<RecitationItem, String>>() {
+                        @Override 
+                        public void handle(TableColumn.CellEditEvent<RecitationItem, String> t) {
+                            controller.processEditRecitation(t.getRowValue(), t.getNewValue(), t.getOldValue(), index);
+                        }
+                });
+            }
+            
+            TableView labTableView = (TableView) gui.getGUINode(CSG_LABS_TABLEVIEW);
+            ObservableList<TableColumn> labList = labTableView.getColumns();
+            for(int i = 0; i < labList.size(); i++){
+                int index = i;
+                labList.get(i).setOnEditCommit(            
+                    new EventHandler<TableColumn.CellEditEvent<LabItem, String>>() {
+                        @Override 
+                        public void handle(TableColumn.CellEditEvent<LabItem, String> t) {
+                            controller.processEditLab(t.getRowValue(), t.getNewValue(), t.getOldValue(), index);
+                        }
+                });
+            }
             TableView taTableView = (TableView) gui.getGUINode(CSG_OH_TAS_TABLE_VIEW);
             ((Button) gui.getGUINode(CSG_OH_TAS_REMOVE_BT)).setOnAction(e->{
                 controller.processRemoveTA();
@@ -885,6 +946,62 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             });
             ((Button) gui.getGUINode(CSG_LABS_REMOVE_BT)).setOnAction(e->{
                 controller.processRemoveLab();
+            });
+            
+            ((DatePicker) gui.getGUINode(CSG_SCHEDULE_STARTING_MONDAY_DP)).setOnAction(e->{
+                if(((CourseSiteGeneratorData)app.getDataComponent()).getTriggerListener())                
+                    controller.processEditStartEndDate(CSG_SCHEDULE_STARTING_MONDAY_DP, 0);
+            });
+            ((DatePicker) gui.getGUINode(CSG_SCHEDULE_ENDING_FRIDAY_DP)).setOnAction(e->{
+                if(((CourseSiteGeneratorData)app.getDataComponent()).getTriggerListener())
+                    controller.processEditStartEndDate(CSG_SCHEDULE_ENDING_FRIDAY_DP, 1);
+            });
+            ((DatePicker) gui.getGUINode(CSG_SCHEDULE_STARTING_MONDAY_DP)).setDayCellFactory(
+                                    (final DatePicker datePicker) -> new DateCell() {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        LocalDate endDate = ((CourseSiteGeneratorData)app.getDataComponent()).getEndingFriday();
+                        if (endDate != null && item.isAfter(endDate)) {
+                            setDisable(true);
+                            setStyle("-fx-background-color: #ffc0cb;"); 
+                        }
+                    }
+            });
+            ((DatePicker) gui.getGUINode(CSG_SCHEDULE_ENDING_FRIDAY_DP)).setDayCellFactory(
+                                    (final DatePicker datePicker) -> new DateCell() {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        LocalDate startDate = ((CourseSiteGeneratorData)app.getDataComponent()).getStartingMonday();
+                        if (startDate != null && item.isBefore(startDate)) {
+                            setDisable(true);
+                            setStyle("-fx-background-color: #ffc0cb;"); 
+                        }
+                    }
+            });
+            ((Button) gui.getGUINode(CSG_SCHEDULE_CLEAR_BT)).setOnAction(e->{
+                controller.processClearEntryFieldData();
+            });
+            ((DatePicker) gui.getGUINode(CSG_SCHEDULE_DATE_DP)).setDayCellFactory(
+                                    (final DatePicker datePicker) -> new DateCell() {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        LocalDate startDate = ((CourseSiteGeneratorData)app.getDataComponent()).getStartingMonday();
+                        LocalDate endDate = ((CourseSiteGeneratorData)app.getDataComponent()).getEndingFriday();
+                        if (startDate != null && item.isBefore(startDate)) {
+                            setDisable(true);
+                            setStyle("-fx-background-color: #ffc0cb;"); 
+                        }
+                        if (endDate != null && item.isAfter(endDate)) {
+                            setDisable(true);
+                            setStyle("-fx-background-color: #ffc0cb;"); 
+                        }
+                    }
+            });            
+            ((Button) gui.getGUINode(CSG_SCHEDULE_ADD_UPDATE_BT)).setOnAction(e->{
+                controller.processAddSchedule();
             });
         }
 

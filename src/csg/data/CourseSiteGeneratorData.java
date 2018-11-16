@@ -16,6 +16,7 @@ import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_GRAD_RB;
 import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_TABLE_VIEW;
 import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_UNDERGRA_RB;
 import static csg.CourseSiteGeneratorPropertyType.CSG_REC_TABLEVIEW;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_STARTING_MONDAY_DP;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_TABLEVIEW;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_NUMBER_CB;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_SEMESTER_CB;
@@ -36,6 +37,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableView;
 import properties_manager.PropertiesManager;
@@ -834,6 +836,5 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
     public void setEndingFriday(LocalDate endingFriday) {
         this.endingFriday = endingFriday;
     }
-
 }
 

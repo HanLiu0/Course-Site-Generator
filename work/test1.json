@@ -8,7 +8,7 @@
     "pages":[
         true,
         true,
-        true,
+        false,
         false
     ],
     "logos":{
@@ -43,159 +43,60 @@
     "academicDishonestyNote":"18",
     "specialAssistanceNote":"19",
     "lectures":[
+        {
+            "section":"5",
+            "days":"5",
+            "time":"5",
+            "room":"5"
+        },
+        {
+            "section":"？",
+            "days":"5",
+            "time":"?",
+            "room":"?"
+        },
+        {
+            "section":"？",
+            "days":"?",
+            "time":"?",
+            "room":"?"
+        }
     ],
     "recitations":[
+        {
+            "section":"5",
+            "day_time":"5",
+            "room":"5",
+            "ta_1":"5",
+            "ta_2":"5"
+        }
     ],
     "labs":[
+        {
+            "section":"5",
+            "day_time":"5",
+            "room":"5",
+            "ta_1":"5",
+            "ta_2":"5"
+        }
     ],
     "startHour":"8:00am",
-    "endHour":"12:00pm",
+    "endHour":"11:00pm",
     "grad_tas":[
-        {
-            "name":"20",
-            "email":"20@asasc.aaa"
-        }
     ],
     "undergrad_tas":[
-        {
-            "name":"21",
-            "email":"21@sac.asc"
-        }
     ],
     "officeHours":[
-        {
-            "time":"8_00am",
-            "day":"TUESDAY",
-            "name":"20"
-        },
-        {
-            "time":"8_30am",
-            "day":"FRIDAY",
-            "name":"20"
-        },
-        {
-            "time":"9_00am",
-            "day":"MONDAY",
-            "name":"20"
-        },
-        {
-            "time":"10_00am",
-            "day":"MONDAY",
-            "name":"20"
-        },
-        {
-            "time":"10_00am",
-            "day":"TUESDAY",
-            "name":"20"
-        },
-        {
-            "time":"10_30am",
-            "day":"MONDAY",
-            "name":"20"
-        },
-        {
-            "time":"11_30am",
-            "day":"TUESDAY",
-            "name":"20"
-        },
-        {
-            "time":"11_30am",
-            "day":"THURSDAY",
-            "name":"20"
-        },
-        {
-            "time":"1_30pm",
-            "day":"THURSDAY",
-            "name":"20"
-        },
-        {
-            "time":"2_00pm",
-            "day":"TUESDAY",
-            "name":"21"
-        },
-        {
-            "time":"2_30pm",
-            "day":"WEDNESDAY",
-            "name":"20"
-        },
-        {
-            "time":"2_30pm",
-            "day":"THURSDAY",
-            "name":"20"
-        },
-        {
-            "time":"3_30pm",
-            "day":"THURSDAY",
-            "name":"20"
-        },
-        {
-            "time":"4_00pm",
-            "day":"TUESDAY",
-            "name":"20"
-        },
-        {
-            "time":"5_00pm",
-            "day":"WEDNESDAY",
-            "name":"21"
-        },
-        {
-            "time":"7_00pm",
-            "day":"MONDAY",
-            "name":"21"
-        },
-        {
-            "time":"7_00pm",
-            "day":"FRIDAY",
-            "name":"21"
-        },
-        {
-            "time":"8_30pm",
-            "day":"MONDAY",
-            "name":"21"
-        },
-        {
-            "time":"9_00pm",
-            "day":"THURSDAY",
-            "name":"21"
-        },
-        {
-            "time":"9_00pm",
-            "day":"FRIDAY",
-            "name":"21"
-        },
-        {
-            "time":"9_30pm",
-            "day":"WEDNESDAY",
-            "name":"21"
-        },
-        {
-            "time":"10_00pm",
-            "day":"MONDAY",
-            "name":"21"
-        },
-        {
-            "time":"10_00pm",
-            "day":"TUESDAY",
-            "name":"21"
-        },
-        {
-            "time":"10_00pm",
-            "day":"FRIDAY",
-            "name":"21"
-        },
-        {
-            "time":"10_30pm",
-            "day":"TUESDAY",
-            "name":"21"
-        },
-        {
-            "time":"10_30pm",
-            "day":"WEDNESDAY",
-            "name":"21"
-        }
     ],
-    "starting_monday":"",
-    "ending_friday":"",
+    "starting_monday":"2018-11-15",
+    "ending_friday":"2018-11-30",
     "schedule":[
+        {
+            "type":"Options",
+            "date":"2018-11-23",
+            "title":"213",
+            "topic":"123",
+            "link":"123"
+        }
     ]
 }
