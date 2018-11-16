@@ -95,7 +95,7 @@ public class AppWelcomeDialog extends Stage {
                         this.hide();
                         app.getGUIModule().getWindow().show();
                     }
-                    catch(IOException ioe) {
+                    catch(Exception ioe) {
                         AppDialogsFacade.showMessageDialog(app.getGUIModule().getWindow(), LOAD_ERROR_TITLE, LOAD_ERROR_CONTENT);
                     }
                 });

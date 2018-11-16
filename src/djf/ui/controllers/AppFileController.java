@@ -75,7 +75,7 @@ public class AppFileController {
                 // GO AHEAD AND PROCEED LOADING A Course
                 promptToOpen();
             }
-        } catch (IOException ioe) {
+        } catch (Exception ioe) {
             // SOMETHING WENT WRONG
             AppDialogsFacade.showMessageDialog(app.getGUIModule().getWindow(), LOAD_ERROR_TITLE, LOAD_ERROR_CONTENT);
         }

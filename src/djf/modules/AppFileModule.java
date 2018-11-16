@@ -6,6 +6,9 @@ import djf.AppTemplate;
 import java.io.File;
 import java.io.IOException;
 import static djf.AppPropertyType.APP_UNDO_FOOLPROOF_SETTINGS;
+import static djf.AppPropertyType.LOAD_ERROR_CONTENT;
+import static djf.AppPropertyType.LOAD_ERROR_TITLE;
+import djf.ui.dialogs.AppDialogsFacade;
 import javafx.application.Platform;
 import properties_manager.PropertiesManager;
 
@@ -166,7 +169,8 @@ public class AppFileModule {
                         saved = true;
                 }
                 catch(Exception exc) {
-                    exc.printStackTrace();
+                    //exc.printStackTrace();
+                     AppDialogsFacade.showMessageDialog(app.getGUIModule().getWindow(), LOAD_ERROR_TITLE, LOAD_ERROR_CONTENT);
                 }
             }
         });
