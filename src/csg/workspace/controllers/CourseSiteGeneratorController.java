@@ -98,6 +98,7 @@ public class CourseSiteGeneratorController {
         if(t != null && t instanceof EditBanner_Transaction){
             if (((EditBanner_Transaction)t).getIndex() == index){
                 ((EditBanner_Transaction)t).updateTransaction(text);
+                app.getFileModule().markAsEdited(true);
                 return;
             }
         }
@@ -148,6 +149,7 @@ public class CourseSiteGeneratorController {
         if(t != null && t instanceof EditInstructor_Transaction){
             if (((EditInstructor_Transaction)t).getIndex() == index){
                 ((EditInstructor_Transaction)t).updateTransaction(text);
+                app.getFileModule().markAsEdited(true);
                 return;
             }
         }
@@ -165,6 +167,7 @@ public class CourseSiteGeneratorController {
         if(t != null && t instanceof EditSyllabusDetails_Transaction){
             if (((EditSyllabusDetails_Transaction)t).getIndex() == index){
                 ((EditSyllabusDetails_Transaction)t).updateTransaction(text);
+                app.getFileModule().markAsEdited(true);
                 return;
             }
         }

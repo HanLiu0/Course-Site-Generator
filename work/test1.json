@@ -1,9 +1,9 @@
 
 {
-    "subject":"1",
-    "number":"2",
-    "semester":"3",
-    "year":"4",
+    "subject":"ISE",
+    "number":"220",
+    "semester":"Fall",
+    "year":"2019",
     "title":"5",
     "pages":[
         true,
@@ -25,7 +25,7 @@
             "src":"C:\\Users\\hanli\\Desktop\\DDPSY$YOTJFSX7{NE7]4Q$E.png"
         }
     },
-    "stylesheet":"1.css",
+    "stylesheet":"sea_wolf.css",
     "instructor":{
         "name":"6",
         "room":"8",
@@ -33,7 +33,7 @@
         "link":"9",
         "officeHours":"10"
     },
-    "courseDescription":"11",
+    "courseDescription":"11ss",
     "courseTopics":"12",
     "prerequisites":"13",
     "courseOutcomes":"14",
@@ -81,12 +81,90 @@
         }
     ],
     "startHour":"8:00am",
-    "endHour":"11:00pm",
+    "endHour":"2:30pm",
     "grad_tas":[
+        {
+            "name":"asd",
+            "email":"scsad@sc.asc"
+        }
     ],
     "undergrad_tas":[
+        {
+            "name":"ac",
+            "email":"sac@sdc.asc"
+        }
     ],
     "officeHours":[
+        {
+            "time":"10_30am",
+            "day":"MONDAY",
+            "name":"ac"
+        },
+        {
+            "time":"11_00am",
+            "day":"MONDAY",
+            "name":"asd"
+        },
+        {
+            "time":"11_00am",
+            "day":"TUESDAY",
+            "name":"asd"
+        },
+        {
+            "time":"11_30am",
+            "day":"MONDAY",
+            "name":"asd"
+        },
+        {
+            "time":"11_30am",
+            "day":"MONDAY",
+            "name":"ac"
+        },
+        {
+            "time":"11_30am",
+            "day":"TUESDAY",
+            "name":"asd"
+        },
+        {
+            "time":"11_30am",
+            "day":"FRIDAY",
+            "name":"ac"
+        },
+        {
+            "time":"12_00pm",
+            "day":"WEDNESDAY",
+            "name":"asd"
+        },
+        {
+            "time":"12_30pm",
+            "day":"MONDAY",
+            "name":"asd"
+        },
+        {
+            "time":"12_30pm",
+            "day":"TUESDAY",
+            "name":"asd"
+        },
+        {
+            "time":"12_30pm",
+            "day":"TUESDAY",
+            "name":"ac"
+        },
+        {
+            "time":"12_30pm",
+            "day":"WEDNESDAY",
+            "name":"ac"
+        },
+        {
+            "time":"12_30pm",
+            "day":"THURSDAY",
+            "name":"asd"
+        },
+        {
+            "time":"12_30pm",
+            "day":"THURSDAY",
+            "name":"ac"
+        }
     ],
     "starting_monday":"2018-11-15",
     "ending_friday":"2018-11-30",
@@ -97,6 +175,13 @@
             "title":"213",
             "topic":"123",
             "link":"123"
+        },
+        {
+            "type":"Options",
+            "date":"2018-11-16",
+            "title":"12",
+            "topic":"12",
+            "link":"12"
         }
     ]
 }

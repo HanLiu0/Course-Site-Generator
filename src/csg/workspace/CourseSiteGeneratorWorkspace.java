@@ -1091,6 +1091,7 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
             ((ImageView) gui.getGUINode(CSG_SITE_RIGHT_FOOTER_IMAGE)).setImage
                 (new Image(FILE_PROTOCOL + props.getProperty(APP_PATH_IMAGES) + props.getProperty(IMAGE_PLACEHOLDER_ICON)));     
             ((ComboBox) gui.getGUINode(CSG_SITE_STYLESHEET_CB)).getSelectionModel().clearSelection();
+            ((ComboBox) gui.getGUINode(CSG_SITE_STYLESHEET_CB)).setValue("");
             ((TextField) gui.getGUINode(CSG_SITE_NAME_TF)).clear();
             ((TextField) gui.getGUINode(CSG_SITE_ROOM_TF)).clear();
             ((TextField) gui.getGUINode(CSG_SITE_EMAIL_TF)).clear();
