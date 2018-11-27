@@ -21,6 +21,7 @@ import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_TABLEVIEW;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_TITLE_TF;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_TOPIC_TF;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_TYPE_CB;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_UPDATE_BT;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_DIR_LABEL;
 import csg.data.CourseSiteGeneratorData;
 import csg.data.LabItem;
@@ -42,6 +43,7 @@ import csg.transactions.EditLab_Transaction;
 import csg.transactions.EditLecture_Transaction;
 import csg.transactions.EditPages_Transaction;
 import csg.transactions.EditRecitation_Transaction;
+import csg.transactions.EditSchedule_Transaction;
 import csg.transactions.EditStartEndDate_Transaction;
 import csg.transactions.EditStyleImages_Transaction;
 import csg.transactions.EditStyleSheet_Transaction;
@@ -50,6 +52,7 @@ import csg.transactions.RemoveLab_Transaction;
 import csg.transactions.RemoveLecture_Transaction;
 import csg.transactions.RemoveOH_Transaction;
 import csg.transactions.RemoveRecitation_Transaction;
+import csg.transactions.RemoveSchedule_Transaction;
 import csg.transactions.RemoveTA_Transaction;
 import csg.transactions.SelectTimeRange_Transaction;
 import csg.workspace.dialogs.CourseSiteGeneratorDialog;
@@ -358,17 +361,60 @@ public class CourseSiteGeneratorController {
          app.processTransaction(transaction);              
     }
     
-    public void processAddSchedule(){
+    public void processAddOrEditSchedule(){
         AppGUIModule gui = app.getGUIModule();
         CourseSiteGeneratorData data = (CourseSiteGeneratorData)app.getDataComponent();        
         String type = (String)((ComboBox) gui.getGUINode(CSG_SCHEDULE_TYPE_CB)).getValue();
-        LocalDate date = ((DatePicker) gui.getGUINode(CSG_SCHEDULE_DATE_DP)).getValue();
+        LocalDate dateLD = ((DatePicker) gui.getGUINode(CSG_SCHEDULE_DATE_DP)).getValue();
+        String date = null;
+        if(dateLD != null)
+            date = dateLD.toString();
         String title = ((TextField) gui.getGUINode(CSG_SCHEDULE_TITLE_TF)).getText();
         String topic = ((TextField) gui.getGUINode(CSG_SCHEDULE_TOPIC_TF)).getText();
         String link = ((TextField) gui.getGUINode(CSG_SCHEDULE_LINK_TF)).getText();
-        ScheduleItem schedule = new ScheduleItem(type, date.toString(), title, topic, link);
-        AddSchedule_Transaction transaction = new AddSchedule_Transaction(data, schedule);
-         app.processTransaction(transaction);            
+        TableView<ScheduleItem> scheduleTable = (TableView<ScheduleItem>)gui.getGUINode(CSG_SCHEDULE_TABLEVIEW);
+        ScheduleItem selectedSchedule = scheduleTable.getSelectionModel().getSelectedItem();
+        //User didn't choose a Schedule
+        if(selectedSchedule == null){        
+            ScheduleItem schedule = new ScheduleItem(type, date, title, topic, link);
+            AddSchedule_Transaction transaction = new AddSchedule_Transaction(data, schedule);
+            app.processTransaction(transaction);            
+        }
+        else{
+            EditSchedule_Transaction transaction = new EditSchedule_Transaction(selectedSchedule, type, date, title, topic, link);
+            app.processTransaction(transaction);            
+        }
+    }
+    
+    public void processRemoveSchedule(){
+        AppGUIModule gui = app.getGUIModule();
+        CourseSiteGeneratorData data = (CourseSiteGeneratorData)app.getDataComponent();        
+        TableView<ScheduleItem> scheduleTable = (TableView<ScheduleItem>)gui.getGUINode(CSG_SCHEDULE_TABLEVIEW);
+        ScheduleItem selectedSchedule = scheduleTable.getSelectionModel().getSelectedItem();
+        if(selectedSchedule == null){        
+            return;
+        }
+        else{
+            RemoveSchedule_Transaction transaction = new RemoveSchedule_Transaction(data, selectedSchedule);
+            app.processTransaction(transaction);            
+        }
+    }
+    
+    public void processLoadEntryFieldData(){
+        AppGUIModule gui = app.getGUIModule();
+        CourseSiteGeneratorData data = (CourseSiteGeneratorData)app.getDataComponent();
+        TableView<ScheduleItem> scheduleTable = (TableView<ScheduleItem>)gui.getGUINode(CSG_SCHEDULE_TABLEVIEW);
+        ScheduleItem selectedSchedule = scheduleTable.getSelectionModel().getSelectedItem();
+        //User didn't choose a TA
+        if(selectedSchedule == null)
+            return;        
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        ((ComboBox) gui.getGUINode(CSG_SCHEDULE_TYPE_CB)).getSelectionModel().select(selectedSchedule.getType());
+        ((DatePicker) gui.getGUINode(CSG_SCHEDULE_DATE_DP)).setValue(LocalDate.parse(selectedSchedule.getDate()));
+        ((TextField) gui.getGUINode(CSG_SCHEDULE_TITLE_TF)).setText(selectedSchedule.getTitle());
+        ((TextField) gui.getGUINode(CSG_SCHEDULE_TOPIC_TF)).setText(selectedSchedule.getTopic());
+        ((TextField) gui.getGUINode(CSG_SCHEDULE_LINK_TF)).setText(selectedSchedule.getLink());
+        ((Button) gui.getGUINode(CSG_SCHEDULE_ADD_UPDATE_BT)).setText(props.getProperty(CSG_SCHEDULE_UPDATE_BT + "_TEXT"));
     }
     
     public void processClearEntryFieldData(){

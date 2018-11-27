@@ -1001,8 +1001,15 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
                     }
             });            
             ((Button) gui.getGUINode(CSG_SCHEDULE_ADD_UPDATE_BT)).setOnAction(e->{
-                controller.processAddSchedule();
+                controller.processAddOrEditSchedule();
             });
+            ((TableView) gui.getGUINode(CSG_SCHEDULE_TABLEVIEW)).setOnMouseClicked(e->{
+                controller.processLoadEntryFieldData();
+            });
+            ((Button) gui.getGUINode(CSG_SCHEDULE_REMOVE_BT)).setOnAction(e->{
+                controller.processRemoveSchedule();
+            });
+            
         }
 
         private void initFoolproofDesign() {

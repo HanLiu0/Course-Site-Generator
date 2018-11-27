@@ -18,6 +18,7 @@ import static csg.CourseSiteGeneratorPropertyType.CSG_OH_TAS_UNDERGRA_RB;
 import static csg.CourseSiteGeneratorPropertyType.CSG_REC_TABLEVIEW;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_STARTING_MONDAY_DP;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_TABLEVIEW;
+import static csg.CourseSiteGeneratorPropertyType.CSG_SCHEDULE_TYPE_CB;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_NUMBER_CB;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_SEMESTER_CB;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_SUBJECT_CB;
@@ -60,6 +61,7 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
         private ObservableList<String> numberOptions;
         private ObservableList<String> semesterOptions;
         private ObservableList<String> yearOptions;
+        private ObservableList<String> scheduleOptions;
         
         private String[] syllabusText;
 
@@ -118,10 +120,12 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
             numberOptions = FXCollections.observableArrayList();
             semesterOptions = FXCollections.observableArrayList();
             yearOptions = FXCollections.observableArrayList();
+            scheduleOptions = FXCollections.observableArrayList();
             ((ComboBox) gui.getGUINode(CSG_SITE_SUBJECT_CB)).setItems(subjectOptions);
             ((ComboBox) gui.getGUINode(CSG_SITE_NUMBER_CB)).setItems(numberOptions);
             ((ComboBox) gui.getGUINode(CSG_SITE_SEMESTER_CB)).setItems(semesterOptions);
             ((ComboBox) gui.getGUINode(CSG_SITE_YEAR_CB)).setItems(yearOptions);
+            ((ComboBox) gui.getGUINode(CSG_SCHEDULE_TYPE_CB)).setItems(scheduleOptions);
             addYearOptions(LocalDate.now().getYear() + "");
             addYearOptions(LocalDate.now().getYear()+1+"");
             syllabusText = new String[9];
@@ -428,6 +432,10 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
     public Iterator<String> semestersIterator() {
         return semesterOptions.iterator();
     }        
+    
+    public Iterator<String> scheduleOptionsIterator(){
+        return scheduleOptions.iterator();
+    }
     public Iterator<TeachingAssistantPrototype> teachingAssistantsIterator() {
         return getTeachingAssistants().iterator();
     }
@@ -665,6 +673,11 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
             numberOptions.add(number);
     }
 
+    public void addScheduleOptions(String schedule){
+        if(schedule != null && !schedule.isEmpty() && !scheduleOptions.contains(schedule))
+            scheduleOptions.add(schedule);        
+    }
+    
     /**
      * @return the subjectOptions
      */

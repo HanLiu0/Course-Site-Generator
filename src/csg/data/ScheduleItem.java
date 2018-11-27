@@ -96,4 +96,24 @@ public class ScheduleItem {
     public void setLink(String link) {
         this.link.set(link);
     }
+    
+    public StringProperty typeProperty(){
+        return type;
+    }
+    
+    public StringProperty dateProperty(){
+        return date;
+    }
+    
+    public StringProperty titleProperty(){
+        return title;
+    }
+        
+    public StringProperty topicProperty(){
+        return topic;
+    }
+            
+    public StringProperty linkProperty(){
+        return link;
+    }
 }

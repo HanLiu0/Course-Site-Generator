@@ -166,22 +166,15 @@
             "name":"ac"
         }
     ],
-    "starting_monday":"2018-11-15",
+    "starting_monday":"2018-11-07",
     "ending_friday":"2018-11-30",
     "schedule":[
         {
-            "type":"Options",
+            "type":"Recitations",
             "date":"2018-11-23",
             "title":"213",
             "topic":"123",
             "link":"123"
-        },
-        {
-            "type":"Options",
-            "date":"2018-11-16",
-            "title":"12",
-            "topic":"12",
-            "link":"12"
         }
     ]
 }

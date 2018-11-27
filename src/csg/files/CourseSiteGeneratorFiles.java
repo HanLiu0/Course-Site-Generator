@@ -62,6 +62,7 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
     static final String JSON_NUMBER_OPTIONS = "numbers";
     static final String JSON_SEMESTER_OPTIONS = "semesters";
     static final String JSON_YEAR_OPTIONS = "years";
+    static final String JSON_SCHEDULE_OPTIONS = "schedules";
     static final String JSON_PAGES = "pages";
     static final String JSON_STYLESHEET = "stylesheet";
     static final String JSON_LOGOS = "logos";
@@ -285,6 +286,7 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
         Iterator<String> years = dataManager.yearsIterator();
         Iterator<String> numbers = dataManager.numbersIterator();
         Iterator<String> semesters = dataManager.semestersIterator();
+        Iterator<String> schedules = dataManager.scheduleOptionsIterator();
         
         JsonArrayBuilder subjectsArrayBuilder = Json.createArrayBuilder();
         while(subjects.hasNext()){
@@ -308,11 +310,17 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
         while(semesters.hasNext()){
             semestersArrayBuilder.add(semesters.next());
         }
-        JsonArray semesterArray = semestersArrayBuilder.build();       
+        JsonArray semesterArray = semestersArrayBuilder.build();      
+        
+        JsonArrayBuilder scheduleOptionsArrayBuilder = Json.createArrayBuilder();
+        while(schedules.hasNext()){
+            scheduleOptionsArrayBuilder.add(schedules.next());
+        }
+        JsonArray scheduleOptionsArray = scheduleOptionsArrayBuilder.build();      
         
         JsonObject settingObject = Json.createObjectBuilder().add(JSON_SUBJECT_OPTIONS, subjectArray)
                 .add(JSON_YEAR_OPTIONS, yearArray).add(JSON_NUMBER_OPTIONS, numberArray)
-                .add(JSON_SEMESTER_OPTIONS, semesterArray).build();
+                .add(JSON_SEMESTER_OPTIONS, semesterArray).add(JSON_SCHEDULE_OPTIONS, scheduleOptionsArray).build();
 
         Map<String, Object> properties1 = new HashMap<>(1);
         properties1.put(JsonGenerator.PRETTY_PRINTING, true);
@@ -469,6 +477,7 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
         JsonArray numbers = settings.getJsonArray(JSON_NUMBER_OPTIONS);
         JsonArray semesters = settings.getJsonArray(JSON_SEMESTER_OPTIONS);
         JsonArray years = settings.getJsonArray(JSON_YEAR_OPTIONS);
+        JsonArray schedules = settings.getJsonArray(JSON_SCHEDULE_OPTIONS);
         for(int i = 0 ; i < subjects.size(); i++){
             dataManager.addSubjectOptions(subjects.getString(i));
         }
@@ -480,6 +489,9 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
         }
         for(int i = 0 ; i < years.size(); i++){
             dataManager.addYearOptions(years.getString(i));
+        }        
+        for(int i = 0 ; i < schedules.size(); i++){
+            dataManager.addScheduleOptions(schedules.getString(i));
         }        
         
         app.getFoolproofModule().updateAll();

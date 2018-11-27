@@ -23,5 +23,12 @@
         "Winter",
         "Spring",
         "Summer"
+    ],
+    "schedules":[
+        "Holidays",
+        "Lectures",
+        "References",
+        "Recitations",
+        "HWs"
     ]
 }
