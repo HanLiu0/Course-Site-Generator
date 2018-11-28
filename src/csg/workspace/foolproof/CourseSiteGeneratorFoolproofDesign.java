@@ -20,6 +20,7 @@ import djf.modules.AppGUIModule;
 import djf.ui.foolproof.FoolproofDesign;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
@@ -39,10 +40,6 @@ public class CourseSiteGeneratorFoolproofDesign implements FoolproofDesign {
     @Override
     public void updateControls() {
         AppGUIModule gui = app.getGUIModule();
-        if(app.getFileModule().getWorkFile() == null)
-            ((Button) gui.getGUINode(EXPORT_BUTTON)).setDisable(true);
-        else
-            ((Button) gui.getGUINode(EXPORT_BUTTON)).setDisable(false);
         CheckBox homeCB = ((CheckBox)gui.getGUINode(CSG_SITE_HOME_CB));
         CheckBox syllabusCB = ((CheckBox)gui.getGUINode(CSG_SITE_SYLLABUS_CB));
         CheckBox scheduleCB = ((CheckBox)gui.getGUINode(CSG_SITE_SCHEDULE_CB));
@@ -74,6 +71,15 @@ public class CourseSiteGeneratorFoolproofDesign implements FoolproofDesign {
             scheduleCB.setDisable(false);
             hwsCB.setDisable(false);
         }
+        Platform.runLater(new Runnable(){
+            @Override
+            public void run() {
+                if(app.getFileModule().getWorkFile() == null)
+                    ((Button) gui.getGUINode(EXPORT_BUTTON)).setDisable(true);
+                else
+                    ((Button) gui.getGUINode(EXPORT_BUTTON)).setDisable(false);            
+            }
+        });
         TextField nameTF = (TextField) gui.getGUINode(CSG_OH_TAS_NAME_TEXT_FIELD);
         TextField emailTF = (TextField) gui.getGUINode(CSG_OH_TAS_EMAIL_TEXT_FIELD);            
         Button addBt = (Button) gui.getGUINode(CSG_OH_TAS_ADD_TA_BUTTON);        

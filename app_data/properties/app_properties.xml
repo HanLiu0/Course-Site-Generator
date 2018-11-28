@@ -23,13 +23,22 @@
         <property name="APP_PATH_IMAGES"    value="./images/"></property>
         <property name="APP_PATH_WEB"       value="./app_data/web/"></property>
         <property name="APP_PATH_SETTING"       value="./app_data/setting/"></property>
-        <property name="APP_PATH_STYLESHEET"     value="./work/css"></property>
+        <property name="APP_PATH_STYLESHEET"     value="./work/css/"></property>
         <property name="WORK_FILE_EXT"       value="*.json"></property>
         <property name="WORK_FILE_EXT_DESC"       value="JSON files (*.json)"></property>
         <property name="PREF_WIDTH"         value="800"></property>
         <property name="PREF_HEIGHT"        value="600"></property>        
         <property name="START_MAXIMIZED"    value="true"></property>
-        
+
+        <!--EXPORTS-->
+        <property name="EXPORT_PATH_PUBLIC_HTML"       value="public_html/"></property>
+        <property name="EXPORT_PATH_CSS"       value="./css/"></property>
+        <property name="EXPORT_PATH_IMAGES"       value="./images/"></property>
+        <property name="EXPORT_PATH_JS"       value="./js/"></property>
+        <property name="EXPORT_PATH_COURSE_DATA_JSON"       value="CourseData.json"></property>
+        <property name="EXPORT_PATH_SCHEDULE_DATA_JSON"       value="ScheduleData.json"></property>
+        <property name="EXPORT_PATH_SYLLABUS_DATA_JSON"       value="SyllabusData.json"></property>
+                
         <!-- TOP TOOLBARS AND CONTROLS TO INCLUDE -->
         <property name="HAS_WELCOME_DIALOG"     value="true"></property>
         <property name="HAS_TOP_TOOLBAR"        value="true"></property>        

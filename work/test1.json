@@ -8,24 +8,24 @@
     "pages":[
         true,
         true,
-        false,
-        false
+        true,
+        true
     ],
     "logos":{
         "favicon":{
-            "src":"C:\\Users\\hanli\\Desktop\\DDPSY$YOTJFSX7{NE7]4Q$E.png"
+            "src":"C:\\Users\\hanli\\Documents\\NetBeansProjects\\CSE219Project\\CourseSiteGenerator\\images\\ImagePlaceHolder.png"
         },
         "navbar":{
-            "src":"C:\\Users\\hanli\\Desktop\\DDPSY$YOTJFSX7{NE7]4Q$E.png"
+            "src":"C:\\Users\\hanli\\Documents\\NetBeansProjects\\CSE219Project\\CourseSiteGenerator\\images\\ImagePlaceHolder.png"
         },
         "bottom_left":{
-            "src":"C:\\Users\\hanli\\Desktop\\DDPSY$YOTJFSX7{NE7]4Q$E.png"
+            "src":"C:\\Users\\hanli\\Documents\\NetBeansProjects\\CSE219Project\\CourseSiteGenerator\\images\\ImagePlaceHolder.png"
         },
         "bottom_right":{
-            "src":"C:\\Users\\hanli\\Desktop\\DDPSY$YOTJFSX7{NE7]4Q$E.png"
+            "src":"C:\\Users\\hanli\\Documents\\NetBeansProjects\\CSE219Project\\CourseSiteGenerator\\images\\ImagePlaceHolder.png"
         }
     },
-    "stylesheet":"sea_wolf.css",
+    "stylesheet":"winter.css",
     "instructor":{
         "name":"6",
         "room":"8",
@@ -34,7 +34,7 @@
         "officeHours":"10"
     },
     "courseDescription":"11ss",
-    "courseTopics":"12",
+    "courseTopics":"[\n        \"Programming style and its impact on readability, reliability, maintainability, and portability.\",\n        \"Decomposing problems into modular designs with simple, narrow interfaces.\",\n        \"Determining the proper objects in an object-oriented design.\",\n        \"Selecting appropriate algorithms and data structures.\",\n        \"Reusing code, including external libraries designed and built by others.\",\n        \"Learning systematic testing and debugging techniques.\",\n        \"Maintaining a repository of code during incremental development of a software project.\",\n        \"Learning how to use threads to synchronize several tasks.\",\n        \"Improving program performance.\",\n        \"Making effective use of a programming environment, including:<br /><ul><li>Syntax-directed editor</li><li>Build tools</li><li>Debugging tools</li><li>Testing tools</li><li>Source code management tools</li><li>Profiling tools</li></ul>\"\n    ]",
     "prerequisites":"13",
     "courseOutcomes":"14",
     "textbooks":"15",

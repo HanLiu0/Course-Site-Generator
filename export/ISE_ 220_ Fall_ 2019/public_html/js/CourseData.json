@@ -1,0 +1,38 @@
+
+{
+    "code":"ISE 220",
+    "semester":"Fall 2019",
+    "title":"5",
+    "logos":{
+        "favicon":{
+            "src":"./images/ImagePlaceHolder.png"
+        },
+        "navbar":{
+            "src":"./images/ImagePlaceHolder.png"
+        },
+        "bottom_left":{
+            "src":"./images/ImagePlaceHolder.png"
+        },
+        "bottom_right":{
+            "src":"./images/ImagePlaceHolder.png"
+        }
+    },
+    "pages":[
+        {
+            "name":"Home",
+            "link":"index.html"
+        },
+        {
+            "name":"Syllabus",
+            "link":"syllabus.html"
+        },
+        {
+            "name":"Schedule",
+            "link":"schedule.html"
+        },
+        {
+            "name":"HWs",
+            "link":"hws.html"
+        }
+    ]
+}
