@@ -421,7 +421,7 @@ public class CourseSiteGeneratorController {
         AppGUIModule gui = app.getGUIModule();
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         ((TableView) gui.getGUINode(CSG_SCHEDULE_TABLEVIEW)).getSelectionModel().clearSelection();
-        ((ComboBox) gui.getGUINode(CSG_SCHEDULE_TYPE_CB)).selectionModelProperty().setValue(null);
+        ((ComboBox) gui.getGUINode(CSG_SCHEDULE_TYPE_CB)).getSelectionModel().clearSelection();
         ((DatePicker) gui.getGUINode(CSG_SCHEDULE_DATE_DP)).setValue(null);
         ((TextField) gui.getGUINode(CSG_SCHEDULE_TITLE_TF)).setText("");
         ((TextField) gui.getGUINode(CSG_SCHEDULE_TOPIC_TF)).setText("");
