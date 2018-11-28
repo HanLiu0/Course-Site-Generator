@@ -26,7 +26,10 @@ import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_YEAR_CB;
 import static csg.data.TeachingAssistantPrototype.TA_TYPE_GRA;
 import static csg.data.TeachingAssistantPrototype.TA_TYPE_UNDERGRA;
 import csg.data.TimeSlot.DayOfWeek;
+import csg.files.CourseSiteGeneratorFiles;
+import static djf.AppPropertyType.APP_CHOICES;
 import static djf.AppPropertyType.APP_PATH_IMAGES;
+import static djf.AppPropertyType.APP_PATH_SETTING;
 import static djf.AppPropertyType.IMAGE_PLACEHOLDER_ICON;
 import djf.components.AppDataComponent;
 import djf.modules.AppGUIModule;
@@ -41,6 +44,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableView;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
 import properties_manager.PropertiesManager;
 
 /**
@@ -130,6 +135,7 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
             addYearOptions(LocalDate.now().getYear()+1+"");
             syllabusText = new String[9];
             Arrays.fill(syllabusText, "");
+            ((CourseSiteGeneratorFiles)app.getFileComponent()).loadSettings(this);
             
             lectureItems = ((TableView)gui.getGUINode(CSG_LECTURES_TABLEVIEW)).getItems();
             recitationItems = ((TableView)gui.getGUINode(CSG_REC_TABLEVIEW)).getItems();
