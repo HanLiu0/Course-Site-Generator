@@ -15,6 +15,7 @@ import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_HWS_CB;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_SCHEDULE_CB;
 import static csg.CourseSiteGeneratorPropertyType.CSG_SITE_SYLLABUS_CB;
 import csg.data.CourseSiteGeneratorData;
+import static djf.AppPropertyType.EXPORT_BUTTON;
 import djf.modules.AppGUIModule;
 import djf.ui.foolproof.FoolproofDesign;
 import java.util.regex.Matcher;
@@ -38,6 +39,10 @@ public class CourseSiteGeneratorFoolproofDesign implements FoolproofDesign {
     @Override
     public void updateControls() {
         AppGUIModule gui = app.getGUIModule();
+        if(app.getFileModule().getWorkFile() == null)
+            ((Button) gui.getGUINode(EXPORT_BUTTON)).setDisable(true);
+        else
+            ((Button) gui.getGUINode(EXPORT_BUTTON)).setDisable(false);
         CheckBox homeCB = ((CheckBox)gui.getGUINode(CSG_SITE_HOME_CB));
         CheckBox syllabusCB = ((CheckBox)gui.getGUINode(CSG_SITE_SYLLABUS_CB));
         CheckBox scheduleCB = ((CheckBox)gui.getGUINode(CSG_SITE_SCHEDULE_CB));
