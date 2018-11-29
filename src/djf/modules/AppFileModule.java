@@ -162,7 +162,8 @@ public class AppFileModule {
                 try {
                     if (app.getWorkspaceComponent().getWorkspace().getWidth() > 0.0) {
                         app.getFileComponent().loadData(app.getDataComponent(), selectedFile.getAbsolutePath());
-                    }
+                        app.getFoolproofModule().updateAll();
+                   }
                     else {
                         Thread.sleep(100);
                     }
