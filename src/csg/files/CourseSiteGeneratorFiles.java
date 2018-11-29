@@ -6,12 +6,14 @@
 package csg.files;
 
 import csg.CourseSiteGeneratorApp;
-import static csg.CourseSiteGeneratorPropertyType.EXPORT_PATH_COURSE_DATA_JSON;
 import static csg.CourseSiteGeneratorPropertyType.EXPORT_PATH_CSS;
 import static csg.CourseSiteGeneratorPropertyType.EXPORT_PATH_IMAGES;
 import static csg.CourseSiteGeneratorPropertyType.EXPORT_PATH_JS;
+import static csg.CourseSiteGeneratorPropertyType.EXPORT_PATH_OFFICE_HOURS_DATA_JSON;
+import static csg.CourseSiteGeneratorPropertyType.EXPORT_PATH_PAGE_DATA_JSON;
 import static csg.CourseSiteGeneratorPropertyType.EXPORT_PATH_PUBLIC_HTML;
 import static csg.CourseSiteGeneratorPropertyType.EXPORT_PATH_SCHEDULE_DATA_JSON;
+import static csg.CourseSiteGeneratorPropertyType.EXPORT_PATH_SECTIONS_DATA_JSON;
 import static csg.CourseSiteGeneratorPropertyType.EXPORT_PATH_SYLLABUS_DATA_JSON;
 import csg.data.CourseSiteGeneratorData;
 import csg.data.Instructor;
@@ -25,6 +27,7 @@ import static csg.data.TeachingAssistantPrototype.TA_TYPE_UNDERGRA;
 import csg.data.TimeSlot;
 import csg.data.TimeSlot.DayOfWeek;
 import csg.workspace.CourseSiteGeneratorWorkspace;
+import csg.workspace.dialogs.CourseSiteGeneratorDialog;
 import static djf.AppPropertyType.APP_CHOICES;
 import static djf.AppPropertyType.APP_PATH_SETTING;
 import static djf.AppPropertyType.APP_PATH_STYLESHEET;
@@ -37,8 +40,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.io.StringReader;
 import java.io.StringWriter;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -89,7 +92,7 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
     static final String JSON_PREREQUISITES = "prerequisites";
     static final String JSON_OUTCOMES = "courseOutcomes";
     static final String JSON_TEXTBOOKS = "textbooks";
-    static final String JSON_GRADED_COMPONENETS = "courseComponents";
+    static final String JSON_GRADED_COMPONENTS = "courseComponents";
     static final String JSON_GRADING_NOTE = "gradingNote";
     static final String JSON_ACADEMIC_DISHONESTY = "academicDishonestyNote";
     static final String JSON_SPECIAL_ASSISTANCE = "specialAssistanceNote";
@@ -127,8 +130,7 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
     static final String JSON_TYPE = "type";
     static final String JSON_DATE = "date";
     static final String JSON_TOPIC = "topic";
-    static final String JSON_CODE = "code";
-    static final String JSON_HOUR = "hour";
+    static final String JSON_HOURS = "hours";
     static final String JSON_HOLIDAY = "holiday";
     static final String JSON_REFERENCES = "references";
     static final String JSON_HWS = "hws";
@@ -265,7 +267,7 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
                                         .add(JSON_PREREQUISITES, dataManager.getSyllabusText(2))
                                         .add(JSON_OUTCOMES, dataManager.getSyllabusText(3))
                                         .add(JSON_TEXTBOOKS, dataManager.getSyllabusText(4))
-                                        .add(JSON_GRADED_COMPONENETS, dataManager.getSyllabusText(5))
+                                        .add(JSON_GRADED_COMPONENTS, dataManager.getSyllabusText(5))
                                         .add(JSON_GRADING_NOTE, dataManager.getSyllabusText(6))
                                         .add(JSON_ACADEMIC_DISHONESTY, dataManager.getSyllabusText(7))
                                         .add(JSON_SPECIAL_ASSISTANCE, dataManager.getSyllabusText(8))
@@ -410,7 +412,7 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
         dataManager.setSyllabusText(2, json.getString(JSON_PREREQUISITES));
         dataManager.setSyllabusText(3, json.getString(JSON_OUTCOMES));
         dataManager.setSyllabusText(4, json.getString(JSON_TEXTBOOKS));
-        dataManager.setSyllabusText(5, json.getString(JSON_GRADED_COMPONENETS));
+        dataManager.setSyllabusText(5, json.getString(JSON_GRADED_COMPONENTS));
         dataManager.setSyllabusText(6, json.getString(JSON_GRADING_NOTE));
         dataManager.setSyllabusText(7, json.getString(JSON_ACADEMIC_DISHONESTY));
         dataManager.setSyllabusText(8, json.getString(JSON_SPECIAL_ASSISTANCE));
@@ -495,8 +497,21 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
             dataManager.addSchedule(schedule);
         }
         
+        loadSettings(dataManager);
+        
+        app.getFoolproofModule().updateAll();
+        ((CourseSiteGeneratorWorkspace)app.getWorkspaceComponent()).loadDataToUI();
+        dataManager.countTaOh();
+    }
+    
+    public void loadSettings(CourseSiteGeneratorData dataManager){
         PropertiesManager props = PropertiesManager.getPropertiesManager();
-        JsonObject settings = loadJSONFile(props.getProperty(APP_PATH_SETTING) + props.getProperty(APP_CHOICES));
+        JsonObject settings = null;
+        try {
+            settings = loadJSONFile(props.getProperty(APP_PATH_SETTING) + props.getProperty(APP_CHOICES));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
         JsonArray subjects = settings.getJsonArray(JSON_SUBJECT_OPTIONS);
         JsonArray numbers = settings.getJsonArray(JSON_NUMBER_OPTIONS);
         JsonArray semesters = settings.getJsonArray(JSON_SEMESTER_OPTIONS);
@@ -517,10 +532,6 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
         for(int i = 0 ; i < schedules.size(); i++){
             dataManager.addScheduleOptions(schedules.getString(i));
         }        
-        
-        app.getFoolproofModule().updateAll();
-        ((CourseSiteGeneratorWorkspace)app.getWorkspaceComponent()).loadDataToUI();
-        dataManager.countTaOh();
     }
     
         // HELPER METHOD FOR LOADING DATA FROM A JSON FORMAT
@@ -562,6 +573,7 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
         catch(IOException e){
             e.printStackTrace();
         }
+        CourseSiteGeneratorData dataManager = (CourseSiteGeneratorData)data;
         
         //For CourseData.json
         File faviconImageFile = new File(((CourseSiteGeneratorData)data).getStyleImages(0));
@@ -578,8 +590,16 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
         catch(IOException e){
             e.printStackTrace();
         }
-
-        CourseSiteGeneratorData dataManager = (CourseSiteGeneratorData)data;
+        
+        JsonReader ohJsonReader = Json.createReader(new StringReader(dataManager.getInstructor().getOhs()));
+        JsonArray ohsJA = ohJsonReader.readArray();
+        ohJsonReader.close();        
+            
+        Instructor instructor = dataManager.getInstructor();
+        JsonObject instructorObject = Json.createObjectBuilder().add(JSON_NAME, instructor.getName())
+            .add(JSON_ROOM, instructor.getRoom()).add(JSON_EMAIL, instructor.getEmail()).add(JSON_LINK, instructor.getHomepage())
+            .add(JSON_HOURS, ohsJA).build();
+            
         JsonArrayBuilder pagesArrayBuilder = Json.createArrayBuilder();
         if(dataManager.getPages(0)){
             pagesArrayBuilder.add(Json.createObjectBuilder().add(JSON_NAME, "Home").add(JSON_LINK, "index.html"));
@@ -602,12 +622,14 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
                     .add(JSON_BOTTOM_RIGHT, bottomRightObject).build();
 
         JsonObject courseDataJSO = Json.createObjectBuilder()
-                                        .add(JSON_CODE, dataManager.getBannerText(0) + " " + dataManager.getBannerText(1))
-                                        .add(JSON_SEMESTER, dataManager.getBannerText(2) + " " + dataManager.getBannerText(3))
+                                        .add(JSON_SUBJECT, dataManager.getBannerText(0))
+                                        .add(JSON_NUMBER, dataManager.getBannerText(1))
+                                        .add(JSON_SEMESTER, dataManager.getBannerText(2))
+                                        .add(JSON_YEAR, dataManager.getBannerText(3))
                                         .add(JSON_TITLE, dataManager.getBannerText(4))
                                         .add(JSON_LOGOS, logosObject)
+                                        .add(JSON_INSTRUCTOR, instructorObject)
                                        .add(JSON_PAGES, pagesArray).build();
-        
         Map<String, Object> properties = new HashMap<>(1);
         properties.put(JsonGenerator.PRETTY_PRINTING, true);
         JsonWriterFactory writerFactory = Json.createWriterFactory(properties);
@@ -615,7 +637,7 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
         JsonWriter jsonWriter = writerFactory.createWriter(sw);
         jsonWriter.writeObject(courseDataJSO);
         jsonWriter.close();
-        String courseDataPath = dataManager.getExportDir() + props.getProperty(EXPORT_PATH_JS) + props.getProperty(EXPORT_PATH_COURSE_DATA_JSON);
+        String courseDataPath = dataManager.getExportDir() + props.getProperty(EXPORT_PATH_JS) + props.getProperty(EXPORT_PATH_PAGE_DATA_JSON);
         // INIT THE WRITER
         OutputStream os = new FileOutputStream(courseDataPath);
         JsonWriter jsonFileWriter = Json.createWriter(os);
@@ -626,120 +648,48 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
         pw.close();    
         
         // For syllabus data
-        JsonArrayBuilder lecturesArrayBuilder = Json.createArrayBuilder();
-        Iterator<LectureItem> lecturesIterator = dataManager.lecturesIterator();
-        while(lecturesIterator.hasNext()){
-            LectureItem lecture = lecturesIterator.next();
-            JsonObject lectureJson = Json.createObjectBuilder().add(JSON_SECTION, lecture.getSection())
-                    .add(JSON_DAYS, lecture.getDays()).add(JSON_TIME, lecture.getTime())
-                    .add(JSON_ROOM, lecture.getRoom()).build();
-            lecturesArrayBuilder.add(lectureJson);
+        if(dataManager.getPages(1)){
+            JsonReader topicsJsonReader = Json.createReader(new StringReader(dataManager.getSyllabusText(1)));
+            JsonArray topicsJA = topicsJsonReader.readArray();
+            topicsJsonReader.close();
+            JsonReader outcomesJsonReader = Json.createReader(new StringReader(dataManager.getSyllabusText(3)));
+            JsonArray outcomesJA = outcomesJsonReader.readArray();
+            outcomesJsonReader.close();
+            JsonReader textbooksJsonReader = Json.createReader(new StringReader(dataManager.getSyllabusText(4)));
+            JsonArray textbooksJA = textbooksJsonReader.readArray();
+            textbooksJsonReader.close();        
+            JsonReader componentsJsonReader = Json.createReader(new StringReader(dataManager.getSyllabusText(5)));
+            JsonArray componentsJA = componentsJsonReader.readArray();
+            componentsJsonReader.close();        
+            
+            JsonObject syllabusDataJSO = Json.createObjectBuilder()
+                                             .add(JSON_DESCRIPTION, dataManager.getSyllabusText(0))
+                                            .add(JSON_TOPICS, topicsJA)
+                                            .add(JSON_PREREQUISITES, dataManager.getSyllabusText(2))
+                                            .add(JSON_OUTCOMES, outcomesJA)
+                                            .add(JSON_TEXTBOOKS, textbooksJA)
+                                            .add(JSON_GRADED_COMPONENTS, componentsJA)
+                                            .add(JSON_GRADING_NOTE, dataManager.getSyllabusText(6))
+                                            .add(JSON_ACADEMIC_DISHONESTY, dataManager.getSyllabusText(7))
+                                            .add(JSON_SPECIAL_ASSISTANCE, dataManager.getSyllabusText(8))
+                                                    .build();
+            Map<String, Object> properties1 = new HashMap<>(1);
+            properties1.put(JsonGenerator.PRETTY_PRINTING, true);
+            JsonWriterFactory writerFactory1 = Json.createWriterFactory(properties1);
+            StringWriter sw1 = new StringWriter();
+            JsonWriter jsonWriter1 = writerFactory1.createWriter(sw1);
+            jsonWriter1.writeObject(syllabusDataJSO);
+            jsonWriter1.close();
+            String syllabusDataPath = dataManager.getExportDir() + props.getProperty(EXPORT_PATH_JS) + props.getProperty(EXPORT_PATH_SYLLABUS_DATA_JSON);
+            // INIT THE WRITER
+            OutputStream os1 = new FileOutputStream(syllabusDataPath);
+            JsonWriter jsonFileWriter1 = Json.createWriter(os1);
+            jsonFileWriter1.writeObject(syllabusDataJSO);
+            String prettyPrinted1 = sw1.toString();
+            PrintWriter pw1 = new PrintWriter(syllabusDataPath);
+            pw1.write(prettyPrinted1);
+            pw1.close();    
         }
-        JsonArray lecturesArray = lecturesArrayBuilder.build();
-        
-        Instructor instructor = dataManager.getInstructor();
-        JsonObject instructorObject = Json.createObjectBuilder().add(JSON_NAME, instructor.getName())
-            .add(JSON_ROOM, instructor.getRoom()).add(JSON_EMAIL, instructor.getEmail()).add(JSON_LINK, instructor.getHomepage())
-            .add(JSON_OFFICE_HOURS, instructor.getOhs()).build();
-        
-        
-        JsonArrayBuilder graduateTaArrayBuilder = Json.createArrayBuilder();
-        Iterator<TeachingAssistantPrototype> graduaTasIterator = dataManager.graduateTeachingAssistantsIterator();
-                    while (graduaTasIterator.hasNext()) {
-                        TeachingAssistantPrototype ta = graduaTasIterator.next();
-            JsonObject taJson = Json.createObjectBuilder()
-                    .add(JSON_NAME, ta.getName()).add(JSON_EMAIL, ta.getEmail()).build();
-            graduateTaArrayBuilder.add(taJson);
-        }                    
-        JsonArray gradTAsArray = graduateTaArrayBuilder.build();
-        JsonArrayBuilder undergraduateTaArrayBuilder = Json.createArrayBuilder();
-        Iterator<TeachingAssistantPrototype> undergraduateTasIterator = dataManager.undergraduateTeachingAssistantsIterator();
-                    while (undergraduateTasIterator.hasNext()) {
-                        TeachingAssistantPrototype ta = undergraduateTasIterator.next();
-            JsonObject taJson = Json.createObjectBuilder()
-                    .add(JSON_NAME, ta.getName()).add(JSON_EMAIL, ta.getEmail()).build();
-            undergraduateTaArrayBuilder.add(taJson);
-        }
-        JsonArray undergradTAsArray = undergraduateTaArrayBuilder.build();        
-        
-        JsonArrayBuilder recitationsArrayBuilder = Json.createArrayBuilder();
-        Iterator<RecitationItem> recitationsIterator = dataManager.recitationsIterator();
-        while(recitationsIterator.hasNext()){
-            RecitationItem recitation = recitationsIterator.next();
-            JsonObject recitationJson = Json.createObjectBuilder().add(JSON_SECTION, recitation.getSection())
-                    .add(JSON_DAYS_TIME, recitation.getDaysAndTime()).add(JSON_ROOM, recitation.getRoom())
-                    .add(JSON_TA1, recitation.getTa1()).add(JSON_TA2, recitation.getTa2()).build();
-            recitationsArrayBuilder.add(recitationJson);
-        }
-        JsonArray recitationsArray = recitationsArrayBuilder.build();
-
-        JsonArrayBuilder labsArrayBuilder = Json.createArrayBuilder();
-        Iterator<LabItem> labsIterator = dataManager.labsIterator();
-        while(labsIterator.hasNext()){
-            LabItem lab = labsIterator.next();
-            JsonObject labJson = Json.createObjectBuilder().add(JSON_SECTION, lab.getSection())
-                    .add(JSON_DAYS_TIME, lab.getDaysAndTime()).add(JSON_ROOM, lab.getRoom())
-                    .add(JSON_TA1, lab.getTa1()).add(JSON_TA2, lab.getTa2()).build();
-            labsArrayBuilder.add(labJson);
-        }
-        JsonArray labsArray = labsArrayBuilder.build();    
-                    
-        JsonArrayBuilder ohArrayBuilder = Json.createArrayBuilder();
-        Iterator<TimeSlot> ohIterator = dataManager.allOfficeHoursIterator();
-            String[] dayOfWeek = new String[5];
-            int index = 0;
-            for(DayOfWeek dow: DayOfWeek.values())
-                dayOfWeek[index++] = dow.toString();
-            while (ohIterator.hasNext()) {
-                TimeSlot oh = ohIterator.next();
-                String[] ohs = new String[]{oh.getMonday(), oh.getTuesday(), oh.getWednesday(), oh.getThursday(), oh.getFriday()};
-                for(int i = 0 ; i < ohs.length; i++){
-                    if(ohs[i] == null)
-                        continue;
-                    String[] taNames = ohs[i].split("\n");
-                    for(int j = 0 ; j < taNames.length; j++){
-                        JsonObject ohJson = Json.createObjectBuilder()
-                                .add(JSON_START_TIME, oh.getStartTime().replace(":", "_")).add(JSON_DAY_OF_WEEK, dayOfWeek[i]).add(JSON_NAME, taNames[j]).build();
-                        ohArrayBuilder.add(ohJson);
-                    }
-                }
-        }
-        JsonArray ohArray = ohArrayBuilder.build();
-
-        JsonObject syllabusDataJSO = Json.createObjectBuilder()
-                                        .add(JSON_START_HOUR, dataManager.getStartTime().substring(0, dataManager.getStartTime().indexOf(":")))
-                                        .add(JSON_END_HOUR, dataManager.getStartTime().substring(0, dataManager.getEndTime().indexOf(":")))
-                                        .add(JSON_DESCRIPTION, dataManager.getSyllabusText(0))
-                                        .add(JSON_PREREQUISITES, dataManager.getSyllabusText(2))
-                                        .add(JSON_LECTURES, lecturesArray)
-                                        .add(JSON_INSTRUCTOR, instructorObject)
-                                        .add(JSON_GRADING_NOTE, dataManager.getSyllabusText(6))
-                                        .add(JSON_ACADEMIC_DISHONESTY, dataManager.getSyllabusText(7))
-                                        .add(JSON_SPECIAL_ASSISTANCE, dataManager.getSyllabusText(8))
-                                        .add(JSON_GRAD_TAS, gradTAsArray)
-                                        .add(JSON_UNDERGRAD_TAS, undergradTAsArray)
-                                        .add(JSON_GRAD_TAS, undergradTAsArray)
-                                        .add(JSON_LABS, labsArray)
-                                        .add(JSON_RECITATIONS, recitationsArray)
-                                        .add(JSON_OFFICE_HOURS, ohArray)
-                                                .build();
-        Map<String, Object> properties1 = new HashMap<>(1);
-        properties1.put(JsonGenerator.PRETTY_PRINTING, true);
-        JsonWriterFactory writerFactory1 = Json.createWriterFactory(properties1);
-        StringWriter sw1 = new StringWriter();
-        JsonWriter jsonWriter1 = writerFactory1.createWriter(sw1);
-        jsonWriter1.writeObject(syllabusDataJSO);
-        jsonWriter1.close();
-        String syllabusDataPath = dataManager.getExportDir() + props.getProperty(EXPORT_PATH_JS) + props.getProperty(EXPORT_PATH_SYLLABUS_DATA_JSON);
-        // INIT THE WRITER
-        OutputStream os1 = new FileOutputStream(syllabusDataPath);
-        JsonWriter jsonFileWriter1 = Json.createWriter(os1);
-        jsonFileWriter1.writeObject(syllabusDataJSO);
-        String prettyPrinted1 = sw1.toString();
-        PrintWriter pw1 = new PrintWriter(syllabusDataPath);
-        pw1.write(prettyPrinted1);
-        pw1.close();    
-        
         //For Schedule Data
         JsonArrayBuilder scheduleHolidaysArrayBuilder = Json.createArrayBuilder();
         JsonArrayBuilder scheduleLecturesArrayBuilder = Json.createArrayBuilder();
@@ -749,7 +699,7 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
         Iterator<ScheduleItem> schedulesIterator = dataManager.schedulesIterator();
         while(schedulesIterator.hasNext()){
             ScheduleItem schedule = schedulesIterator.next();
-            if(schedule.getType().equals("Holidays")){
+            if(schedule.getType().equals("Holiday")){
                 JsonObject scheduleJson = Json.createObjectBuilder()
                         .add(JSON_MONTH, schedule.getDate().substring(schedule.getDate().indexOf("-") + 1, schedule.getDate().lastIndexOf("-")))
                         .add(JSON_DAY, schedule.getDate().substring(schedule.getDate().lastIndexOf("-") + 1))
@@ -757,7 +707,7 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
                         .add(JSON_LINK, schedule.getLink()).build();
                 scheduleHolidaysArrayBuilder.add(scheduleJson);
             }
-            else if(schedule.getType().equals("Lectures")){
+            else if(schedule.getType().equals("Lecture")){
                 JsonObject scheduleJson = Json.createObjectBuilder()
                         .add(JSON_MONTH, schedule.getDate().substring(schedule.getDate().indexOf("-") + 1, schedule.getDate().lastIndexOf("-")))
                         .add(JSON_DAY, schedule.getDate().substring(schedule.getDate().lastIndexOf("-") + 1))
@@ -765,7 +715,7 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
                         .add(JSON_LINK, schedule.getLink()).build();
                 scheduleLecturesArrayBuilder.add(scheduleJson);
             }
-            else if(schedule.getType().equals("References")){
+            else if(schedule.getType().equals("Reference")){
                 JsonObject scheduleJson = Json.createObjectBuilder()
                         .add(JSON_MONTH, schedule.getDate().substring(schedule.getDate().indexOf("-") + 1, schedule.getDate().lastIndexOf("-")))
                         .add(JSON_DAY, schedule.getDate().substring(schedule.getDate().lastIndexOf("-") + 1))
@@ -774,19 +724,19 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
                         .add(JSON_CRITERIA, "none").build();
                 scheduleReferencesArrayBuilder.add(scheduleJson);
             }
-            else if(schedule.getType().equals("Recitations")){
+            else if(schedule.getType().equals("Recitation")){
                 JsonObject scheduleJson = Json.createObjectBuilder()
                         .add(JSON_MONTH, schedule.getDate().substring(schedule.getDate().indexOf("-") + 1, schedule.getDate().lastIndexOf("-")))
                         .add(JSON_DAY, schedule.getDate().substring(schedule.getDate().lastIndexOf("-") + 1))
-                        .add(JSON_TITLE, schedule.getTitle())
+                        .add(JSON_TITLE, schedule.getTitle()).add(JSON_TOPIC, schedule.getTopic())
                         .add(JSON_LINK, schedule.getLink()).build();
                 scheduleRecitationsArrayBuilder.add(scheduleJson);
             }
-            else if(schedule.getType().equals("HWs")){
+            else if(schedule.getType().equals("HW")){
                 JsonObject scheduleJson = Json.createObjectBuilder()
                         .add(JSON_MONTH, schedule.getDate().substring(schedule.getDate().indexOf("-") + 1, schedule.getDate().lastIndexOf("-")))
                         .add(JSON_DAY, schedule.getDate().substring(schedule.getDate().lastIndexOf("-") + 1))
-                        .add(JSON_TITLE, schedule.getTitle())
+                        .add(JSON_TITLE, schedule.getTitle()).add(JSON_TOPIC, schedule.getTopic())
                         .add(JSON_LINK, schedule.getLink()).build();
                 scheduleHwsArrayBuilder.add(scheduleJson);
             }
@@ -823,6 +773,144 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
         PrintWriter pw2 = new PrintWriter(scheduleDataPath);
         pw2.write(prettyPrinted2);
         pw2.close();            
+
+        // Section Data
+        JsonArrayBuilder lecturesArrayBuilder = Json.createArrayBuilder();
+        Iterator<LectureItem> lecturesIterator = dataManager.lecturesIterator();
+        while(lecturesIterator.hasNext()){
+            LectureItem lecture = lecturesIterator.next();
+            JsonObject lectureJson = Json.createObjectBuilder().add(JSON_SECTION, lecture.getSection())
+                    .add(JSON_DAYS, lecture.getDays()).add(JSON_TIME, lecture.getTime())
+                    .add(JSON_ROOM, lecture.getRoom()).build();
+            lecturesArrayBuilder.add(lectureJson);
+        }
+        JsonArray lecturesArray = lecturesArrayBuilder.build();
+
+        JsonArrayBuilder recitationsArrayBuilder = Json.createArrayBuilder();
+        Iterator<RecitationItem> recitationsIterator = dataManager.recitationsIterator();
+        while(recitationsIterator.hasNext()){
+            RecitationItem recitation = recitationsIterator.next();
+            JsonObject recitationJson = Json.createObjectBuilder().add(JSON_SECTION, recitation.getSection())
+                    .add(JSON_DAYS_TIME, recitation.getDaysAndTime()).add(JSON_ROOM, recitation.getRoom())
+                    .add(JSON_TA1, recitation.getTa1()).add(JSON_TA2, recitation.getTa2()).build();
+            recitationsArrayBuilder.add(recitationJson);
+        }
+        JsonArray recitationsArray = recitationsArrayBuilder.build();
+
+        JsonArrayBuilder labsArrayBuilder = Json.createArrayBuilder();
+        Iterator<LabItem> labsIterator = dataManager.labsIterator();
+        while(labsIterator.hasNext()){
+            LabItem lab = labsIterator.next();
+            JsonObject labJson = Json.createObjectBuilder().add(JSON_SECTION, lab.getSection())
+                    .add(JSON_DAYS_TIME, lab.getDaysAndTime()).add(JSON_ROOM, lab.getRoom())
+                    .add(JSON_TA1, lab.getTa1()).add(JSON_TA2, lab.getTa2()).build();
+            labsArrayBuilder.add(labJson);
+        }
+        JsonArray labsArray = labsArrayBuilder.build();    
+        JsonObject sectionsDataJSO = Json.createObjectBuilder()
+                                        .add(JSON_LECTURES, lecturesArray)
+                                        .add(JSON_RECITATIONS, recitationsArray)
+                                        .add(JSON_LABS, labsArray)
+                                                .build();    
+        Map<String, Object> properties3 = new HashMap<>(1);
+        properties3.put(JsonGenerator.PRETTY_PRINTING, true);
+        JsonWriterFactory writerFactory3 = Json.createWriterFactory(properties3);
+        StringWriter sw3 = new StringWriter();
+        JsonWriter jsonWriter3 = writerFactory3.createWriter(sw3);
+        jsonWriter3.writeObject(sectionsDataJSO);
+        jsonWriter3.close();
+        String sectionsDataPath = dataManager.getExportDir() + props.getProperty(EXPORT_PATH_JS) + props.getProperty(EXPORT_PATH_SECTIONS_DATA_JSON);
+        // INIT THE WRITER
+        OutputStream os3 = new FileOutputStream(sectionsDataPath);
+        JsonWriter jsonFileWriter3 = Json.createWriter(os3);
+        jsonFileWriter3.writeObject(sectionsDataJSO);
+        String prettyPrinted3 = sw3.toString();
+        PrintWriter pw3 = new PrintWriter(sectionsDataPath);
+        pw3.write(prettyPrinted3);
+        pw3.close();            
+        
+        // Office Hours Data
+            JsonArrayBuilder graduateTaArrayBuilder = Json.createArrayBuilder();
+            Iterator<TeachingAssistantPrototype> graduaTasIterator = dataManager.graduateTeachingAssistantsIterator();
+                        while (graduaTasIterator.hasNext()) {
+                            TeachingAssistantPrototype ta = graduaTasIterator.next();
+                JsonObject taJson = Json.createObjectBuilder()
+                        .add(JSON_NAME, ta.getName()).add(JSON_EMAIL, ta.getEmail()).build();
+                graduateTaArrayBuilder.add(taJson);
+            }                    
+            JsonArray gradTAsArray = graduateTaArrayBuilder.build();
+            JsonArrayBuilder undergraduateTaArrayBuilder = Json.createArrayBuilder();
+            Iterator<TeachingAssistantPrototype> undergraduateTasIterator = dataManager.undergraduateTeachingAssistantsIterator();
+                        while (undergraduateTasIterator.hasNext()) {
+                            TeachingAssistantPrototype ta = undergraduateTasIterator.next();
+                JsonObject taJson = Json.createObjectBuilder()
+                        .add(JSON_NAME, ta.getName()).add(JSON_EMAIL, ta.getEmail()).build();
+                undergraduateTaArrayBuilder.add(taJson);
+            }
+            JsonArray undergradTAsArray = undergraduateTaArrayBuilder.build();        
+
+            JsonArrayBuilder ohArrayBuilder = Json.createArrayBuilder();
+            Iterator<TimeSlot> ohIterator = dataManager.allOfficeHoursIterator();
+                String[] dayOfWeek = new String[5];
+                int index = 0;
+                for(DayOfWeek dow: DayOfWeek.values())
+                    dayOfWeek[index++] = dow.toString();
+                while (ohIterator.hasNext()) {
+                    TimeSlot oh = ohIterator.next();
+                    String[] ohs = new String[]{oh.getMonday(), oh.getTuesday(), oh.getWednesday(), oh.getThursday(), oh.getFriday()};
+                    for(int i = 0 ; i < ohs.length; i++){
+                        if(ohs[i] == null)
+                            continue;
+                        String[] taNames = ohs[i].split("\n");
+                        for(int j = 0 ; j < taNames.length; j++){
+                            JsonObject ohJson = Json.createObjectBuilder()
+                                    .add(JSON_START_TIME, oh.getStartTime().replace(":", "_")).add(JSON_DAY_OF_WEEK, dayOfWeek[i]).add(JSON_NAME, taNames[j]).build();
+                            ohArrayBuilder.add(ohJson);
+                        }
+                    }
+            }
+            JsonArray ohArray = ohArrayBuilder.build();
+
+            String startTime = dataManager.getStartTime();
+            String startTimeHour = startTime.substring(0, dataManager.getStartTime().indexOf(":"));
+            if(startTime.endsWith("pm")){
+                startTimeHour = Integer.parseInt(startTimeHour) + 12 + "";
+                if(startTimeHour.equals("24"))
+                    startTimeHour = "0";
+            }
+            String endTime = dataManager.getEndTime();
+            String endTimeHour = endTime.substring(0, dataManager.getEndTime().indexOf(":"));
+            if(endTime.endsWith("pm")){
+                endTimeHour = Integer.parseInt(endTimeHour) + 12 + "";
+                if(endTimeHour.equals("24"))
+                    endTimeHour = "0";
+            }
+            JsonObject ohsDataJSO = Json.createObjectBuilder()
+                                            .add(JSON_START_HOUR, startTimeHour)
+                                            .add(JSON_END_HOUR, endTimeHour)
+                                            .add(JSON_INSTRUCTOR, instructorObject)
+                                            .add(JSON_GRAD_TAS, gradTAsArray)
+                                            .add(JSON_UNDERGRAD_TAS, undergradTAsArray)
+                                            .add(JSON_OFFICE_HOURS, ohArray)
+                                                    .build();
+            Map<String, Object> properties4 = new HashMap<>(1);
+            properties4.put(JsonGenerator.PRETTY_PRINTING, true);
+            JsonWriterFactory writerFactory4 = Json.createWriterFactory(properties4);
+            StringWriter sw4 = new StringWriter();
+            JsonWriter jsonWriter4 = writerFactory4.createWriter(sw4);
+            jsonWriter4.writeObject(ohsDataJSO);
+            jsonWriter4.close();
+            String ohsDataPath = dataManager.getExportDir() + props.getProperty(EXPORT_PATH_JS) + props.getProperty(EXPORT_PATH_OFFICE_HOURS_DATA_JSON);
+            // INIT THE WRITER
+            OutputStream os4 = new FileOutputStream(ohsDataPath);
+            JsonWriter jsonFileWriter4 = Json.createWriter(os4);
+            jsonFileWriter4.writeObject(ohsDataJSO);
+            String prettyPrinted4 = sw4.toString();
+            PrintWriter pw4 = new PrintWriter(ohsDataPath);
+            pw4.write(prettyPrinted4);
+            pw4.close();            
+        
+        CourseSiteGeneratorDialog.showExportDialog(app, dataManager);
     }
 
     @Override

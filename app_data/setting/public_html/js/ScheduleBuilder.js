@@ -21,10 +21,7 @@ function ScheduleDate(sMonth, sDay) {
 }
 function buildSchedule() {
     initDateData();
-    var dataFile = "./js/ScheduleData.json";
-    loadData(dataFile);
-}
-function loadData(jsonFile) {
+    var jsonFile = "./js/ScheduleData.json";
     $.getJSON(jsonFile, function (json) {
 	loadJSONData(json);
         buildScheduleTable();
@@ -38,7 +35,7 @@ function loadData(jsonFile) {
 function initDateData() {
     var currentYear = new Date().getFullYear();
     daysInMonth = new Array();
-    if ((currentYear %4) == 0) {
+    if ((currentYear % 4) === 0) {
         isLeapYear = true;
         daysInMonth[2] = 29;
     }
@@ -112,7 +109,6 @@ function loadJSONData(data) {
         hws[i] = hw;
     }
 }
-
 function buildScheduleTable() {
     var countMonth = startingMondayDate.month;
     var countDay = startingMondayDate.day;
@@ -138,7 +134,6 @@ function buildScheduleTable() {
         incDate(countDate);
     }
 }
-
 function incDate(dateToInc) {
     dateToInc.day++;
     var maxDays = daysInMonth[dateToInc.month];
@@ -147,7 +142,6 @@ function incDate(dateToInc) {
         dateToInc.month++;
     }
 }
-
 function firstDateIsBeforeSecond(firstDate, secondDate) {
     if (firstDate.month < secondDate.month)
         return true;
@@ -156,7 +150,6 @@ function firstDateIsBeforeSecond(firstDate, secondDate) {
         return true;
     return false;
 }
-
 function addHolidays() {
     for (var i = 0; i < holidays.length; i++) {
         var holiday = holidays[i];
@@ -167,7 +160,6 @@ function addHolidays() {
                 );
     }
 }
-
 function addLectures() {
     for (var i = 0; i < lectures.length; i++) {
         var lecture = lectures[i];
@@ -213,7 +205,6 @@ function addRecitations() {
         cell.append(textToAppend);
     }     
 }
-
 function addHWs() {
     for (var i = 0; i < hws.length; i++) {
         var hw = hws[i];

@@ -135,7 +135,6 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
             addYearOptions(LocalDate.now().getYear()+1+"");
             syllabusText = new String[9];
             Arrays.fill(syllabusText, "");
-            ((CourseSiteGeneratorFiles)app.getFileComponent()).loadSettings(this);
             
             lectureItems = ((TableView)gui.getGUINode(CSG_LECTURES_TABLEVIEW)).getItems();
             recitationItems = ((TableView)gui.getGUINode(CSG_REC_TABLEVIEW)).getItems();
@@ -325,6 +324,8 @@ public class CourseSiteGeneratorData  implements AppDataComponent{
         resetTimeRange();
         setStartingMonday(null);
         setEndingFriday(null);
+        ((CourseSiteGeneratorFiles)app.getFileComponent()).loadSettings(this);
+
 //        
 //        for (int i = 0; i < officeHours.size(); i++) {
 //            TimeSlot timeSlot = officeHours.get(i);

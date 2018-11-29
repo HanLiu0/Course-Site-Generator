@@ -5,6 +5,10 @@
  */
 package csg.workspace.dialogs;
 
+import static csg.CourseSiteGeneratorPropertyType.APP_EXPORT_HWS_PAGE;
+import static csg.CourseSiteGeneratorPropertyType.APP_EXPORT_INDEX_PAGE;
+import static csg.CourseSiteGeneratorPropertyType.APP_EXPORT_SCHEDULE_PAGE;
+import static csg.CourseSiteGeneratorPropertyType.APP_EXPORT_SYLLABUS_PAGE;
 import static csg.CourseSiteGeneratorPropertyType.CSG_EDIT_DIALOG_EMAIL;
 import static csg.CourseSiteGeneratorPropertyType.CSG_EDIT_DIALOG_EMAIL_PROMPT;
 import static csg.CourseSiteGeneratorPropertyType.CSG_EDIT_DIALOG_GRADUATE;
@@ -19,9 +23,12 @@ import csg.data.TeachingAssistantPrototype;
 import static csg.data.TeachingAssistantPrototype.TA_TYPE_GRA;
 import static csg.data.TeachingAssistantPrototype.TA_TYPE_UNDERGRA;
 import csg.transactions.EditTA_Transaction;
+import static djf.AppPropertyType.APP_EXPORT_PAGE;
 import djf.AppTemplate;
 import djf.ui.dialogs.AppDialogsFacade;
+import djf.ui.dialogs.AppWebDialog;
 import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -161,5 +168,20 @@ public class CourseSiteGeneratorDialog extends AppDialogsFacade{
             EditTA_Transaction editTransaction = new EditTA_Transaction(app, TA, nameTF.getText(), emailTF.getText(), newType);            
             app.processTransaction(editTransaction);
         }
+    }
+    
+    public static void showExportDialog (AppTemplate app, CourseSiteGeneratorData dataManager) throws IOException {
+        AppWebDialog dialog = new AppWebDialog(app);
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        String filePath = dataManager.getExportDir();
+        if(dataManager.getPages(0))
+            filePath += props.getProperty(APP_EXPORT_INDEX_PAGE);
+        else if(dataManager.getPages(1))
+            filePath += props.getProperty(APP_EXPORT_SYLLABUS_PAGE);
+        else if(dataManager.getPages(2))
+            filePath += props.getProperty(APP_EXPORT_SCHEDULE_PAGE);
+        else if(dataManager.getPages(3))
+            filePath += props.getProperty(APP_EXPORT_HWS_PAGE);
+        dialog.showWebDialog(filePath);        
     }
 }

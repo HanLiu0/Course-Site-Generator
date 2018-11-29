@@ -384,6 +384,7 @@ public class CourseSiteGeneratorController {
             EditSchedule_Transaction transaction = new EditSchedule_Transaction(selectedSchedule, type, date, title, topic, link);
             app.processTransaction(transaction);            
         }
+        processClearEntryFieldData();
     }
     
     public void processRemoveSchedule(){

@@ -25,10 +25,10 @@
         "Summer"
     ],
     "schedules":[
-        "Holidays",
-        "Lectures",
-        "References",
-        "Recitations",
-        "HWs"
+        "Holiday",
+        "Lecture",
+        "Reference",
+        "Recitation",
+        "HW"
     ]
 }

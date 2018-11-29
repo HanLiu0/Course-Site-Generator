@@ -6,14 +6,14 @@
     "year":"2019",
     "title":"5",
     "pages":[
-        true,
-        true,
+        false,
+        false,
         true,
         true
     ],
     "logos":{
         "favicon":{
-            "src":"C:\\Users\\hanli\\Documents\\NetBeansProjects\\CSE219Project\\CourseSiteGenerator\\images\\ImagePlaceHolder.png"
+            "src":"C:\\Users\\hanli\\Documents\\NetBeansProjects\\CSE219Project\\CourseSiteGenerator\\images\\SBUShieldFavicon.png"
         },
         "navbar":{
             "src":"C:\\Users\\hanli\\Documents\\NetBeansProjects\\CSE219Project\\CourseSiteGenerator\\images\\ImagePlaceHolder.png"
@@ -25,7 +25,7 @@
             "src":"C:\\Users\\hanli\\Documents\\NetBeansProjects\\CSE219Project\\CourseSiteGenerator\\images\\ImagePlaceHolder.png"
         }
     },
-    "stylesheet":"winter.css",
+    "stylesheet":"sea_wolf.css",
     "instructor":{
         "name":"6",
         "room":"8",

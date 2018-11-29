@@ -1,9 +1,9 @@
 
 {
-    "startingMondayMonth":11,
-    "startingMondayDay":7,
-    "endingFridayMonth":11,
-    "endingFridayDay":30,
+    "startingMondayMonth":"11",
+    "startingMondayDay":"7",
+    "endingFridayMonth":"11",
+    "endingFridayDay":"30",
     "holiday":[
     ],
     "lectures":[

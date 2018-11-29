@@ -13,6 +13,10 @@
         <property name="APP_BANNER"         value="CourseSiteGeneratorWelcomeBanner.png"></property>
         <property name="APP_LOGO"	    value="CourseSiteGeneratorLogo.png"></property>
         <property name="APP_EXPORT_PAGE"    value="index.html"></property>
+        <property name="APP_EXPORT_INDEX_PAGE"    value="/index.html"></property>
+        <property name="APP_EXPORT_SYLLABUS_PAGE"    value="/syllabus.html"></property>
+        <property name="APP_EXPORT_SCHEDULE_PAGE"    value="/schedule.html"></property>
+        <property name="APP_EXPORT_HWS_PAGE"    value="/hws.html"></property>
         <property name="APP_HELP_PAGE"      value="Help.html"></property>
         <property name="APP_ABOUT_PAGE"      value="About.html"></property>
         <property name="APP_CSS"	    value="csg_style.css"></property>
@@ -35,8 +39,10 @@
         <property name="EXPORT_PATH_CSS"       value="./css/"></property>
         <property name="EXPORT_PATH_IMAGES"       value="./images/"></property>
         <property name="EXPORT_PATH_JS"       value="./js/"></property>
-        <property name="EXPORT_PATH_COURSE_DATA_JSON"       value="CourseData.json"></property>
+        <property name="EXPORT_PATH_OFFICE_HOURS_DATA_JSON"       value="OfficeHoursData.json"></property>
+        <property name="EXPORT_PATH_PAGE_DATA_JSON"       value="PageData.json"></property>
         <property name="EXPORT_PATH_SCHEDULE_DATA_JSON"       value="ScheduleData.json"></property>
+        <property name="EXPORT_PATH_SECTIONS_DATA_JSON"       value="SectionsData.json"></property>
         <property name="EXPORT_PATH_SYLLABUS_DATA_JSON"       value="SyllabusData.json"></property>
                 
         <!-- TOP TOOLBARS AND CONTROLS TO INCLUDE -->
