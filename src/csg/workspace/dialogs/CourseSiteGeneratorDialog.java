@@ -29,12 +29,17 @@ import djf.ui.dialogs.AppDialogsFacade;
 import djf.ui.dialogs.AppWebDialog;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Worker;
+import javafx.concurrent.Worker.State;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
@@ -43,7 +48,10 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import properties_manager.PropertiesManager;
 
@@ -171,7 +179,6 @@ public class CourseSiteGeneratorDialog extends AppDialogsFacade{
     }
     
     public static void showExportDialog (AppTemplate app, CourseSiteGeneratorData dataManager) throws IOException {
-        AppWebDialog dialog = new AppWebDialog(app);
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         String filePath = dataManager.getExportDir();
         if(dataManager.getPages(0))
@@ -182,6 +189,36 @@ public class CourseSiteGeneratorDialog extends AppDialogsFacade{
             filePath += props.getProperty(APP_EXPORT_SCHEDULE_PAGE);
         else if(dataManager.getPages(3))
             filePath += props.getProperty(APP_EXPORT_HWS_PAGE);
-        dialog.showWebDialog(filePath);        
+
+        WebView webView = new WebView();
+        Stage webViewStage = new Stage();
+        Scene scene = new Scene(webView);
+        webViewStage.setScene(scene);
+
+        // MAKE IT MODAL
+        webViewStage.initOwner(app.getGUIModule().getWindow());
+        webViewStage.initModality(Modality.APPLICATION_MODAL);        
+        WebEngine webEngine = webView.getEngine();
+        webView.getEngine().getLoadWorker().stateProperty().addListener(new ChangeListener<Worker.State>() {
+            boolean first = true;
+            @Override
+            public void changed(ObservableValue<? extends Worker.State> ov, Worker.State t, Worker.State t1) {
+                if(t1.equals(State.SUCCEEDED) && first) {
+                    first = false;
+                    webView.getEngine().reload();
+                }
+            }
+        });
+        webEngine.documentProperty().addListener(e->{
+            // THE PAGE WILL LOAD ASYNCHRONOUSLY, SO MAKE
+            // SURE TO GRAB THE TITLE FOR THE WINDOW
+            // ONCE IT'S BEEN LOADED
+            String title = webEngine.getTitle();
+            webViewStage.setTitle(title);
+        });
+        URL pageURL = new File(filePath).toURI().toURL();
+        String pagePath = pageURL.toExternalForm();
+        webEngine.load(pagePath);
+        webViewStage.showAndWait();
     }
 }
