@@ -1,8 +1,8 @@
-@import url('http://fonts.googleapis.com/css?family=Alegreya+Sans');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 body {
-    background-color: pink;
-    font-family: Comic Sans MS, Comic Sans, cursive;
+    background-color: #a2c3d1;
+    font-family: 'Open Sans', sans-serif;
 }
 
 td.course_num
@@ -15,18 +15,18 @@ p,li,td,th {
 }
 
 h1,h2,h3,h4,h5,h6 {
-    color:#003399
+    color:#749FAB;
 }
 
 #navbar {
-    background-color:#660000;
+    background-color:#3D4B4E;
     margin-top:5px;
 }
 
 #banner {
     font-size:24pt;
     color:#ffffff;
-    background-color:#990000;
+    background-color:#506B7A;
 }
 
 #desc {
@@ -59,17 +59,17 @@ a.nav:hover{
 }
 
 a:hover {
-    color:rgb(118,143,165);
+    color:#005a5b;
 }
 
 a {
     text-decoration:none;
-    color:#006633;
+    color:#009698;
     font-weight:bold;
 }
 
 span {
-    color:#8888ff;
+    color:#1dacd6;
     font-weight:bold;
 }
 
@@ -79,7 +79,7 @@ span.reading {
 }
 
 span.tutorial {
-    color:#990099;
+    color:#008b8b;
     font-weight:normal;
 }
 
@@ -115,20 +115,20 @@ td.hws {
     height:50px;
     text-align:center;
     font-weight:bold;
-    background-color:rgb(227,230,235);
+    background-color:#D7E6E5;
 }
 td.time
 {
-    background-color:rgb(174,189,99);
+    background-color:#B6DDDD;
     color:black;
 }
 td.open
 {
-    background-color:rgb(220,100,100);
+    background-color:#D7E6E5;
 }
 td.lecture
 {
-    background-color:rgb(103,124,151);
+    background-color:#79C4C7;
 }
 td.recitation
 {
@@ -140,7 +140,7 @@ td.tas
 }
 .office_hours_schedule th
 {
-    background-color:rgb(180,120,180);
+    background-color:#358287;
 }
 .email
 {
@@ -151,13 +151,13 @@ td.tas
 
 
 .rec_0 {
-    background-color:rgb(255,204,153);
+    background-color:#DAE3EC;
     border: 5px solid white;
     border-radius: 25px;
     box-shadow: 5px 5px 5px #888888;
 }
 .rec_1 {
-    background-color:rgb(229, 204, 255);
+    background-color: #AEABB3;
     border: 5px solid white;
     border-radius: 25px;
     box-shadow: 5px 5px 5px #888888;
@@ -190,5 +190,5 @@ td.tas
 }
 
 .grading_total {
-    background-color: rgb(255,190,150);
+    background-color: #1dacd6;
 }

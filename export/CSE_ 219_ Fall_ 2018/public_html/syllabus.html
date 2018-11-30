@@ -6,18 +6,22 @@
         <title></title>
         <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
         <link href="./css/course_homepage_layout.css" rel="stylesheet" type="text/css">
-        <link href="./css/sea_wolf.css" rel="stylesheet" type="text/css">
+        <link href="./css/winter.css" rel="stylesheet" type="text/css">
 
         <!-- LINK TO OUR JavaScript FILE AND JQuery -->
         <script src="./js/jquery.min.js"></script>
-        <script src="./js/CourseBuilder.js"></script>
+        <script src="./js/PageBuilder.js"></script>
+        <script src="./js/OfficeHoursBuilder.js"></script>
+        <script src="./js/SectionsBuilder.js"></script>
         <script src="./js/SyllabusBuilder.js"></script>
 
         <!-- ONCE THE PAGE FULLY LOADS INITIALIZE THE SLIDESHOW -->
         <script>
             $(document).ready()
             {
-                buildCourse("Syllabus", ".");
+                buildPage("Syllabus", ".");
+                buildOfficeHours();
+                buildSections();
                 buildSyllabus();
             }
         </script>
@@ -51,10 +55,10 @@
                     </ul>
                     <br />
 
-                    <h3>LECTURE</h3>
+                    <h3>LECTURES</h3>
                     <table>
                         <tbody>
-                            <tr id='lecture_row'>
+                            <tr id='lectures_row'>
                             </tr>
                         </tbody>
                     </table>
@@ -128,8 +132,8 @@
                     <br />
 
 
-                    <h3>COURSE COMPONENTS</h3>                    
-                    <ul id='course_components'></ul>
+                    <h3>GRADED COMPONENTS</h3>                    
+                    <ul id='graded_components'></ul>
                     <br />
 
                     <h3>GRADING BREAKDOWN</h3>                    
@@ -150,7 +154,7 @@
                     <a id="left_footer_image_link"></a>
                     <a id="right_footer_image_link"></a>
                     <p class="footer">Web page created and maintained<br />
-                        by <span id="instructor_link"></span></p>
+                        by <span id="author_link"></span></p>
                     <br /><br />
                 </div>
             </div>
