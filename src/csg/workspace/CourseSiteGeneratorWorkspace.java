@@ -217,6 +217,7 @@ import static djf.modules.AppGUIModule.ENABLED;
 import static djf.modules.AppLanguageModule.FILE_PROTOCOL;
 import djf.ui.AppNodesBuilder;
 import java.io.File;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -962,7 +963,7 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
                     public void updateItem(LocalDate item, boolean empty) {
                         super.updateItem(item, empty);
                         LocalDate endDate = ((CourseSiteGeneratorData)app.getDataComponent()).getEndingFriday();
-                        if (endDate != null && item.isAfter(endDate)) {
+                        if (endDate != null && item.isAfter(endDate) || !(item.getDayOfWeek() == (DayOfWeek.MONDAY))) {
                             setDisable(true);
                             setStyle("-fx-background-color: #ffc0cb;"); 
                         }
@@ -974,7 +975,7 @@ public class CourseSiteGeneratorWorkspace extends AppWorkspaceComponent{
                     public void updateItem(LocalDate item, boolean empty) {
                         super.updateItem(item, empty);
                         LocalDate startDate = ((CourseSiteGeneratorData)app.getDataComponent()).getStartingMonday();
-                        if (startDate != null && item.isBefore(startDate)) {
+                        if (startDate != null && item.isBefore(startDate) || !(item.getDayOfWeek() == (DayOfWeek.FRIDAY))) {
                             setDisable(true);
                             setStyle("-fx-background-color: #ffc0cb;"); 
                         }
