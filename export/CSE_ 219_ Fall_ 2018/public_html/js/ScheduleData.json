@@ -6,12 +6,6 @@
     "endingFridayDay":"21",
     "holidays":[
         {
-            "month":"9",
-            "day":"3",
-            "title":"LABOR DAY",
-            "link":"https://www.stonybrook.edu/commcms/registrar/calendars/academic_calendars"
-        },
-        {
             "month":"10",
             "day":"8",
             "title":"FALL BREAK?<br /><br /><br />",
@@ -94,6 +88,12 @@
             "day":"21",
             "title":"",
             "link":""
+        },
+        {
+            "month":"9",
+            "day":"3",
+            "title":"LABOR DAY",
+            "link":"https://www.stonybrook.edu/commcms/registrar/calendars/academic_calendars"
         }
     ],
     "lectures":[
@@ -110,34 +110,6 @@
             "title":"Lecture 2",
             "topic":"Graphical<br />User<br />Interfaces<br /><br />",
             "link":"https://blackboard.stonybrook.edu/bbcswebdav/pid-4588421-dt-content-rid-31820795_1/xid-31820795_1"
-        },
-        {
-            "month":"9",
-            "day":"4",
-            "title":"Lecture 3",
-            "topic":"Event<br />Programming<br /><br />",
-            "link":"https://blackboard.stonybrook.edu/bbcswebdav/pid-4591754-dt-content-rid-31835006_1/xid-31835006_1"
-        },
-        {
-            "month":"9",
-            "day":"6",
-            "title":"Lecture 4",
-            "topic":"Graphics<br />&amp; GUIs<br /><br />",
-            "link":"https://blackboard.stonybrook.edu/bbcswebdav/pid-4595769-dt-content-rid-31868074_1/xid-31868074_1"
-        },
-        {
-            "month":"9",
-            "day":"11",
-            "title":"Lecture 5",
-            "topic":"Threads<br /><br />",
-            "link":"https://blackboard.stonybrook.edu/bbcswebdav/pid-4598618-dt-content-rid-31897815_1/xid-31897815_1"
-        },
-        {
-            "month":"9",
-            "day":"13",
-            "title":"Lecture 6",
-            "topic":"Threads<br />(continued)<br /><br />",
-            "link":"none"
         },
         {
             "month":"9",
@@ -299,6 +271,34 @@
             "title":"<a href='https://www.stonybrook.edu/commcms/registrar/registration/_exams/fall18-finals.php'>FINAL EXAM</a>",
             "topic":"(8:00am-10:45am)<br />(Cumulative)<br /><br />",
             "link":"none"
+        },
+        {
+            "month":"9",
+            "day":"4",
+            "title":"Lecture 3",
+            "topic":"Event<br />Programming<br /><br />",
+            "link":"https://blackboard.stonybrook.edu/bbcswebdav/pid-4591754-dt-content-rid-31835006_1/xid-31835006_1"
+        },
+        {
+            "month":"9",
+            "day":"6",
+            "title":"Lecture 4",
+            "topic":"Graphics<br />&amp; GUIs<br /><br />",
+            "link":"https://blackboard.stonybrook.edu/bbcswebdav/pid-4595769-dt-content-rid-31868074_1/xid-31868074_1"
+        },
+        {
+            "month":"9",
+            "day":"11",
+            "title":"Lecture 5",
+            "topic":"Threads<br /><br />",
+            "link":"https://blackboard.stonybrook.edu/bbcswebdav/pid-4598618-dt-content-rid-31897815_1/xid-31897815_1"
+        },
+        {
+            "month":"9",
+            "day":"13",
+            "title":"Lecture 6",
+            "topic":"Threads<br />(continued)<br /><br />",
+            "link":"none"
         }
     ],
     "references":[
@@ -352,13 +352,6 @@
             "day":"29",
             "title":"NO RECITATION",
             "topic":"<br /><br />",
-            "link":"none"
-        },
-        {
-            "month":"9",
-            "day":"5",
-            "title":"Recitation 1",
-            "topic":"Debugging<br /><br />",
             "link":"none"
         },
         {

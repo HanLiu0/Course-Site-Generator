@@ -208,7 +208,7 @@
         <property name="CSG_SCHEDULE_TITLE_TABLE_COLUMN_TEXT"           value="Título"></property>
         <property name="CSG_SCHEDULE_TOPIC_TABLE_COLUMN_TEXT"           value="Tema"></property>
         <property name="CSG_SCHEDULE_CLEAR_BT_TEXT"           value="Claro"></property>
-        <property name="CSG_SCHEDULE_ADD_UPDATE_BT_TEXT"           value="Añadir / Actualizar"></property>
+        <property name="CSG_SCHEDULE_ADD_UPDATE_BT_TEXT"           value="Añadir"></property>
         <property name="CSG_SCHEDULE_ADD_BT_TEXT"           value="Añadir"></property>
         <property name="CSG_SCHEDULE_UPDATE_BT_TEXT"           value="Actualizar"></property>
         <property name="CSG_SCHEDULE_ADD_EDIT_LABEL_TEXT"           value="Añadir / Editar"></property>

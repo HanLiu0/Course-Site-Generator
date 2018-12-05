@@ -157,7 +157,6 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
     public void saveData(AppDataComponent data, String filePath) throws IOException{
         // GET THE DATA
         CourseSiteGeneratorData dataManager = (CourseSiteGeneratorData)data;
-
         // NOW BUILD THE TA JSON OBJCTS TO SAVE
                     JsonArrayBuilder pagesArrayBuilder = Json.createArrayBuilder();
                     for(int i = 0 ; i < 4; i++){

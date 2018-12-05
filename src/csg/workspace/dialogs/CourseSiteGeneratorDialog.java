@@ -194,21 +194,10 @@ public class CourseSiteGeneratorDialog extends AppDialogsFacade{
         Stage webViewStage = new Stage();
         Scene scene = new Scene(webView);
         webViewStage.setScene(scene);
-
         // MAKE IT MODAL
         webViewStage.initOwner(app.getGUIModule().getWindow());
         webViewStage.initModality(Modality.APPLICATION_MODAL);        
         WebEngine webEngine = webView.getEngine();
-        webView.getEngine().getLoadWorker().stateProperty().addListener(new ChangeListener<Worker.State>() {
-            boolean first = true;
-            @Override
-            public void changed(ObservableValue<? extends Worker.State> ov, Worker.State t, Worker.State t1) {
-                if(t1.equals(State.SUCCEEDED) && first) {
-                    first = false;
-                    webView.getEngine().reload();
-                }
-            }
-        });
         webEngine.documentProperty().addListener(e->{
             // THE PAGE WILL LOAD ASYNCHRONOUSLY, SO MAKE
             // SURE TO GRAB THE TITLE FOR THE WINDOW
@@ -218,7 +207,17 @@ public class CourseSiteGeneratorDialog extends AppDialogsFacade{
         });
         URL pageURL = new File(filePath).toURI().toURL();
         String pagePath = pageURL.toExternalForm();
-        webEngine.load(pagePath);
-        webViewStage.showAndWait();
+        webView.getEngine().getLoadWorker().stateProperty().addListener(new ChangeListener<Worker.State>() {
+            boolean first = true;
+            @Override
+            public void changed(ObservableValue<? extends Worker.State> ov, Worker.State t, Worker.State t1) {
+                if(t1.equals(State.SUCCEEDED) && first) {
+                    first = false;
+                    webView.getEngine().reload();
+                }
+            }
+        });        webEngine.load(pagePath);
+        webViewStage.showAndWait();        
+
     }
 }
