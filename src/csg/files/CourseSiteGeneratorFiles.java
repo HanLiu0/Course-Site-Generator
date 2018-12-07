@@ -51,6 +51,7 @@ import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -146,7 +147,7 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
     static final String JSON_MONTH = "month";
     static final String JSON_DAY = "day";
     static final String JSON_CRITERIA = "criteria";
-    
+    static final String JSON_LECTURE = "Lecture";
     
 
     public CourseSiteGeneratorFiles(CourseSiteGeneratorApp initApp) {
@@ -895,6 +896,153 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
             JsonArray undergradTAsArray = undergraduateTaArrayBuilder.build();        
 
             JsonArrayBuilder ohArrayBuilder = Json.createArrayBuilder();
+            Iterator<LectureItem> ohLecturesIterator = dataManager.lecturesIterator();
+            while(ohLecturesIterator.hasNext()){
+                LectureItem lecture = ohLecturesIterator.next();
+                String[] days = lecture.getDays().split("&");
+                for(int i = 0 ; i < days.length; i++){
+                    days[i] = days[i].trim().toUpperCase();
+                    if(days[i].endsWith("S"))
+                        days[i] = days[i].substring(0, days[i].length()-1);
+                }
+                ArrayList<String> times = new ArrayList<>();
+                String time = lecture.getTime();
+                String startTime = time.substring(0, time.indexOf("-")).trim();
+                int startTimeColonIndex = startTime.indexOf(":");
+                String endTime = time.substring(time.indexOf("-")+1).trim();
+                int endTimeColonIndex = endTime.indexOf(":");
+                int startTimeHour; 
+                if(startTimeColonIndex != -1)
+                   startTimeHour = Integer.parseInt(startTime.substring(0, startTime.indexOf(":")));
+                else
+                    startTimeHour = Integer.parseInt(startTime.substring(0, startTime.length() - 2));
+                int startTimeMinute;
+                if(startTimeColonIndex != -1)
+                    startTimeMinute = Integer.parseInt(startTime.substring(startTime.indexOf(":")+1, startTime.indexOf(":")+3));
+                else
+                    startTimeMinute = 0;
+                String startTimeSuffix = startTime.substring(startTime.length() - 2, startTime.length());
+                if(startTimeSuffix.equals("pm") && startTimeHour != 12)
+                    startTimeHour += 12;
+                int endTimeHour; 
+                if(endTimeColonIndex != -1)
+                    endTimeHour = Integer.parseInt(endTime.substring(0, endTime.indexOf(":")));
+                else
+                    endTimeHour = Integer.parseInt(endTime.substring(0, endTime.length() - 2));
+                int endTimeMinute; 
+                if(endTimeColonIndex != -1)
+                    endTimeMinute = Integer.parseInt(endTime.substring(endTime.indexOf(":")+1, endTime.indexOf(":")+3));
+                else
+                    endTimeMinute = 0;
+                String endTimeSuffix = endTime.substring(endTime.length() - 2, endTime.length());
+                if(endTimeSuffix.equals("pm") && endTimeHour != 12)
+                    endTimeHour += 12;
+                if(startTimeMinute != 0 && startTimeMinute >= 30){
+                    String amOrPm = startTimeHour < 12? "am" : "pm";
+                    int actualTime = startTimeHour;
+                    if(actualTime > 12)
+                        actualTime -= 12;                    
+                    times.add(actualTime + ":30" + amOrPm);
+                    startTimeHour++;
+                }
+                if(endTimeMinute >= 30)
+                    endTimeHour++;
+                while(startTimeHour < endTimeHour){
+                    String amOrPm = startTimeHour < 12? "am" : "pm";
+                    int actualTime = startTimeHour;
+                    if(actualTime > 12)
+                        actualTime -= 12;
+                    times.add(actualTime + ":00" + amOrPm);
+                    times.add(actualTime + ":30" + amOrPm);
+                    startTimeHour++;
+                }
+                if(endTimeMinute > 0 && endTimeMinute < 30){
+                    String amOrPm = endTimeHour < 12? "am" : "pm";
+                    int actualTime = endTimeHour;
+                    if(actualTime > 12)
+                        actualTime -= 12;
+                    times.add(actualTime + ":00" + amOrPm);
+                }
+                for(int i = 0 ; i < days.length; i++){
+                    for(String lectureTime: times){
+                        JsonObject lectureJson = Json.createObjectBuilder().add(JSON_DAY, days[i])
+                                .add(JSON_TIME, lectureTime.replace(":", "_"))
+                                .add(JSON_NAME, JSON_LECTURE).build();
+                        ohArrayBuilder.add(lectureJson);
+                    }
+                }
+            }
+            for(int i = 0 ; i < ohsJA.size(); i++){
+                JsonObject instructorOH = ohsJA.getJsonObject(i);
+                String day = instructorOH.getString(JSON_DAY);
+                day = day.trim().toUpperCase();
+                if(day.endsWith("S"))
+                    day = day.substring(0, day.length()-1);
+                String time = instructorOH.getString(JSON_TIME);
+                ArrayList<String> times = new ArrayList<>();
+                String startTime = time.substring(0, time.indexOf("-")).trim();
+                int startTimeColonIndex = startTime.indexOf(":");
+                String endTime = time.substring(time.indexOf("-")+1).trim();
+                int endTimeColonIndex = endTime.indexOf(":");
+                int startTimeHour; 
+                if(startTimeColonIndex != -1)
+                   startTimeHour = Integer.parseInt(startTime.substring(0, startTime.indexOf(":")));
+                else
+                    startTimeHour = Integer.parseInt(startTime.substring(0, startTime.length() - 2));
+                int startTimeMinute;
+                if(startTimeColonIndex != -1)
+                    startTimeMinute = Integer.parseInt(startTime.substring(startTime.indexOf(":")+1, startTime.indexOf(":")+3));
+                else
+                    startTimeMinute = 0;
+                String startTimeSuffix = startTime.substring(startTime.length() - 2, startTime.length());
+                if(startTimeSuffix.equals("pm") && startTimeHour != 12)
+                    startTimeHour += 12;
+                int endTimeHour; 
+                if(endTimeColonIndex != -1)
+                    endTimeHour = Integer.parseInt(endTime.substring(0, endTime.indexOf(":")));
+                else
+                    endTimeHour = Integer.parseInt(endTime.substring(0, endTime.length() - 2));
+                int endTimeMinute; 
+                if(endTimeColonIndex != -1)
+                    endTimeMinute = Integer.parseInt(endTime.substring(endTime.indexOf(":")+1, endTime.indexOf(":")+3));
+                else
+                    endTimeMinute = 0;
+                String endTimeSuffix = endTime.substring(endTime.length() - 2, endTime.length());
+                if(endTimeSuffix.equals("pm") && endTimeHour != 12)
+                    endTimeHour += 12;
+                if(startTimeMinute != 0 && startTimeMinute >= 30){
+                    String amOrPm = startTimeHour < 12? "am" : "pm";
+                    int actualTime = startTimeHour;
+                    if(actualTime > 12)
+                        actualTime -= 12;                    
+                    times.add(actualTime + ":30" + amOrPm);
+                    startTimeHour++;
+                }
+                if(endTimeMinute >= 30)
+                    endTimeHour++;
+                while(startTimeHour < endTimeHour){
+                    String amOrPm = startTimeHour < 12? "am" : "pm";
+                    int actualTime = startTimeHour;
+                    if(actualTime > 12)
+                        actualTime -= 12;
+                    times.add(actualTime + ":00" + amOrPm);
+                    times.add(actualTime + ":30" + amOrPm);
+                    startTimeHour++;
+                }
+                if(endTimeMinute > 0 && endTimeMinute < 30){
+                    String amOrPm = endTimeHour < 12? "am" : "pm";
+                    int actualTime = endTimeHour;
+                    if(actualTime > 12)
+                        actualTime -= 12;
+                    times.add(actualTime + ":00" + amOrPm);
+                }
+                for(String instructorOHTime: times){
+                    JsonObject lectureJson = Json.createObjectBuilder().add(JSON_DAY, day)
+                            .add(JSON_TIME, instructorOHTime.replace(":", "_"))
+                            .add(JSON_NAME, instructor.getName()).build();
+                    ohArrayBuilder.add(lectureJson);
+                }                
+            }
             Iterator<TimeSlot> ohIterator = dataManager.allOfficeHoursIterator();
                 String[] dayOfWeek = new String[5];
                 int index = 0;

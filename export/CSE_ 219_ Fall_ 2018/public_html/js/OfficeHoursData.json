@@ -108,6 +108,76 @@
     ],
     "officeHours":[
         {
+            "day":"TUESDAY",
+            "time":"10_00am",
+            "name":"Lecture"
+        },
+        {
+            "day":"TUESDAY",
+            "time":"10_30am",
+            "name":"Lecture"
+        },
+        {
+            "day":"TUESDAY",
+            "time":"11_00am",
+            "name":"Lecture"
+        },
+        {
+            "day":"THURSDAY",
+            "time":"10_00am",
+            "name":"Lecture"
+        },
+        {
+            "day":"THURSDAY",
+            "time":"10_30am",
+            "name":"Lecture"
+        },
+        {
+            "day":"THURSDAY",
+            "time":"11_00am",
+            "name":"Lecture"
+        },
+        {
+            "day":"TUESDAY",
+            "time":"1_00pm",
+            "name":"Richard McKenna"
+        },
+        {
+            "day":"TUESDAY",
+            "time":"1_30pm",
+            "name":"Richard McKenna"
+        },
+        {
+            "day":"TUESDAY",
+            "time":"2_00pm",
+            "name":"Richard McKenna"
+        },
+        {
+            "day":"WEDNESDAY",
+            "time":"2_00pm",
+            "name":"Richard McKenna"
+        },
+        {
+            "day":"WEDNESDAY",
+            "time":"2_30pm",
+            "name":"Richard McKenna"
+        },
+        {
+            "day":"THURSDAY",
+            "time":"1_00pm",
+            "name":"Richard McKenna"
+        },
+        {
+            "day":"THURSDAY",
+            "time":"1_30pm",
+            "name":"Richard McKenna"
+        },
+        {
+            "day":"THURSDAY",
+            "time":"2_00pm",
+            "name":"Richard McKenna"
+        },
+        {
             "time":"8_00am",
             "day":"MONDAY",
             "name":"Lei Song"

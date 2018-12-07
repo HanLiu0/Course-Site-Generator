@@ -13,16 +13,16 @@
     ],
     "logos":{
         "favicon":{
-            "src":"C:\\Users\\hanli\\Documents\\NetBeansProjects\\CSE219Project\\CourseSiteGenerator\\images\\SBUShieldFavicon.png"
+            "src":".\\images\\SBUShieldFavicon.png"
         },
         "navbar":{
-            "src":"C:\\Users\\hanli\\Documents\\NetBeansProjects\\CSE219Project\\CourseSiteGenerator\\images\\SBUDarkRedShieldLogo.png"
+            "src":".\\images\\SBUDarkRedShieldLogo.png"
         },
         "bottom_left":{
-            "src":"C:\\Users\\hanli\\Documents\\NetBeansProjects\\CSE219Project\\CourseSiteGenerator\\images\\SBUWhiteShieldLogo.jpg"
+            "src":".\\images\\SBUWhiteShieldLogo.jpg"
         },
         "bottom_right":{
-            "src":"C:\\Users\\hanli\\Documents\\NetBeansProjects\\CSE219Project\\CourseSiteGenerator\\images\\SBUCSLogo.png"
+            "src":".\\images\\SBUCSLogo.png"
         }
     },
     "stylesheet":"winter.css",
@@ -46,7 +46,7 @@
         {
             "section":"L01",
             "days":"Tuesdays & Thursdays",
-            "time":"10:00am-11:20pm",
+            "time":"10:00am-11:20am",
             "room":"Humanities 1006"
         }
     ],
