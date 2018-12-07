@@ -198,13 +198,6 @@ public class CourseSiteGeneratorDialog extends AppDialogsFacade{
         webViewStage.initOwner(app.getGUIModule().getWindow());
         webViewStage.initModality(Modality.APPLICATION_MODAL);        
         WebEngine webEngine = webView.getEngine();
-        webEngine.documentProperty().addListener(e->{
-            // THE PAGE WILL LOAD ASYNCHRONOUSLY, SO MAKE
-            // SURE TO GRAB THE TITLE FOR THE WINDOW
-            // ONCE IT'S BEEN LOADED
-            String title = webEngine.getTitle();
-            webViewStage.setTitle(title);
-        });
         URL pageURL = new File(filePath).toURI().toURL();
         String pagePath = pageURL.toExternalForm();
         webView.getEngine().getLoadWorker().stateProperty().addListener(new ChangeListener<Worker.State>() {
@@ -216,7 +209,9 @@ public class CourseSiteGeneratorDialog extends AppDialogsFacade{
                     webView.getEngine().reload();
                 }
             }
-        });        webEngine.load(pagePath);
+        });        
+        webViewStage.titleProperty().bind(webEngine.titleProperty());
+        webEngine.load(pagePath);
         webViewStage.showAndWait();        
 
     }
