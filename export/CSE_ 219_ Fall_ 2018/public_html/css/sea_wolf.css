@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 body {
-    background-color: #a2c3d1;
+    background-color:rgb(118,143,165);
     font-family: 'Open Sans', sans-serif;
 }
 
@@ -15,18 +15,18 @@ p,li,td,th {
 }
 
 h1,h2,h3,h4,h5,h6 {
-    color:#749FAB;
+    color:#003399
 }
 
 #navbar {
-    background-color:#3D4B4E;
+    background-color:#660000;
     margin-top:5px;
 }
 
 #banner {
     font-size:24pt;
     color:#ffffff;
-    background-color:#506B7A;
+    background-color:#990000;
 }
 
 #desc {
@@ -59,17 +59,17 @@ a.nav:hover{
 }
 
 a:hover {
-    color:#005a5b;
+    color:rgb(118,143,165);
 }
 
 a {
     text-decoration:none;
-    color:#009698;
+    color:#006633;
     font-weight:bold;
 }
 
 span {
-    color:#1dacd6;
+    color:#8888ff;
     font-weight:bold;
 }
 
@@ -79,7 +79,7 @@ span.reading {
 }
 
 span.tutorial {
-    color:#008b8b;
+    color:#990099;
     font-weight:normal;
 }
 
@@ -115,20 +115,20 @@ td.hws {
     height:50px;
     text-align:center;
     font-weight:bold;
-    background-color:#b0e0e6;
+    background-color:rgb(227,230,235);
 }
 td.time
 {
-    background-color:#B6DDDD;
+    background-color:rgb(174,189,99);
     color:black;
 }
 td.open
 {
-    background-color:#D7E6E5;
+    background-color:rgb(220,100,100);
 }
 td.lecture
 {
-    background-color:#79C4C7;
+    background-color:rgb(103,124,151);
 }
 td.recitation
 {
@@ -140,7 +140,7 @@ td.tas
 }
 .office_hours_schedule th
 {
-    background-color:#358287;
+    background-color:rgb(180,120,180);
 }
 .email
 {
@@ -151,13 +151,13 @@ td.tas
 
 
 .rec_0 {
-    background-color:#DAE3EC;
+    background-color:rgb(255,204,153);
     border: 5px solid white;
     border-radius: 25px;
     box-shadow: 5px 5px 5px #888888;
 }
 .rec_1 {
-    background-color: #AEABB3;
+    background-color:rgb(229, 204, 255);
     border: 5px solid white;
     border-radius: 25px;
     box-shadow: 5px 5px 5px #888888;
@@ -190,5 +190,5 @@ td.tas
 }
 
 .grading_total {
-    background-color: #1dacd6;
+    background-color: rgb(255,190,150);
 }

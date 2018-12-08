@@ -921,7 +921,7 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
                     startTimeMinute = Integer.parseInt(startTime.substring(startTime.indexOf(":")+1, startTime.indexOf(":")+3));
                 else
                     startTimeMinute = 0;
-                String startTimeSuffix = startTime.substring(startTime.length() - 2, startTime.length());
+                String startTimeSuffix = startTime.substring(startTime.length() - 2, startTime.length()).toLowerCase();
                 if(startTimeSuffix.equals("pm") && startTimeHour != 12)
                     startTimeHour += 12;
                 int endTimeHour; 
@@ -934,7 +934,7 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
                     endTimeMinute = Integer.parseInt(endTime.substring(endTime.indexOf(":")+1, endTime.indexOf(":")+3));
                 else
                     endTimeMinute = 0;
-                String endTimeSuffix = endTime.substring(endTime.length() - 2, endTime.length());
+                String endTimeSuffix = endTime.substring(endTime.length() - 2, endTime.length()).toLowerCase();
                 if(endTimeSuffix.equals("pm") && endTimeHour != 12)
                     endTimeHour += 12;
                 if(startTimeMinute != 0 && startTimeMinute >= 30){
@@ -994,7 +994,7 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
                     startTimeMinute = Integer.parseInt(startTime.substring(startTime.indexOf(":")+1, startTime.indexOf(":")+3));
                 else
                     startTimeMinute = 0;
-                String startTimeSuffix = startTime.substring(startTime.length() - 2, startTime.length());
+                String startTimeSuffix = startTime.substring(startTime.length() - 2, startTime.length()).toLowerCase();
                 if(startTimeSuffix.equals("pm") && startTimeHour != 12)
                     startTimeHour += 12;
                 int endTimeHour; 
@@ -1007,7 +1007,7 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
                     endTimeMinute = Integer.parseInt(endTime.substring(endTime.indexOf(":")+1, endTime.indexOf(":")+3));
                 else
                     endTimeMinute = 0;
-                String endTimeSuffix = endTime.substring(endTime.length() - 2, endTime.length());
+                String endTimeSuffix = endTime.substring(endTime.length() - 2, endTime.length()).toLowerCase();
                 if(endTimeSuffix.equals("pm") && endTimeHour != 12)
                     endTimeHour += 12;
                 if(startTimeMinute != 0 && startTimeMinute >= 30){
@@ -1064,14 +1064,14 @@ public class CourseSiteGeneratorFiles implements AppFileComponent {
             }
             JsonArray ohArray = ohArrayBuilder.build();
 
-            String startTime = dataManager.getStartTime();
+            String startTime = dataManager.getStartTime().toLowerCase();
             String startTimeHour = startTime.substring(0, dataManager.getStartTime().indexOf(":"));
             if(startTime.endsWith("pm")){
                 startTimeHour = Integer.parseInt(startTimeHour) + 12 + "";
                 if(startTimeHour.equals("24"))
                     startTimeHour = "0";
             }
-            String endTime = dataManager.getEndTime();
+            String endTime = dataManager.getEndTime().toLowerCase();
             String endTimeHour = endTime.substring(0, dataManager.getEndTime().indexOf(":"));
             if(endTime.endsWith("pm")){
                 endTimeHour = Integer.parseInt(endTimeHour) + 12 + "";

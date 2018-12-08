@@ -397,7 +397,8 @@ public class CourseSiteGeneratorController {
         }
         else{
             RemoveSchedule_Transaction transaction = new RemoveSchedule_Transaction(data, selectedSchedule);
-            app.processTransaction(transaction);            
+            app.processTransaction(transaction);           
+            processClearEntryFieldData();
         }
     }
     
